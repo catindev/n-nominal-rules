@@ -1,0 +1,12 @@
+{
+  "id": "library.common.rule_beneficiary_address_registration_street_length",
+  "type": "rule",
+  "description": "beneficiary.address.registration.street: длина не более 255",
+  "role": "check",
+  "operator": "length_max",
+  "field": "beneficiary.address.registration.street",
+  "level": "ERROR",
+  "code": "BENEFICIARY_ADDRESS_REGISTRATION_STREET.LENGTH",
+  "message": "Поле beneficiary.address.registration.street не должно превышать 255 символов",
+  "value": 255
+}

@@ -1,0 +1,15 @@
+{
+  "id": "beneficiary_ip_nonresident.full_validation.cond_residency_4_if_present",
+  "type": "condition",
+  "description": "Если beneficiary.ip.residency.permitStartDate заполнено, валидируем формат",
+  "when": {
+    "all": [
+      "pred_residency_4_present"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "rule_residency_4_format"
+    }
+  ]
+}

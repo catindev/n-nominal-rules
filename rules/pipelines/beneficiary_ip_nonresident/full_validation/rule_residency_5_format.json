@@ -1,0 +1,12 @@
+{
+  "id": "beneficiary_ip_nonresident.full_validation.rule_residency_5_format",
+  "type": "rule",
+  "description": "Формат даты residency beneficiary.ip.residency.permitEndDate",
+  "role": "check",
+  "operator": "matches_regex",
+  "field": "beneficiary.ip.residency.permitEndDate",
+  "level": "ERROR",
+  "code": "BENEFICIARY_IP_RESIDENCY_PERMITENDDATE.FORMAT",
+  "message": "Поле beneficiary.ip.residency.permitEndDate должно быть в формате YYYY-MM-DD",
+  "value": "^\\d{4}-\\d{2}-\\d{2}$"
+}

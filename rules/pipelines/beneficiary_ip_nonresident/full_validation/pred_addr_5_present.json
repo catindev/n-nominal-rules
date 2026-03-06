@@ -1,0 +1,8 @@
+{
+  "id": "beneficiary_ip_nonresident.full_validation.pred_addr_5_present",
+  "type": "rule",
+  "description": "Адресное поле beneficiary.address.registration.city указано",
+  "role": "predicate",
+  "operator": "not_empty",
+  "field": "beneficiary.address.registration.city"
+}

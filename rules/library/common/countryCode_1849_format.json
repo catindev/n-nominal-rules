@@ -1,0 +1,12 @@
+{
+  "id": "library.common.rule_beneficiary_address_registration_countrycode_format",
+  "type": "rule",
+  "description": "beneficiary.address.registration.countryCode: код страны ISO",
+  "role": "check",
+  "operator": "matches_regex",
+  "field": "beneficiary.address.registration.countryCode",
+  "level": "ERROR",
+  "code": "BENEFICIARY_ADDRESS_REGISTRATION_COUNTRYCODE.FORMAT",
+  "message": "Поле beneficiary.address.registration.countryCode должно содержать двухбуквенный код страны ISO 3166-1 alpha-2",
+  "value": "^[A-Z]{2}$"
+}

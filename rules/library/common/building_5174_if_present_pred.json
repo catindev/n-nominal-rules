@@ -1,0 +1,8 @@
+{
+  "id": "library.common.pred_beneficiary_address_registration_building_present",
+  "type": "rule",
+  "description": "Поле beneficiary.address.registration.building указано",
+  "role": "predicate",
+  "operator": "not_empty",
+  "field": "beneficiary.address.registration.building"
+}

@@ -1,0 +1,11 @@
+{
+  "id": "branch_a.ip_resident.full_validation",
+  "type": "pipeline",
+  "description": "Ветка A / IP_RESIDENT / full",
+  "strict": false,
+  "flow": [
+    {
+      "pipeline": "beneficiary_ip_resident.full_validation"
+    }
+  ]
+}

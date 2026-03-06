@@ -1,0 +1,15 @@
+{
+  "id": "beneficiary_ul_nonresident.full_validation.cond_faddr_5_if_present",
+  "type": "condition",
+  "description": "Если beneficiary.tax.foreignAddress.addressLine заполнено, валидируем формат/длину",
+  "when": {
+    "all": [
+      "pred_faddr_5_present"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "library.common.rule_beneficiary_tax_foreignaddress_addressline_length"
+    }
+  ]
+}

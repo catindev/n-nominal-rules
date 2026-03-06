@@ -1,0 +1,11 @@
+{
+  "id": "branch_c.ip_nonresident.precheck_min",
+  "type": "pipeline",
+  "description": "Ветка C / IP_NONRESIDENT / precheck",
+  "strict": false,
+  "flow": [
+    {
+      "pipeline": "beneficiary_ip_nonresident.precheck_min"
+    }
+  ]
+}

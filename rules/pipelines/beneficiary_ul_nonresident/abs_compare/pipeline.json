@@ -1,0 +1,11 @@
+{
+  "id": "beneficiary_ul_nonresident.abs_compare",
+  "type": "pipeline",
+  "description": "Минимальное сравнение/ожидания по АБС для UL_NONRESIDENT",
+  "strict": false,
+  "flow": [
+    {
+      "rule": "library.compare.abs_not_found"
+    }
+  ]
+}

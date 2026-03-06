@@ -1,0 +1,8 @@
+{
+  "id": "library.common.pred_beneficiary_address_registration_regioncode_present",
+  "type": "rule",
+  "description": "Поле beneficiary.address.registration.regionCode указано",
+  "role": "predicate",
+  "operator": "not_empty",
+  "field": "beneficiary.address.registration.regionCode"
+}

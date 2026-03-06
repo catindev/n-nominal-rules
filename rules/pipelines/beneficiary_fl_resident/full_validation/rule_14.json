@@ -1,0 +1,11 @@
+{
+  "id": "beneficiary_fl_resident.full_validation.rule_14",
+  "type": "rule",
+  "description": "Не указан орган, выдавший документ",
+  "role": "check",
+  "operator": "not_empty",
+  "field": "beneficiary.fl.idDoc.issuer",
+  "level": "ERROR",
+  "code": "FL.IDDOC.ISSUER.REQUIRED.BENEFICIARY_FL_RESIDENT_FULL_VALIDATION_RULE_14",
+  "message": "Не указан орган, выдавший документ"
+}

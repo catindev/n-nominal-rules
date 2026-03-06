@@ -1,0 +1,12 @@
+{
+  "id": "beneficiary_ip_nonresident.full_validation.rule_1",
+  "type": "rule",
+  "description": "FULL rule 1",
+  "role": "check",
+  "operator": "length_max",
+  "field": "beneficiary.kio",
+  "level": "ERROR",
+  "code": "IP.KIO.LENGTH",
+  "message": "КИО не должен превышать 20 символов",
+  "value": 20
+}

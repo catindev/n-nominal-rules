@@ -1,0 +1,15 @@
+{
+  "id": "library.common.contacts_any",
+  "type": "rule",
+  "description": "Должен быть указан хотя бы один контакт",
+  "role": "check",
+  "operator": "any_filled",
+  "level": "ERROR",
+  "code": "BEN.CONTACTS.MIN_ONE",
+  "message": "Необходимо заполнить хотя бы один контакт: телефон или email",
+  "paths": [
+    "beneficiary.contacts.phone",
+    "beneficiary.contacts.email",
+    "beneficiary.contacts.phoneForeign"
+  ]
+}

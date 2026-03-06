@@ -1,0 +1,14 @@
+{
+  "id": "beneficiary_fl_resident.precheck_min.rule_min_4",
+  "type": "rule",
+  "description": "Имя обязательно",
+  "role": "check",
+  "operator": "not_empty",
+  "field": "beneficiary.fl.fio.first",
+  "level": "EXCEPTION",
+  "code": "FL.FIO.FIRST.REQUIRED.BENEFICIARY_FL_RESIDENT_PRECHECK_MIN_RULE_MIN_4",
+  "message": "Не указано имя физического лица",
+  "meta": {
+    "category": "DATA"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "id": "library.tax.pred_is_foreign_taxpayer_true",
+  "type": "rule",
+  "description": "Есть признак иностранного налогоплательщика",
+  "role": "predicate",
+  "operator": "equals",
+  "field": "beneficiary.tax.isForeignTaxpayer",
+  "value": true
+}

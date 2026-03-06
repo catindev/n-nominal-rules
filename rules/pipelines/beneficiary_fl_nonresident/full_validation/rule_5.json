@@ -1,0 +1,11 @@
+{
+  "id": "beneficiary_fl_nonresident.full_validation.rule_5",
+  "type": "rule",
+  "description": "Не указано место рождения",
+  "role": "check",
+  "operator": "not_empty",
+  "field": "beneficiary.fl.birthPlace",
+  "level": "ERROR",
+  "code": "FL.BIRTH_PLACE.REQUIRED.BENEFICIARY_FL_NONRESIDENT_FULL_VALIDATION_RULE_5",
+  "message": "Не указано место рождения"
+}

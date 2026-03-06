@@ -1,0 +1,11 @@
+{
+  "id": "beneficiary_fl_resident.full_validation.rule_11",
+  "type": "rule",
+  "description": "Не указан номер документа",
+  "role": "check",
+  "operator": "not_empty",
+  "field": "beneficiary.fl.idDoc.number",
+  "level": "ERROR",
+  "code": "FL.IDDOC.NUMBER.REQUIRED.BENEFICIARY_FL_RESIDENT_FULL_VALIDATION_RULE_11",
+  "message": "Не указан номер документа"
+}

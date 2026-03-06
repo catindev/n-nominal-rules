@@ -1,0 +1,11 @@
+{
+  "id": "beneficiary_ip_resident.full_validation.rule_6",
+  "type": "rule",
+  "description": "FULL rule 6",
+  "role": "check",
+  "operator": "not_empty",
+  "field": "beneficiary.ip.birthPlace",
+  "level": "ERROR",
+  "code": "IP.BIRTH_PLACE.REQUIRED.BENEFICIARY_IP_RESIDENT_FULL_VALIDATION_RULE_6",
+  "message": "Не указано место рождения ИП"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "beneficiary_fl_nonresident.full_validation.cond_migration_3_if_present",
+  "type": "condition",
+  "description": "Если beneficiary.fl.migrationCard.endDate указано, валидируем",
+  "when": {
+    "all": [
+      "pred_migration_3_present"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "rule_migration_3_format"
+    }
+  ]
+}

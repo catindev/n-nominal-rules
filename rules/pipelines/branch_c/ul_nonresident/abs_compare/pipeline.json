@@ -1,0 +1,11 @@
+{
+  "id": "branch_c.ul_nonresident.abs_compare",
+  "type": "pipeline",
+  "description": "Ветка C / UL_NONRESIDENT / abs",
+  "strict": false,
+  "flow": [
+    {
+      "pipeline": "beneficiary_ul_nonresident.abs_compare"
+    }
+  ]
+}

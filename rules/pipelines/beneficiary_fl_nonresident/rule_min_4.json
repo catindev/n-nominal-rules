@@ -1,0 +1,15 @@
+{
+  "id": "beneficiary_fl_nonresident.precheck_min.rule_min_4",
+  "type": "rule",
+  "description": "Дата рождения обязательна",
+  "role": "check",
+  "operator": "matches_regex",
+  "field": "beneficiary.fl.birthDate",
+  "level": "EXCEPTION",
+  "code": "FL.BIRTH_DATE.FORMAT.BENEFICIARY_FL_NONRESIDENT_PRECHECK_MIN_RULE_MIN_4",
+  "message": "Дата рождения должна быть в формате YYYY-MM-DD",
+  "value": "^\\d{4}-\\d{2}-\\d{2}$",
+  "meta": {
+    "category": "DATA"
+  }
+}

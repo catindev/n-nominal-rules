@@ -1,0 +1,12 @@
+{
+  "id": "beneficiary_ul_nonresident.full_validation.rule_3",
+  "type": "rule",
+  "description": "FULL rule 3",
+  "role": "check",
+  "operator": "length_max",
+  "field": "beneficiary.ul.name.full_ru",
+  "level": "ERROR",
+  "code": "UL.NAME.FULL_RU.LENGTH.BENEFICIARY_UL_NONRESIDENT_FULL_VALIDATION_RULE_3",
+  "message": "Полное наименование ЮЛ на русском языке слишком длинное",
+  "value": 500
+}

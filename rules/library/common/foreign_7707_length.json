@@ -1,0 +1,12 @@
+{
+  "id": "library.common.rule_beneficiary_tax_foreignaddress_postalcode_length",
+  "type": "rule",
+  "description": "Длина foreignAddress",
+  "role": "check",
+  "operator": "length_max",
+  "field": "beneficiary.tax.foreignAddress.postalCode",
+  "level": "ERROR",
+  "code": "BENEFICIARY_TAX_FOREIGNADDRESS_POSTALCODE.LENGTH",
+  "message": "Поле beneficiary.tax.foreignAddress.postalCode не должно превышать 255 символов",
+  "value": 255
+}

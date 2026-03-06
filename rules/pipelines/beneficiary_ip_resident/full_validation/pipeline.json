@@ -1,0 +1,149 @@
+{
+  "id": "beneficiary_ip_resident.full_validation",
+  "type": "pipeline",
+  "description": "Полная валидация для IP_RESIDENT",
+  "strict": false,
+  "flow": [
+    {
+      "rule": "library.common.participation_required"
+    },
+    {
+      "rule": "library.common.participation_length"
+    },
+    {
+      "rule": "library.common.contacts_any"
+    },
+    {
+      "condition": "library.common.cond_phone_if_present"
+    },
+    {
+      "condition": "library.common.cond_email_if_present"
+    },
+    {
+      "rule": "library.common.status_start_required"
+    },
+    {
+      "rule": "library.common.status_start_format"
+    },
+    {
+      "condition": "library.common.cond_status_end_if_present"
+    },
+    {
+      "rule": "library.tax.rule_us_taxpayer_block"
+    },
+    {
+      "rule": "library.tax.rule_us_resident_block"
+    },
+    {
+      "rule": "rule_1"
+    },
+    {
+      "rule": "rule_2"
+    },
+    {
+      "rule": "rule_3"
+    },
+    {
+      "rule": "rule_4"
+    },
+    {
+      "rule": "rule_5"
+    },
+    {
+      "rule": "rule_6"
+    },
+    {
+      "rule": "rule_7"
+    },
+    {
+      "rule": "rule_8"
+    },
+    {
+      "rule": "rule_9"
+    },
+    {
+      "rule": "rule_10"
+    },
+    {
+      "condition": "cond_addr_1_if_present"
+    },
+    {
+      "condition": "cond_addr_2_if_present"
+    },
+    {
+      "condition": "cond_addr_3_if_present"
+    },
+    {
+      "condition": "cond_addr_4_if_present"
+    },
+    {
+      "condition": "cond_addr_5_if_present"
+    },
+    {
+      "condition": "cond_addr_6_if_present"
+    },
+    {
+      "condition": "cond_addr_7_if_present"
+    },
+    {
+      "condition": "cond_addr_8_if_present"
+    },
+    {
+      "condition": "cond_addr_9_if_present"
+    },
+    {
+      "condition": "cond_addr_10_if_present"
+    },
+    {
+      "condition": "cond_addr_11_if_present"
+    },
+    {
+      "condition": "cond_foreign_tax_block"
+    },
+    {
+      "condition": "cond_faddr_1_if_present"
+    },
+    {
+      "condition": "cond_faddr_2_if_present"
+    },
+    {
+      "condition": "cond_faddr_3_if_present"
+    },
+    {
+      "condition": "cond_faddr_4_if_present"
+    },
+    {
+      "condition": "cond_faddr_5_if_present"
+    },
+    {
+      "rule": "rule_iddoc_1"
+    },
+    {
+      "rule": "rule_iddoc_2"
+    },
+    {
+      "rule": "rule_iddoc_3"
+    },
+    {
+      "rule": "rule_iddoc_4"
+    },
+    {
+      "rule": "rule_iddoc_5"
+    },
+    {
+      "rule": "rule_iddoc_6"
+    },
+    {
+      "rule": "rule_iddoc_7"
+    },
+    {
+      "rule": "rule_iddoc_datefmt_1"
+    },
+    {
+      "rule": "rule_iddoc_datefmt_2"
+    },
+    {
+      "rule": "rule_iddoc_order"
+    }
+  ]
+}

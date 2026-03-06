@@ -1,0 +1,12 @@
+{
+  "id": "beneficiary_ip_resident.full_validation.rule_5",
+  "type": "rule",
+  "description": "FULL rule 5",
+  "role": "check",
+  "operator": "matches_regex",
+  "field": "beneficiary.ip.birthDate",
+  "level": "ERROR",
+  "code": "IP.BIRTH_DATE.FORMAT.BENEFICIARY_IP_RESIDENT_FULL_VALIDATION_RULE_5",
+  "message": "Дата рождения ИП должна быть в формате YYYY-MM-DD",
+  "value": "^\\d{4}-\\d{2}-\\d{2}$"
+}

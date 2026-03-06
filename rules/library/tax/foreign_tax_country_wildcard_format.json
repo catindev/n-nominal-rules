@@ -1,0 +1,16 @@
+{
+  "id": "library.tax.rule_foreign_country_format",
+  "type": "rule",
+  "description": "Все коды стран foreignCountries должны быть ISO alpha-2",
+  "role": "check",
+  "operator": "matches_regex",
+  "level": "ERROR",
+  "code": "BEN.TAX.FOREIGN_COUNTRY.FORMAT",
+  "message": "Коды стран иностранного налогового резидентства должны быть в формате ISO 3166-1 alpha-2",
+  "field": "beneficiary.tax.foreignCountries[*]",
+  "value": "^[A-Z]{2}$",
+  "aggregate": {
+    "mode": "EACH",
+    "onEmpty": "SKIP"
+  }
+}

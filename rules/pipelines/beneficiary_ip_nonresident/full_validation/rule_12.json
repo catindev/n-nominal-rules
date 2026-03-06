@@ -1,0 +1,15 @@
+{
+  "id": "beneficiary_ip_nonresident.full_validation.rule_12",
+  "type": "rule",
+  "description": "FULL rule 12",
+  "role": "check",
+  "operator": "in_dictionary",
+  "field": "beneficiary.tax.isUSTaxResident",
+  "level": "ERROR",
+  "code": "IP.TAX.US_TAX_RESIDENT.BOOL",
+  "message": "Признак налогового резидента США должен быть boolean",
+  "dictionary": {
+    "type": "static",
+    "id": "true_false"
+  }
+}

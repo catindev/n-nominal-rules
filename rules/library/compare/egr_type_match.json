@@ -1,0 +1,15 @@
+{
+  "id": "library.compare.egr_type_match",
+  "type": "rule",
+  "description": "Тип в запросе и ЕГР должен совпадать",
+  "role": "check",
+  "operator": "field_equals_field",
+  "level": "EXCEPTION",
+  "code": "BEN.EGR.TYPE.MISMATCH",
+  "message": "Тип бенефициара не совпадает с данными ЕГР",
+  "field": "beneficiary.type",
+  "value_field": "egr.beneficiary.type",
+  "meta": {
+    "category": "DATA"
+  }
+}

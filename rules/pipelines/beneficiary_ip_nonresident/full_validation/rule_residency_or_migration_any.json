@@ -1,0 +1,14 @@
+{
+  "id": "beneficiary_ip_nonresident.full_validation.rule_residency_or_migration_any",
+  "type": "rule",
+  "description": "Нужно указать документ пребывания или миграционную карту",
+  "role": "check",
+  "operator": "any_filled",
+  "level": "ERROR",
+  "code": "IP.RESIDENCY.OR_MIGRATION.REQUIRED",
+  "message": "Для ИП-нерезидента необходимо указать документ пребывания либо миграционную карту",
+  "paths": [
+    "beneficiary.ip.residency.documentType",
+    "beneficiary.ip.migrationCard.number"
+  ]
+}

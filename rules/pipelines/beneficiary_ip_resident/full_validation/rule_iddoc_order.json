@@ -1,0 +1,12 @@
+{
+  "id": "beneficiary_ip_resident.full_validation.rule_iddoc_order",
+  "type": "rule",
+  "description": "Дата окончания документа позже даты выдачи",
+  "role": "check",
+  "operator": "field_greater_than_field",
+  "field": "beneficiary.ip.idDoc.expireDate",
+  "level": "ERROR",
+  "code": "IP.IDDOC.DATE.ORDER.BENEFICIARY_IP_RESIDENT_FULL_VALIDATION_RULE_IDDOC_ORDER",
+  "message": "Дата окончания действия документа должна быть позже даты выдачи",
+  "value_field": "beneficiary.ip.idDoc.issueDate"
+}

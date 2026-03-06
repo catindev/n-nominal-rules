@@ -1,0 +1,8 @@
+{
+  "id": "beneficiary_ip_nonresident.full_validation.pred_migration_2_present",
+  "type": "rule",
+  "description": "Поле migration beneficiary.ip.migrationCard.startDate указано",
+  "role": "predicate",
+  "operator": "not_empty",
+  "field": "beneficiary.ip.migrationCard.startDate"
+}

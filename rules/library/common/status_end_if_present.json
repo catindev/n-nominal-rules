@@ -1,0 +1,18 @@
+{
+  "id": "library.common.cond_status_end_if_present",
+  "type": "condition",
+  "description": "Если дата окончания указана, валидируем ее формат и порядок",
+  "when": {
+    "all": [
+      "library.common.pred_status_end_present"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "library.common.status_end_format"
+    },
+    {
+      "rule": "library.common.status_end_gt_start"
+    }
+  ]
+}

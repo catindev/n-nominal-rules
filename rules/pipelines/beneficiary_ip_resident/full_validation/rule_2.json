@@ -1,0 +1,11 @@
+{
+  "id": "beneficiary_ip_resident.full_validation.rule_2",
+  "type": "rule",
+  "description": "FULL rule 2",
+  "role": "check",
+  "operator": "not_empty",
+  "field": "beneficiary.ip.fio.last",
+  "level": "ERROR",
+  "code": "IP.FIO.LAST.REQUIRED.BENEFICIARY_IP_RESIDENT_FULL_VALIDATION_RULE_2",
+  "message": "Не указана фамилия ИП"
+}

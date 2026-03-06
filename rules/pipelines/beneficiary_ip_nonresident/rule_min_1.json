@@ -1,0 +1,15 @@
+{
+  "id": "beneficiary_ip_nonresident.precheck_min.rule_min_1",
+  "type": "rule",
+  "description": "MIN rule 1",
+  "role": "check",
+  "operator": "in_dictionary",
+  "field": "beneficiary.type",
+  "level": "EXCEPTION",
+  "code": "BEN.TYPE.UNSUPPORTED.BENEFICIARY_IP_NONRESIDENT_PRECHECK_MIN_RULE_MIN_1",
+  "message": "Неподдерживаемый тип бенефициара",
+  "dictionary": {
+    "type": "static",
+    "id": "beneficiary_types"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "id": "beneficiary_ip_resident.full_validation.pred_faddr_4_present",
+  "type": "rule",
+  "description": "Foreign address field beneficiary.tax.foreignAddress.city present",
+  "role": "predicate",
+  "operator": "not_empty",
+  "field": "beneficiary.tax.foreignAddress.city"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "beneficiary_fl_nonresident.full_validation.rule_18",
+  "type": "rule",
+  "description": "Флаг налогового резидентства США должен быть true или false",
+  "role": "check",
+  "operator": "in_dictionary",
+  "field": "beneficiary.tax.isUSTaxResident",
+  "level": "ERROR",
+  "code": "FL.TAX.US_TAX_RESIDENT.BOOL",
+  "message": "Флаг налогового резидентства США должен быть true или false",
+  "dictionary": {
+    "type": "static",
+    "id": "true_false"
+  }
+}

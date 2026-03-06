@@ -1,0 +1,12 @@
+{
+  "id": "library.common.rule_beneficiary_address_registration_locality_length",
+  "type": "rule",
+  "description": "beneficiary.address.registration.locality: длина не более 255",
+  "role": "check",
+  "operator": "length_max",
+  "field": "beneficiary.address.registration.locality",
+  "level": "ERROR",
+  "code": "BENEFICIARY_ADDRESS_REGISTRATION_LOCALITY.LENGTH",
+  "message": "Поле beneficiary.address.registration.locality не должно превышать 255 символов",
+  "value": 255
+}

@@ -1,0 +1,12 @@
+{
+  "id": "library.common.rule_beneficiary_address_registration_apartment_length",
+  "type": "rule",
+  "description": "beneficiary.address.registration.apartment: длина не более 255",
+  "role": "check",
+  "operator": "length_max",
+  "field": "beneficiary.address.registration.apartment",
+  "level": "ERROR",
+  "code": "BENEFICIARY_ADDRESS_REGISTRATION_APARTMENT.LENGTH",
+  "message": "Поле beneficiary.address.registration.apartment не должно превышать 255 символов",
+  "value": 255
+}

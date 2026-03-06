@@ -1,0 +1,11 @@
+{
+  "id": "beneficiary_ul_resident.precheck_min.rule_min_2",
+  "type": "rule",
+  "description": "MIN rule 2",
+  "role": "check",
+  "operator": "valid_inn",
+  "field": "beneficiary.inn",
+  "level": "EXCEPTION",
+  "code": "UL.INN.INVALID",
+  "message": "Некорректный ИНН юридического лица"
+}

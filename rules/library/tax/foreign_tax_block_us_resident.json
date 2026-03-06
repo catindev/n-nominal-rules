@@ -1,0 +1,15 @@
+{
+  "id": "library.tax.rule_us_resident_block",
+  "type": "rule",
+  "description": "Флаг US resident блокирует регистрацию в v1",
+  "role": "check",
+  "operator": "equals",
+  "level": "EXCEPTION",
+  "code": "BEN.TAX.US_RESIDENT.BLOCK",
+  "message": "Регистрация невозможна: бенефициар является резидентом США",
+  "field": "beneficiary.tax.isUSResident",
+  "value": false,
+  "meta": {
+    "category": "COMPLIANCE"
+  }
+}

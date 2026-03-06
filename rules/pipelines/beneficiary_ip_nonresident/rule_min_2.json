@@ -1,0 +1,11 @@
+{
+  "id": "beneficiary_ip_nonresident.precheck_min.rule_min_2",
+  "type": "rule",
+  "description": "MIN rule 2",
+  "role": "check",
+  "operator": "not_empty",
+  "field": "beneficiary.kio",
+  "level": "EXCEPTION",
+  "code": "IP.KIO.REQUIRED",
+  "message": "Для ИП-нерезидента необходимо указать КИО"
+}

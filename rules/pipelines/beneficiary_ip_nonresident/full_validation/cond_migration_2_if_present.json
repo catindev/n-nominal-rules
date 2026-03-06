@@ -1,0 +1,15 @@
+{
+  "id": "beneficiary_ip_nonresident.full_validation.cond_migration_2_if_present",
+  "type": "condition",
+  "description": "Если beneficiary.ip.migrationCard.startDate заполнено, валидируем формат",
+  "when": {
+    "all": [
+      "pred_migration_2_present"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "rule_migration_2_format"
+    }
+  ]
+}

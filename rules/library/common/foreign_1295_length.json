@@ -1,0 +1,12 @@
+{
+  "id": "library.common.rule_beneficiary_tax_foreignaddress_addressline_length",
+  "type": "rule",
+  "description": "Длина foreignAddress",
+  "role": "check",
+  "operator": "length_max",
+  "field": "beneficiary.tax.foreignAddress.addressLine",
+  "level": "ERROR",
+  "code": "BENEFICIARY_TAX_FOREIGNADDRESS_ADDRESSLINE.LENGTH",
+  "message": "Поле beneficiary.tax.foreignAddress.addressLine не должно превышать 255 символов",
+  "value": 255
+}

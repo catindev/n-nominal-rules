@@ -1,0 +1,11 @@
+{
+  "id": "beneficiary_ul_resident.full_validation.rule_5",
+  "type": "rule",
+  "description": "FULL rule 5",
+  "role": "check",
+  "operator": "not_empty",
+  "field": "beneficiary.ul.opf",
+  "level": "ERROR",
+  "code": "UL.OPF.REQUIRED.BENEFICIARY_UL_RESIDENT_FULL_VALIDATION_RULE_5",
+  "message": "Не указана организационно-правовая форма"
+}

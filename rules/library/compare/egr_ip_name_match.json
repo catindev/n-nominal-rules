@@ -1,0 +1,15 @@
+{
+  "id": "library.compare.egr_ip_name_match",
+  "type": "rule",
+  "description": "Наименование ИП в запросе и ЕГР должно совпадать",
+  "role": "check",
+  "operator": "field_equals_field",
+  "level": "EXCEPTION",
+  "code": "BEN.EGR.NAME.MISMATCH.LIBRARY_COMPARE_EGR_IP_NAME_MATCH",
+  "message": "Наименование бенефициара не совпадает с данными ЕГР",
+  "field": "beneficiary.ip.name.full",
+  "value_field": "egr.beneficiary.ip.name.full",
+  "meta": {
+    "category": "DATA"
+  }
+}

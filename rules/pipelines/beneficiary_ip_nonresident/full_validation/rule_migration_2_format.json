@@ -1,0 +1,12 @@
+{
+  "id": "beneficiary_ip_nonresident.full_validation.rule_migration_2_format",
+  "type": "rule",
+  "description": "Формат даты migration beneficiary.ip.migrationCard.startDate",
+  "role": "check",
+  "operator": "matches_regex",
+  "field": "beneficiary.ip.migrationCard.startDate",
+  "level": "ERROR",
+  "code": "BENEFICIARY_IP_MIGRATIONCARD_STARTDATE.FORMAT",
+  "message": "Поле beneficiary.ip.migrationCard.startDate должно быть в формате YYYY-MM-DD",
+  "value": "^\\d{4}-\\d{2}-\\d{2}$"
+}

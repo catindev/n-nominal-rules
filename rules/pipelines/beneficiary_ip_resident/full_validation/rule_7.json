@@ -1,0 +1,12 @@
+{
+  "id": "beneficiary_ip_resident.full_validation.rule_7",
+  "type": "rule",
+  "description": "FULL rule 7",
+  "role": "check",
+  "operator": "matches_regex",
+  "field": "beneficiary.ip.citizenship",
+  "level": "ERROR",
+  "code": "IP.CITIZENSHIP.FORMAT.BENEFICIARY_IP_RESIDENT_FULL_VALIDATION_RULE_7",
+  "message": "Гражданство ИП должно быть кодом страны ISO 3166-1 alpha-2",
+  "value": "^[A-Z]{2}$"
+}

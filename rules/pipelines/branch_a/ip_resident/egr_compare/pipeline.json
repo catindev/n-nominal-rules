@@ -1,0 +1,11 @@
+{
+  "id": "branch_a.ip_resident.egr_compare",
+  "type": "pipeline",
+  "description": "Ветка A / IP_RESIDENT / compare EGR",
+  "strict": false,
+  "flow": [
+    {
+      "pipeline": "beneficiary_ip_resident.egr_compare"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "beneficiary_ul_resident.full_validation.cond_faddr_2_if_present",
+  "type": "condition",
+  "description": "Если beneficiary.tax.foreignAddress.postalCode заполнено, валидируем формат/длину",
+  "when": {
+    "all": [
+      "pred_faddr_2_present"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "library.common.rule_beneficiary_tax_foreignaddress_postalcode_length"
+    }
+  ]
+}

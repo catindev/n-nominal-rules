@@ -1,0 +1,8 @@
+{
+  "id": "beneficiary_ul_nonresident.full_validation.pred_addr_4_present",
+  "type": "rule",
+  "description": "Адресное поле beneficiary.address.registration.regionName указано",
+  "role": "predicate",
+  "operator": "not_empty",
+  "field": "beneficiary.address.registration.regionName"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "beneficiary_fl_nonresident.full_validation.cond_addr_8_if_present",
+  "type": "condition",
+  "description": "Если beneficiary.address.registration.house заполнено, валидируем формат/длину",
+  "when": {
+    "all": [
+      "pred_addr_8_present"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "library.common.rule_beneficiary_address_registration_house_length"
+    }
+  ]
+}

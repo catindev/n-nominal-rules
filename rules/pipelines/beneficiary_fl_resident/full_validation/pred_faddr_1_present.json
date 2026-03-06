@@ -1,0 +1,8 @@
+{
+  "id": "beneficiary_fl_resident.full_validation.pred_faddr_1_present",
+  "type": "rule",
+  "description": "Адресное поле beneficiary.tax.foreignAddress.countryCode указано",
+  "role": "predicate",
+  "operator": "not_empty",
+  "field": "beneficiary.tax.foreignAddress.countryCode"
+}

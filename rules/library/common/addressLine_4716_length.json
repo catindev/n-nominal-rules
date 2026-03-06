@@ -1,0 +1,12 @@
+{
+  "id": "library.common.rule_beneficiary_address_registration_addressline_length",
+  "type": "rule",
+  "description": "beneficiary.address.registration.addressLine: длина не более 255",
+  "role": "check",
+  "operator": "length_max",
+  "field": "beneficiary.address.registration.addressLine",
+  "level": "ERROR",
+  "code": "BENEFICIARY_ADDRESS_REGISTRATION_ADDRESSLINE.LENGTH",
+  "message": "Поле beneficiary.address.registration.addressLine не должно превышать 255 символов",
+  "value": 255
+}

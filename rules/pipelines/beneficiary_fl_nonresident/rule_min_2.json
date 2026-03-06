@@ -1,0 +1,14 @@
+{
+  "id": "beneficiary_fl_nonresident.precheck_min.rule_min_2",
+  "type": "rule",
+  "description": "Фамилия обязательна",
+  "role": "check",
+  "operator": "not_empty",
+  "field": "beneficiary.fl.fio.last",
+  "level": "EXCEPTION",
+  "code": "FL.FIO.LAST.REQUIRED.BENEFICIARY_FL_NONRESIDENT_PRECHECK_MIN_RULE_MIN_2",
+  "message": "Не указана фамилия физического лица",
+  "meta": {
+    "category": "DATA"
+  }
+}

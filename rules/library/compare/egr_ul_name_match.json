@@ -1,0 +1,15 @@
+{
+  "id": "library.compare.egr_ul_name_match",
+  "type": "rule",
+  "description": "Наименование ЮЛ в запросе и ЕГР должно совпадать",
+  "role": "check",
+  "operator": "field_equals_field",
+  "level": "EXCEPTION",
+  "code": "BEN.EGR.NAME.MISMATCH.LIBRARY_COMPARE_EGR_UL_NAME_MATCH",
+  "message": "Наименование бенефициара не совпадает с данными ЕГР",
+  "field": "beneficiary.ul.name.full_ru",
+  "value_field": "egr.beneficiary.ul.name.full_ru",
+  "meta": {
+    "category": "DATA"
+  }
+}

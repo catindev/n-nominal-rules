@@ -1,0 +1,11 @@
+{
+  "id": "beneficiary_ul_resident.full_validation.rule_6",
+  "type": "rule",
+  "description": "FULL rule 6",
+  "role": "check",
+  "operator": "valid_ogrn",
+  "field": "beneficiary.ul.ogrn",
+  "level": "ERROR",
+  "code": "UL.OGRN.INVALID",
+  "message": "Некорректный ОГРН юридического лица"
+}

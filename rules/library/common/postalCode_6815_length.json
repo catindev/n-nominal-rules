@@ -1,0 +1,12 @@
+{
+  "id": "library.common.rule_beneficiary_address_registration_postalcode_length",
+  "type": "rule",
+  "description": "beneficiary.address.registration.postalCode: длина не более 20",
+  "role": "check",
+  "operator": "length_max",
+  "field": "beneficiary.address.registration.postalCode",
+  "level": "ERROR",
+  "code": "BENEFICIARY_ADDRESS_REGISTRATION_POSTALCODE.LENGTH",
+  "message": "Поле beneficiary.address.registration.postalCode не должно превышать 20 символов",
+  "value": 20
+}

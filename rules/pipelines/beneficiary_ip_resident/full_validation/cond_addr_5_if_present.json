@@ -1,0 +1,15 @@
+{
+  "id": "beneficiary_ip_resident.full_validation.cond_addr_5_if_present",
+  "type": "condition",
+  "description": "Если beneficiary.address.registration.city заполнено, валидируем формат/длину",
+  "when": {
+    "all": [
+      "pred_addr_5_present"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "library.common.rule_beneficiary_address_registration_city_length"
+    }
+  ]
+}

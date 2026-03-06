@@ -1,0 +1,11 @@
+{
+  "id": "library.common.beneficiary_type_required",
+  "type": "rule",
+  "description": "Тип бенефициара обязателен",
+  "role": "check",
+  "operator": "not_empty",
+  "level": "EXCEPTION",
+  "code": "BEN.TYPE.REQUIRED",
+  "message": "Не указан тип бенефициара",
+  "field": "beneficiary.type"
+}

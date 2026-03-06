@@ -1,0 +1,17 @@
+{
+  "id": "beneficiary_ul_resident.egr_compare",
+  "type": "pipeline",
+  "description": "Сравнение критичного набора с ЕГР для UL_RESIDENT",
+  "strict": false,
+  "flow": [
+    {
+      "rule": "library.compare.egr_type_match"
+    },
+    {
+      "rule": "library.compare.egr_inn_match"
+    },
+    {
+      "rule": "library.compare.egr_ul_name_match"
+    }
+  ]
+}

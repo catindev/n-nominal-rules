@@ -1,0 +1,14 @@
+{
+  "id": "library.tax.rule_foreign_tin_or_reason",
+  "type": "rule",
+  "description": "Нужно указать foreignTin[0] либо причину отсутствия",
+  "role": "check",
+  "operator": "any_filled",
+  "level": "ERROR",
+  "code": "BEN.TAX.FOREIGN_TIN_OR_REASON.REQUIRED",
+  "message": "Нужно указать иностранный ИНН либо код причины его отсутствия",
+  "paths": [
+    "beneficiary.tax.foreignTin[0]",
+    "beneficiary.tax.foreignTinAbsenceReason"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "id": "branch_b.fl_nonresident.full_validation",
+  "type": "pipeline",
+  "description": "Ветка B / FL_NONRESIDENT / full_validation",
+  "strict": false,
+  "flow": [
+    {
+      "pipeline": "beneficiary_fl_nonresident.full_validation"
+    }
+  ]
+}

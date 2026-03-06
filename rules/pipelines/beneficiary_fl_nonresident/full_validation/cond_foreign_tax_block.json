@@ -1,0 +1,27 @@
+{
+  "id": "beneficiary_fl_nonresident.full_validation.cond_foreign_tax_block",
+  "type": "condition",
+  "description": "Если указан foreign tax flag, требуем список стран и ИНН/причину",
+  "when": {
+    "all": [
+      "pred_foreign_tax_true"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "library.tax.rule_foreign_country0_required"
+    },
+    {
+      "rule": "library.tax.rule_foreign_country_format"
+    },
+    {
+      "rule": "library.tax.rule_foreign_tin_or_reason"
+    },
+    {
+      "rule": "library.tax.rule_foreign_tin_length"
+    },
+    {
+      "rule": "library.tax.rule_foreign_tin_absence_reason_dict"
+    }
+  ]
+}

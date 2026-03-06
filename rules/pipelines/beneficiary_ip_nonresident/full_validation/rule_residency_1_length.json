@@ -1,0 +1,12 @@
+{
+  "id": "beneficiary_ip_nonresident.full_validation.rule_residency_1_length",
+  "type": "rule",
+  "description": "Длина residency beneficiary.ip.residency.documentType",
+  "role": "check",
+  "operator": "length_max",
+  "field": "beneficiary.ip.residency.documentType",
+  "level": "ERROR",
+  "code": "BENEFICIARY_IP_RESIDENCY_DOCUMENTTYPE.LENGTH",
+  "message": "Поле beneficiary.ip.residency.documentType не должно превышать 255 символов",
+  "value": 255
+}

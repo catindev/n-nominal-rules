@@ -1,0 +1,12 @@
+{
+  "id": "library.common.rule_beneficiary_address_registration_house_length",
+  "type": "rule",
+  "description": "beneficiary.address.registration.house: длина не более 255",
+  "role": "check",
+  "operator": "length_max",
+  "field": "beneficiary.address.registration.house",
+  "level": "ERROR",
+  "code": "BENEFICIARY_ADDRESS_REGISTRATION_HOUSE.LENGTH",
+  "message": "Поле beneficiary.address.registration.house не должно превышать 255 символов",
+  "value": 255
+}

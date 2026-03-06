@@ -1,0 +1,8 @@
+{
+  "id": "beneficiary_fl_resident.full_validation.pred_addr_2_present",
+  "type": "rule",
+  "description": "Адресное поле beneficiary.address.registration.postalCode указано",
+  "role": "predicate",
+  "operator": "not_empty",
+  "field": "beneficiary.address.registration.postalCode"
+}

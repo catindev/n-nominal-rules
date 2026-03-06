@@ -1,0 +1,12 @@
+{
+  "id": "beneficiary_fl_nonresident.full_validation.rule_residency_2_length",
+  "type": "rule",
+  "description": "Проверка поля документа пребывания",
+  "role": "check",
+  "operator": "length_max",
+  "field": "beneficiary.fl.residency.series",
+  "level": "ERROR",
+  "code": "FL.RESIDENCY.SERIES.LENGTH",
+  "message": "Серия документа пребывания слишком длинная",
+  "value": 255
+}

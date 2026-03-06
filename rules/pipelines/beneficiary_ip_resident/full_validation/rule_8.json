@@ -1,0 +1,11 @@
+{
+  "id": "beneficiary_ip_resident.full_validation.rule_8",
+  "type": "rule",
+  "description": "FULL rule 8",
+  "role": "check",
+  "operator": "valid_ogrn",
+  "field": "beneficiary.ip.ogrnip",
+  "level": "ERROR",
+  "code": "IP.OGRNIP.INVALID.BENEFICIARY_IP_RESIDENT_FULL_VALIDATION_RULE_8",
+  "message": "Некорректный ОГРНИП"
+}

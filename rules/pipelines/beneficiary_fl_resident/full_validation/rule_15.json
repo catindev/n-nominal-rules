@@ -1,0 +1,12 @@
+{
+  "id": "beneficiary_fl_resident.full_validation.rule_15",
+  "type": "rule",
+  "description": "Дата выдачи документа должна быть в формате YYYY-MM-DD",
+  "role": "check",
+  "operator": "matches_regex",
+  "field": "beneficiary.fl.idDoc.issueDate",
+  "level": "ERROR",
+  "code": "FL.IDDOC.ISSUE_DATE.FORMAT.BENEFICIARY_FL_RESIDENT_FULL_VALIDATION_RULE_15",
+  "message": "Дата выдачи документа должна быть в формате YYYY-MM-DD",
+  "value": "^\\d{4}-\\d{2}-\\d{2}$"
+}

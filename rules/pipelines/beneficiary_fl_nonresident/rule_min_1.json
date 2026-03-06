@@ -1,0 +1,18 @@
+{
+  "id": "beneficiary_fl_nonresident.precheck_min.rule_min_1",
+  "type": "rule",
+  "description": "Тип поддерживается",
+  "role": "check",
+  "operator": "in_dictionary",
+  "field": "beneficiary.type",
+  "level": "EXCEPTION",
+  "code": "BEN.TYPE.UNSUPPORTED.BENEFICIARY_FL_NONRESIDENT_PRECHECK_MIN_RULE_MIN_1",
+  "message": "Неподдерживаемый тип бенефициара",
+  "dictionary": {
+    "type": "static",
+    "id": "beneficiary_types"
+  },
+  "meta": {
+    "category": "DATA"
+  }
+}

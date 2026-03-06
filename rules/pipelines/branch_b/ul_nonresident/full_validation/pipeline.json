@@ -1,0 +1,11 @@
+{
+  "id": "branch_b.ul_nonresident.full_validation",
+  "type": "pipeline",
+  "description": "Ветка B / UL_NONRESIDENT / full",
+  "strict": false,
+  "flow": [
+    {
+      "pipeline": "beneficiary_ul_nonresident.full_validation"
+    }
+  ]
+}

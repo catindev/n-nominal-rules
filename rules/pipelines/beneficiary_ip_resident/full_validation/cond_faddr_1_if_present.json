@@ -1,0 +1,15 @@
+{
+  "id": "beneficiary_ip_resident.full_validation.cond_faddr_1_if_present",
+  "type": "condition",
+  "description": "Если beneficiary.tax.foreignAddress.countryCode заполнено, валидируем формат/длину",
+  "when": {
+    "all": [
+      "pred_faddr_1_present"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "library.common.rule_beneficiary_tax_foreignaddress_countrycode_format"
+    }
+  ]
+}

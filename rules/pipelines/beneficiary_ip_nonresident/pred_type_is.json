@@ -1,0 +1,9 @@
+{
+  "id": "beneficiary_ip_nonresident.pred_type_is",
+  "type": "rule",
+  "description": "Проверка типа бенефициара для пайплайна",
+  "role": "predicate",
+  "operator": "equals",
+  "field": "beneficiary.type",
+  "value": "IP_NONRESIDENT"
+}

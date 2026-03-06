@@ -1,0 +1,11 @@
+{
+  "id": "library.common.participation_required",
+  "type": "rule",
+  "description": "Идентификатор основания участия обязателен",
+  "role": "check",
+  "operator": "not_empty",
+  "level": "ERROR",
+  "code": "BEN.PARTICIPATION_ID.REQUIRED",
+  "message": "Не указан идентификатор основания участия бенефициара",
+  "field": "beneficiary.participationId"
+}

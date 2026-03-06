@@ -1,0 +1,11 @@
+{
+  "id": "library.tax.rule_foreign_country0_required",
+  "type": "rule",
+  "description": "Нужно указать хотя бы одну страну иностранного налогового резидентства",
+  "role": "check",
+  "operator": "not_empty",
+  "level": "ERROR",
+  "code": "BEN.TAX.FOREIGN_COUNTRY.REQUIRED",
+  "message": "Не указано государство иностранного налогового резидентства",
+  "field": "beneficiary.tax.foreignCountries[0]"
+}

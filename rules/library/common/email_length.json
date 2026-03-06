@@ -1,0 +1,12 @@
+{
+  "id": "library.common.email_length",
+  "type": "rule",
+  "description": "Email не длиннее 254 символов",
+  "role": "check",
+  "operator": "length_max",
+  "level": "ERROR",
+  "code": "BEN.CONTACTS.EMAIL.LENGTH",
+  "message": "Адрес электронной почты слишком длинный",
+  "field": "beneficiary.contacts.email",
+  "value": 254
+}

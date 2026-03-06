@@ -1,0 +1,15 @@
+{
+  "id": "beneficiary_ip_nonresident.full_validation.cond_residency_or_migration",
+  "type": "condition",
+  "description": "Для ИП-нерезидента с иностранным гражданством обязателен документ пребывания или миграционная карта",
+  "when": {
+    "all": [
+      "pred_foreign_citizenship"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "rule_residency_or_migration_any"
+    }
+  ]
+}

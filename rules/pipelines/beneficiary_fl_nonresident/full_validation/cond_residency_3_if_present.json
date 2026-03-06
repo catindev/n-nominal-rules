@@ -1,0 +1,15 @@
+{
+  "id": "beneficiary_fl_nonresident.full_validation.cond_residency_3_if_present",
+  "type": "condition",
+  "description": "Если beneficiary.fl.residency.number указано, валидируем",
+  "when": {
+    "all": [
+      "pred_residency_3_present"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "rule_residency_3_length"
+    }
+  ]
+}

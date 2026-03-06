@@ -1,0 +1,11 @@
+{
+  "id": "beneficiary_ul_nonresident.full_validation.rule_1",
+  "type": "rule",
+  "description": "FULL rule 1",
+  "role": "check",
+  "operator": "not_empty",
+  "field": "beneficiary.kio",
+  "level": "ERROR",
+  "code": "UL.KIO.REQUIRED",
+  "message": "Для ЮЛ-нерезидента необходимо указать КИО"
+}
