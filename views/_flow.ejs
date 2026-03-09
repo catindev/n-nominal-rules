@@ -9,7 +9,7 @@
       var pipeIco  = subLib ? icons['pipeline-list-icon-library'] : icons['pipeline-list-icon'];
     %>
     <li class="flow-item">
-      <div class="flow-pipeline-header" data-accordion>
+      <div class="flow-pipeline-header" data-accordion data-pipeline-id="<%= step.pipelineId %>">
         <span class="flow-pipeline-icon"><%- pipeIco %></span>
         <span class="flow-pipeline-title">
           <%= sub ? (sub.description || sub.id) : step.pipelineId %>
@@ -104,31 +104,7 @@
         <% if (condSteps.length > 0) { %>
         <div class="flow-cond-section">
           <span class="flow-cond-section-label">Проверить:</span>
-          <ul class="flow-cond-rules">
-            <% condSteps.forEach(function(cs) {
-              if (cs.kind === 'rule') {
-                var ra   = compiled.registry.get(cs.ruleId);
-                var rLib2 = cs.ruleId.startsWith('library.');
-            %>
-            <li class="flow-cond-rule<%= rLib2 ? ' flow-cond-rule--library' : '' %>">
-              <span class="flow-cond-rule-icon"><%- rLib2 ? icons['rule-list-icon-library'] : icons['rule-list-icon'] %></span>
-              <a href="/rules/<%= encodeURIComponent(cs.ruleId) %>" class="flow-cond-rule-link">
-                <%= ra ? (ra.description || ra.id) : cs.ruleId %>
-              </a>
-            </li>
-            <% } else if (cs.kind === 'condition') {
-              var ca   = compiled.registry.get(cs.conditionId);
-              var cLib2 = cs.conditionId.startsWith('library.');
-            %>
-            <li class="flow-cond-rule<%= cLib2 ? ' flow-cond-rule--library' : '' %>">
-              <span class="flow-cond-rule-icon"><%- cLib2 ? icons['condition-list-icon-library'] : icons['condition-list-icon'] %></span>
-              <a href="/conditions/<%= encodeURIComponent(cs.conditionId) %>" class="flow-cond-rule-link">
-                <%= ca ? (ca.description || ca.id) : cs.conditionId %>
-              </a>
-            </li>
-            <% } %>
-            <% }) %>
-          </ul>
+          <%- include('_flow', { steps: condSteps, compiled: compiled, icons: icons, nested: true }) %>
         </div>
         <% } %>
 

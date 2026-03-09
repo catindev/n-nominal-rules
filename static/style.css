@@ -651,7 +651,7 @@ a {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  /* background: var(--bg-subtle); */
+  background: var(--bg-subtle);
 }
 
 /* Секция внутри body (when / проверки) */
@@ -708,4 +708,17 @@ a {
 }
 .flow-cond-rule--library .flow-cond-rule-link:hover {
   color: var(--purple);
+}
+
+/* ── _flow внутри flow-cond-body: убираем лишние отступы ─────────────────── */
+.flow-cond-body .flow {
+  padding-left: 0;
+}
+.flow-cond-body .flow.flow--nested {
+  /* padding-left: 1.5rem; */
+}
+
+/* Вложенное условие внутри условия — чуть меньше отступ тела */
+.flow-cond-body .flow-cond-body {
+  margin-left: 36px;
 }
