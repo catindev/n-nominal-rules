@@ -1,6 +1,6 @@
 {
-  "name": "j-nominal-rules — starter package for FL_RESIDENT",
-  "description": "Стартовый пакет правил для профиля FL_RESIDENT. Структура: entrypoints / internal pipelines / library. Пакет рассчитан как новая база для дальнейшего развития остальных профилей. Версия v3: устранены оставшиеся расхождения по ревью итерации 3, убраны дублирующие проверки foreign-tax и добавлена обратная консистентность isForeignIdDoc.",
+  "name": "Бенефициары ном. счетов (FL_RESIDENT)",
+  "description": "Пакет правил проверок заявок на регистрацию бенефициаров номинальных счетов. В этом наборе пока чтто есть только стартовый пакет правил для профиля FL_RESIDENT. Пакет рассчитан как новая база для дальнейшего развития остальных профилей",
   "operators": {
     "any_filled": {
       "description": "заполнено хотя бы одно поле из списка"
@@ -41,130 +41,130 @@
   },
   "fields": {
     "beneficiary.type": {
-      "title": "Тип бенефициара"
+      "description": "Тип бенефициара"
     },
     "beneficiary.inn": {
-      "title": "ИНН бенефициара"
+      "description": "ИНН бенефициара"
     },
     "beneficiary.participationId": {
-      "title": "Идентификатор основания участия"
+      "description": "Идентификатор основания участия"
     },
     "beneficiary.contacts.phone": {
-      "title": "Телефон"
+      "description": "Телефон"
     },
     "beneficiary.contacts.email": {
-      "title": "Email"
+      "description": "Email"
     },
     "beneficiary.contacts.phoneForeign": {
-      "title": "Иностранный телефон"
+      "description": "Иностранный телефон"
     },
     "beneficiary.status.startDate": {
-      "title": "Дата начала статуса"
+      "description": "Дата начала статуса"
     },
     "beneficiary.status.endDate": {
-      "title": "Дата окончания статуса"
+      "description": "Дата окончания статуса"
     },
     "beneficiary.fl.lastName": {
-      "title": "Фамилия"
+      "description": "Фамилия"
     },
     "beneficiary.fl.firstName": {
-      "title": "Имя"
+      "description": "Имя"
     },
     "beneficiary.fl.middleName": {
-      "title": "Отчество"
+      "description": "Отчество"
     },
     "beneficiary.fl.birthDate": {
-      "title": "Дата рождения"
+      "description": "Дата рождения"
     },
     "beneficiary.fl.birthPlace": {
-      "title": "Место рождения"
+      "description": "Место рождения"
     },
     "beneficiary.fl.citizenshipCode": {
-      "title": "Код гражданства"
+      "description": "Код гражданства"
     },
     "beneficiary.address.registration.countryCode": {
-      "title": "Страна адреса регистрации"
+      "description": "Страна адреса регистрации"
     },
     "beneficiary.address.registration.postalCode": {
-      "title": "Почтовый индекс адреса регистрации"
+      "description": "Почтовый индекс адреса регистрации"
     },
     "beneficiary.address.registration.regionCode": {
-      "title": "Код региона адреса регистрации"
+      "description": "Код региона адреса регистрации"
     },
     "beneficiary.address.registration.regionName": {
-      "title": "Регион адреса регистрации"
+      "description": "Регион адреса регистрации"
     },
     "beneficiary.address.registration.city": {
-      "title": "Город адреса регистрации"
+      "description": "Город адреса регистрации"
     },
     "beneficiary.address.registration.locality": {
-      "title": "Населённый пункт адреса регистрации"
+      "description": "Населённый пункт адреса регистрации"
     },
     "beneficiary.address.registration.street": {
-      "title": "Улица адреса регистрации"
+      "description": "Улица адреса регистрации"
     },
     "beneficiary.address.registration.house": {
-      "title": "Дом адреса регистрации"
+      "description": "Дом адреса регистрации"
     },
     "beneficiary.address.registration.building": {
-      "title": "Корпус/строение адреса регистрации"
+      "description": "Корпус/строение адреса регистрации"
     },
     "beneficiary.address.registration.apartment": {
-      "title": "Квартира/офис адреса регистрации"
+      "description": "Квартира/офис адреса регистрации"
     },
     "beneficiary.address.registration.addressLine": {
-      "title": "Адрес регистрации одной строкой"
+      "description": "Адрес регистрации одной строкой"
     },
     "beneficiary.idDoc.typeCode": {
-      "title": "Код типа документа"
+      "description": "Код типа документа"
     },
     "beneficiary.idDoc.typeName": {
-      "title": "Наименование типа документа"
+      "description": "Наименование типа документа"
     },
     "beneficiary.idDoc.series": {
-      "title": "Серия документа"
+      "description": "Серия документа"
     },
     "beneficiary.idDoc.number": {
-      "title": "Номер документа"
+      "description": "Номер документа"
     },
     "beneficiary.idDoc.issueDate": {
-      "title": "Дата выдачи документа"
+      "description": "Дата выдачи документа"
     },
     "beneficiary.idDoc.expireDate": {
-      "title": "Дата окончания действия документа"
+      "description": "Дата окончания действия документа"
     },
     "beneficiary.idDoc.issuer": {
-      "title": "Кем выдан документ"
+      "description": "Кем выдан документ"
     },
     "beneficiary.idDoc.isForeignIdDoc": {
-      "title": "Признак иностранного удостоверяющего документа"
+      "description": "Признак иностранного удостоверяющего документа"
     },
     "beneficiary.tax.usTaxResident": {
-      "title": "Признак налогового резидентства США"
+      "description": "Признак налогового резидентства США"
     },
     "beneficiary.tax.usResident": {
-      "title": "Признак резидентства США"
+      "description": "Признак резидентства США"
     },
     "beneficiary.tax.foreignTaxResident": {
-      "title": "Признак иностранного налогового резидентства"
+      "description": "Признак иностранного налогового резидентства"
     },
     "beneficiary.tax.foreignResidencies0.countryCode": {
-      "title": "Код страны иностранного налогового резидентства"
+      "description": "Код страны иностранного налогового резидентства"
     },
     "beneficiary.tax.foreignResidencies0.tin": {
-      "title": "Иностранный ИНН"
+      "description": "Иностранный ИНН"
     },
     "beneficiary.tax.foreignResidencies0.tinAbsenceReason": {
-      "title": "Причина отсутствия иностранного ИНН"
+      "description": "Причина отсутствия иностранного ИНН"
     },
     "beneficiary.idDoc.issuerCode": {
-      "title": "Код подразделения документа"
+      "description": "Код подразделения документа"
     },
     "beneficiary.contacts.postalAddress": {
-      "title": "Почтовый адрес"
+      "description": "Почтовый адрес"
     },
     "beneficiary.tax.foreignResidencies0.address": {
-      "title": "Адрес в иностранном государстве"
+      "description": "Адрес в иностранном государстве"
     }
   }
 }

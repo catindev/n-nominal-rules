@@ -1,15 +1,16 @@
 const express = require("express");
-const fs      = require("fs");
-const path    = require("path");
+const fs = require("fs");
+const path = require("path");
 
-const { createEngine }         = require("./lib");
+const { createEngine } = require("./lib");
 const { loadArtifactsFromDir } = require("./lib/loader-fs");
-const { Operators }            = require("./lib/operators");
-const { CompilationError }     = require("./lib/compiler/compilation-error");
-const mountDocs                = require("./docs-routes");
+const { Operators } = require("./lib/operators");
+const { CompilationError } = require("./lib/compiler/compilation-error");
+const mountDocs = require("./docs-routes");
+const EventEmitter = require("events");
 
 // ---- config
-const PORT  = Number(process.env.PORT || 3000);
+const PORT = Number(process.env.PORT || 3000);
 const TRACE = (process.env.TRACE || "0") === "1";
 
 // Режим определяется по NODE_ENV:
@@ -18,10 +19,10 @@ const TRACE = (process.env.TRACE || "0") === "1";
 //   production / test     — snapshot-режим: грузит SNAPSHOT_PATH.
 //                           Используется в любом деплое (прод, тест, канарейка).
 //                           Если SNAPSHOT_PATH не задан или файл не найден — падает.
-const NODE_ENV     = process.env.NODE_ENV || "development";
-const IS_DEV       = NODE_ENV === "development";
+const NODE_ENV = process.env.NODE_ENV || "development";
+const IS_DEV = NODE_ENV === "development";
 const SNAPSHOT_PATH = process.env.SNAPSHOT_PATH || null;
-const RULES_DIR     = process.env.RULES_DIR      || path.join(__dirname, "rules");
+const RULES_DIR = process.env.RULES_DIR || path.join(__dirname, "rules");
 
 // ---- hot-reload (dev-mode only) ────────────────────────────────────────────
 //
@@ -44,9 +45,12 @@ function startHotReload(engine, rulesDir, ctx) {
       const { artifacts, sources } = loadArtifactsFromDir(rulesDir);
       const compiled = engine.compile(artifacts, { sources });
       ctx.compiled = compiled;
+      ctx.emit("reload");
       console.log(`[hot-reload] OK — ${artifacts.length} artifacts loaded`);
     } catch (err) {
-      console.error(`[hot-reload] COMPILATION ERROR — keeping previous version`);
+      console.error(
+        `[hot-reload] COMPILATION ERROR — keeping previous version`,
+      );
       if (err.name === "CompilationError" && Array.isArray(err.errors)) {
         err.errors.forEach((e, i) => console.error(`  ${i + 1}. ${e}`));
       } else {
@@ -86,21 +90,23 @@ function bootstrap() {
     // Контейнер — мутабельная обёртка над compiled.
     // Все обработчики запросов читают из ctx.compiled.
     // Hot-reload меняет ctx.compiled не трогая обработчики.
-    const ctx = { compiled, rulesDir: RULES_DIR };
+    const ctx = Object.assign(new EventEmitter(), {
+      compiled,
+      rulesDir: RULES_DIR,
+    });
     startHotReload(engine, RULES_DIR, ctx);
     return { engine, ctx, meta: { mode: "development", rulesDir: RULES_DIR } };
-
   } else {
     // ── production / test: snapshot-режим ───────────────────────────────────
     if (!SNAPSHOT_PATH) {
       throw new Error(
         `[${NODE_ENV}] SNAPSHOT_PATH is required when NODE_ENV=${NODE_ENV}. ` +
-        `Set SNAPSHOT_PATH=./snapshot.json`
+          `Set SNAPSHOT_PATH=./snapshot.json`,
       );
     }
     if (!fs.existsSync(SNAPSHOT_PATH)) {
       throw new Error(
-        `[${NODE_ENV}] Snapshot file not found: ${SNAPSHOT_PATH}`
+        `[${NODE_ENV}] Snapshot file not found: ${SNAPSHOT_PATH}`,
       );
     }
 
@@ -111,21 +117,36 @@ function bootstrap() {
       throw new Error(`[${NODE_ENV}] Failed to parse snapshot: ${e.message}`);
     }
 
-    const { artifacts, version, createdAt, createdBy, description, manifest: snapshotManifest } = snapshot;
+    const {
+      artifacts,
+      version,
+      createdAt,
+      createdBy,
+      description,
+      manifest: snapshotManifest,
+    } = snapshot;
 
     if (!Array.isArray(artifacts) || artifacts.length === 0) {
-      throw new Error(`[${NODE_ENV}] Snapshot contains no artifacts: ${SNAPSHOT_PATH}`);
+      throw new Error(
+        `[${NODE_ENV}] Snapshot contains no artifacts: ${SNAPSHOT_PATH}`,
+      );
     }
 
     const compiled = engine.compile(artifacts);
     console.log(`[engine] mode     : ${NODE_ENV} (snapshot)`);
     console.log(`[engine] file     : ${SNAPSHOT_PATH}`);
-    console.log(`[engine] version  : ${version  || "n/a"}`);
-    console.log(`[engine] created  : ${createdAt || "n/a"} by ${createdBy || "n/a"}`);
+    console.log(`[engine] version  : ${version || "n/a"}`);
+    console.log(
+      `[engine] created  : ${createdAt || "n/a"} by ${createdBy || "n/a"}`,
+    );
     if (description) console.log(`[engine] desc     : ${description}`);
     console.log(`[engine] artifacts: ${artifacts.length}`);
     const ctx = { compiled, manifest: snapshotManifest || {} };
-    return { engine, ctx, meta: { mode: NODE_ENV, version, createdAt, createdBy, description } };
+    return {
+      engine,
+      ctx,
+      meta: { mode: NODE_ENV, version, createdAt, createdBy, description },
+    };
   }
 }
 
@@ -134,6 +155,14 @@ const { engine, ctx, meta } = bootstrap();
 // ---- http app
 const app = express();
 app.use(express.json({ limit: "2mb" }));
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  res.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+  if (req.method === "OPTIONS") return res.sendStatus(200);
+  next();
+});
 
 app.get("/health", (_req, res) => {
   res.json({ ok: true, ...meta });
@@ -156,25 +185,38 @@ app.post("/v1/validate", (req, res) => {
   const body = req.body ?? {};
 
   if (!body.context || typeof body.context !== "object") {
-    return res.status(400).json({ error: true, message: 'Request body must contain "context" object' });
+    return res.status(400).json({
+      error: true,
+      message: 'Request body must contain "context" object',
+    });
   }
 
-  const context    = body.context;
+  const context = body.context;
   const pipelineId = context.pipelineId;
 
   if (!pipelineId || typeof pipelineId !== "string") {
-    return res.status(400).json({ error: true, message: "context.pipelineId is required (string)" });
+    return res.status(400).json({
+      error: true,
+      message: "context.pipelineId is required (string)",
+    });
   }
 
   if (body.payload !== undefined && typeof body.payload !== "object") {
-    return res.status(400).json({ error: true, message: '"payload" must be an object if provided' });
+    return res.status(400).json({
+      error: true,
+      message: '"payload" must be an object if provided',
+    });
   }
 
-  const payload         = body.payload ?? {};
+  const payload = body.payload ?? {};
   const enrichedPayload = Object.assign({}, payload, { __context: context });
 
   try {
-    const result   = engine.runPipeline(ctx.compiled, pipelineId, enrichedPayload);
+    const result = engine.runPipeline(
+      ctx.compiled,
+      pipelineId,
+      enrichedPayload,
+    );
     const response = Object.assign({ context }, result);
 
     if (!TRACE && response.trace) {
@@ -183,18 +225,21 @@ app.post("/v1/validate", (req, res) => {
     }
     return res.json(response);
   } catch (err) {
-    return res.status(500).json({ error: true, message: err?.message || String(err), pipelineId });
+    return res
+      .status(500)
+      .json({ error: true, message: err?.message || String(err), pipelineId });
   }
 });
 
-
 // ── Documentation UI (dev-mode only) ─────────────────────────────────────
 // Документация: в dev всегда, в prod — если DOCS_ENABLED=true
-const DOCS_ENABLED = IS_DEV || process.env.DOCS_ENABLED === 'true';
+const DOCS_ENABLED = IS_DEV || process.env.DOCS_ENABLED === "true";
 if (DOCS_ENABLED) mountDocs(app, ctx);
 
 app.listen(PORT, () => {
   console.log(`[rules-engine] listening on http://localhost:${PORT}`);
   console.log(`[rules-engine] endpoint: POST /v1/validate`);
-  console.log(`[rules-engine] trace: ${TRACE ? "on" : "off"} (set TRACE=1 to include trace)`);
+  console.log(
+    `[rules-engine] trace: ${TRACE ? "on" : "off"} (set TRACE=1 to include trace)`,
+  );
 });

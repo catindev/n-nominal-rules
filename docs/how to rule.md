@@ -89,6 +89,8 @@ Predicate - это правило, которое возвращает true ил
 
 У predicate нет `level`, `code`, `message`.
 
+Доступные операторы для predicate: `equals`, `not_equals`, `not_empty`, `is_empty`, `matches_regex`, `in_dictionary`, `contains`, `greater_than`, `less_than`, `field_equals_field`, `field_not_equals_field`.
+
 # 7. Condition (условная логика)
 
 Condition выполняет `steps` только если `when` выполняется.
@@ -109,8 +111,9 @@ Condition выполняет `steps` только если `when` выполня
 `when` может быть:
 
 ```json
-{ "all": ["pred1", "pred2"] }
-{ "any": ["pred1", "pred2"] }
+"pred_name"                          // одиночный predicate
+{ "all": ["pred1", "pred2"] }        // все должны быть true
+{ "any": ["pred1", "pred2"] }        // хотя бы один true
 ```
 
 # 8. Pipeline (сценарий проверки)
@@ -122,6 +125,7 @@ Pipeline - это список шагов с проверками (сценар�
   "id": "check_ul",
   "type": "pipeline",
   "description": "Проверить юрлицо",
+  "entrypoint": false,
   "strict": false,
   "flow": [
     { "rule": "rule_inn_required" },
@@ -129,6 +133,15 @@ Pipeline - это список шагов с проверками (сценар�
   ]
 }
 ```
+
+Поле `entrypoint` **обязательно** для каждого pipeline:
+
+| Значение | Смысл |
+|---|---|
+| `true` | Публичный сценарий — вызывается через API (`context.pipelineId`) |
+| `false` | Внутренний блок — вызывается только из других pipeline через `{ "pipeline": "..." }` |
+
+Компилятор отклоняет pipeline без явного `entrypoint` с ошибкой `entrypoint must be explicitly set to true|false`.
 
 # 9. Strict-режим (строгий пайплайн)
 
@@ -159,7 +172,7 @@ Strict-режим - это способ сгруппировать провер�
 Что это означает:
 
 1. Внутри выполняются обычные правила (с level = ERROR)
-2. Если внутри есть хотя бы одна ERROR, то движок автоматически создает EXCEPTION на уровне пайплайна
+2. Если внутри есть хотя бы одна ERROR **или EXCEPTION**, движок автоматически создаёт итоговый EXCEPTION на уровне пайплайна
 3. Статус выполнения становится `EXCEPTION`
 4. Возвращается `code` и `message` пайплайна
 
@@ -193,13 +206,11 @@ rules/library/inn/checksum.json
 
 ```
 rules/
-  pipeline/
+  pipelines/
     pipeline_id/
       pipeline.json
-      rules/
-      conditions/
   library/
-  dictionary/
+  dictionaries/
 ```
 
 # 12. Как писать новую валидацию (пошагово)

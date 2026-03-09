@@ -160,10 +160,16 @@ checkout.items[*].qty
 |---|---|
 | PASS | правило считается пройденным (по умолчанию для check) |
 | FAIL | правило считается проваленным |
-| TRUE | predicate = TRUE (по умолчанию для predicate) |
-| FALSE | predicate = FALSE |
+| TRUE | predicate = TRUE |
+| FALSE | predicate = FALSE (по умолчанию для predicate) |
 | UNDEFINED | результат неопределён |
 | ERROR | генерируется ошибка выполнения |
+
+> **Важно для predicate:** если `onEmpty` не задан явно, wildcard-predicate при отсутствии совпадений возвращает `FALSE`. Это означает, что condition с таким predicate **не активируется**. Если пустой массив должен трактоваться как истинный (например, «если иностранных налоговых резидентств нет — проверку не запускать»), укажите явно:
+>
+> ```json
+> "aggregate": { "onEmpty": "TRUE" }
+> ```
 
 ---
 
