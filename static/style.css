@@ -598,3 +598,114 @@ a {
   font-style: italic;
   margin-left: 2px;
 }
+
+/* ── Inline condition expansion in flow ──────────────────────────────────── */
+
+/* Элемент-условие занимает чуть больше вертикального пространства */
+.flow-item--condition {
+  margin-bottom: 4px;
+}
+
+/* Заголовок условия — как flow-leaf но без border-bottom (он у body) */
+.flow-cond-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.5rem 0 0.4rem;
+  text-decoration: none;
+}
+.flow-cond-header .flow-leaf-title {
+  font-size: 1rem;
+  flex: 1;
+  transition: color 0.15s;
+}
+.flow-cond-header:hover .flow-leaf-title {
+  color: var(--teal);
+  text-decoration: underline;
+  text-decoration-color: var(--teal);
+}
+.flow-leaf--library.flow-cond-header:hover .flow-leaf-title {
+  color: var(--purple);
+  text-decoration-color: var(--purple);
+}
+
+/* иконка «открыть страницу условия» */
+.flow-cond-link-icon {
+  width: 14px;
+  height: 14px;
+  color: var(--text-muted);
+  opacity: 0;
+  flex-shrink: 0;
+  transition: opacity 0.15s;
+}
+.flow-cond-header:hover .flow-cond-link-icon {
+  opacity: 1;
+}
+
+/* Тело с пунктирной рамкой — как на макете */
+.flow-cond-body {
+  margin: 0 0 10px 42px; /* 42px = icon(32) + gap(10) */
+  border: 1.5px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  /* background: var(--bg-subtle); */
+}
+
+/* Секция внутри body (when / проверки) */
+.flow-cond-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.flow-cond-section-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+/* Список правил */
+.flow-cond-rules {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.flow-cond-rule {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9375rem;
+}
+.flow-cond-rule:last-child {
+  border-bottom: none;
+}
+.flow-cond-rule-icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+.flow-cond-rule-link {
+  color: var(--text);
+  text-decoration: none;
+  transition: color 0.15s;
+  flex: 1;
+}
+.flow-cond-rule-link:hover {
+  color: var(--teal);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.flow-cond-rule--library .flow-cond-rule-link {
+  color: var(--text-muted);
+}
+.flow-cond-rule--library .flow-cond-rule-link:hover {
+  color: var(--purple);
+}
