@@ -1,8 +1,0 @@
-{
-  "id": "beneficiary_ul_resident.full_validation.pred_addr_10_present",
-  "type": "rule",
-  "description": "Адресное поле beneficiary.address.registration.apartment указано",
-  "role": "predicate",
-  "operator": "not_empty",
-  "field": "beneficiary.address.registration.apartment"
-}

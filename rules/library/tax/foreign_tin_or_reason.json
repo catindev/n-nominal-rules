@@ -1,14 +1,18 @@
 {
-  "id": "library.tax.rule_foreign_tin_or_reason",
+  "id": "library.tax.foreign_tin_or_reason",
   "type": "rule",
-  "description": "Нужно указать foreignTin[0] либо причину отсутствия",
+  "description": "Должен быть указан иностранный ИНН или причина его отсутствия",
   "role": "check",
   "operator": "any_filled",
-  "level": "ERROR",
-  "code": "BEN.TAX.FOREIGN_TIN_OR_REASON.REQUIRED",
-  "message": "Нужно указать иностранный ИНН либо код причины его отсутствия",
+  "level": "EXCEPTION",
+  "code": "BEN.TAX.FOREIGN_TIN.OR_REASON",
+  "message": "Укажите beneficiary.tax.foreignResidencies0.tin или beneficiary.tax.foreignResidencies0.tinAbsenceReason",
+  "fields": [
+    "beneficiary.tax.foreignResidencies0.tin",
+    "beneficiary.tax.foreignResidencies0.tinAbsenceReason"
+  ],
   "paths": [
-    "beneficiary.tax.foreignTin[0]",
-    "beneficiary.tax.foreignTinAbsenceReason"
+    "beneficiary.tax.foreignResidencies0.tin",
+    "beneficiary.tax.foreignResidencies0.tinAbsenceReason"
   ]
 }

@@ -1,8 +1,0 @@
-{
-  "id": "beneficiary_fl_nonresident.full_validation.pred_faddr_4_present",
-  "type": "rule",
-  "description": "Адресное поле beneficiary.tax.foreignAddress.city указано",
-  "role": "predicate",
-  "operator": "not_empty",
-  "field": "beneficiary.tax.foreignAddress.city"
-}

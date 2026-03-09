@@ -1,0 +1,11 @@
+{
+  "id": "library.fl.citizenship_required",
+  "type": "rule",
+  "description": "Код гражданства должен быть заполнен",
+  "role": "check",
+  "operator": "not_empty",
+  "level": "EXCEPTION",
+  "code": "FL.CITIZENSHIP.REQUIRED",
+  "message": "Необходимо заполнить код гражданства",
+  "field": "beneficiary.fl.citizenshipCode"
+}

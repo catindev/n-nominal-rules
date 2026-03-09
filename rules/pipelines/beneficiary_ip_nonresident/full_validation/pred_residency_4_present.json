@@ -1,8 +1,0 @@
-{
-  "id": "beneficiary_ip_nonresident.full_validation.pred_residency_4_present",
-  "type": "rule",
-  "description": "Поле residency beneficiary.ip.residency.permitStartDate указано",
-  "role": "predicate",
-  "operator": "not_empty",
-  "field": "beneficiary.ip.residency.permitStartDate"
-}

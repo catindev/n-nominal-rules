@@ -1,0 +1,15 @@
+{
+  "id": "library.documents.type_code_in_dictionary",
+  "type": "rule",
+  "description": "Код типа документа должен входить в допустимый справочник",
+  "role": "check",
+  "operator": "in_dictionary",
+  "level": "ERROR",
+  "code": "BEN.IDDOC.TYPE_CODE.DICT",
+  "message": "Код типа документа должен входить в допустимый классификатор",
+  "field": "beneficiary.idDoc.typeCode",
+  "dictionary": {
+    "type": "static",
+    "id": "document_type_codes_fl"
+  }
+}

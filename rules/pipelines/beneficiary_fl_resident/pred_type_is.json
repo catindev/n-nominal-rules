@@ -1,9 +1,0 @@
-{
-  "id": "beneficiary_fl_resident.pred_type_is",
-  "type": "rule",
-  "description": "Проверка типа FL_RESIDENT",
-  "role": "predicate",
-  "operator": "equals",
-  "field": "beneficiary.type",
-  "value": "FL_RESIDENT"
-}

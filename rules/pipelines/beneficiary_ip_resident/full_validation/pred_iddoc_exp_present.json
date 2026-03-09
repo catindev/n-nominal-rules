@@ -1,8 +1,0 @@
-{
-  "id": "beneficiary_ip_resident.full_validation.pred_iddoc_exp_present",
-  "type": "rule",
-  "description": "Есть дата окончания документа",
-  "role": "predicate",
-  "operator": "not_empty",
-  "field": "beneficiary.ip.idDoc.expireDate"
-}

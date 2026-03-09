@@ -1,0 +1,15 @@
+{
+  "id": "library.fl.cond_inn_if_present",
+  "type": "condition",
+  "description": "Если ИНН указан, проверяем контрольные разряды",
+  "when": {
+    "all": [
+      "library.fl.pred_inn_present"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "library.fl.inn_valid"
+    }
+  ]
+}

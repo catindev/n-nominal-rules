@@ -1,8 +1,0 @@
-{
-  "id": "library.common.pred_beneficiary_address_registration_addressline_present",
-  "type": "rule",
-  "description": "Поле beneficiary.address.registration.addressLine указано",
-  "role": "predicate",
-  "operator": "not_empty",
-  "field": "beneficiary.address.registration.addressLine"
-}

@@ -1,0 +1,12 @@
+{
+  "id": "library.documents.number_passport_rf_format",
+  "type": "rule",
+  "description": "Номер паспорта РФ должен содержать ровно 6 цифр и не быть 000000",
+  "role": "check",
+  "operator": "matches_regex",
+  "level": "ERROR",
+  "code": "BEN.IDDOC.NUMBER.PASSPORT_RF.FORMAT",
+  "message": "Номер паспорта РФ должен содержать ровно 6 цифр и не может быть 000000",
+  "field": "beneficiary.idDoc.number",
+  "value": "^(?!000000)\\d{6}$"
+}

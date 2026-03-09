@@ -1,9 +1,0 @@
-{
-  "id": "beneficiary_fl_nonresident.full_validation.pred_foreign_tax_true",
-  "type": "rule",
-  "description": "Есть иностранное налоговое резидентство",
-  "role": "predicate",
-  "operator": "equals",
-  "field": "beneficiary.tax.foreign_tax_resident",
-  "value": true
-}

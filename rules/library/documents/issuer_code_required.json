@@ -1,0 +1,11 @@
+{
+  "id": "library.documents.issuer_code_required",
+  "type": "rule",
+  "description": "Код подразделения должен быть заполнен",
+  "role": "check",
+  "operator": "not_empty",
+  "level": "ERROR",
+  "code": "BEN.IDDOC.ISSUER_CODE.REQUIRED",
+  "message": "Необходимо заполнить код подразделения документа",
+  "field": "beneficiary.idDoc.issuerCode"
+}

@@ -1,0 +1,12 @@
+{
+  "id": "library.fl.first_name_length_max",
+  "type": "rule",
+  "description": "Имя не должно превышать 100 символов",
+  "role": "check",
+  "operator": "length_max",
+  "level": "ERROR",
+  "code": "FL.FIRST_NAME.LENGTH_MAX",
+  "message": "Имя не должно превышать 100 символов",
+  "field": "beneficiary.fl.firstName",
+  "value": 100
+}

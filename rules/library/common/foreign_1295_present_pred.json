@@ -1,8 +1,0 @@
-{
-  "id": "library.common.pred_beneficiary_tax_foreignaddress_addressline_present",
-  "type": "rule",
-  "description": "Поле beneficiary.tax.foreignAddress.addressLine указано",
-  "role": "predicate",
-  "operator": "not_empty",
-  "field": "beneficiary.tax.foreignAddress.addressLine"
-}

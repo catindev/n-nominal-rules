@@ -1,0 +1,12 @@
+{
+  "id": "library.documents.issue_date_gt_birth_date",
+  "type": "rule",
+  "description": "Дата выдачи документа должна быть позже даты рождения",
+  "role": "check",
+  "operator": "field_greater_than_field",
+  "level": "ERROR",
+  "code": "BEN.IDDOC.ISSUE_DATE.GT_BIRTH_DATE",
+  "message": "Дата выдачи документа должна быть позже даты рождения",
+  "field": "beneficiary.idDoc.issueDate",
+  "value_field": "beneficiary.fl.birthDate"
+}

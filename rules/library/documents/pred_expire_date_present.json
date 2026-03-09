@@ -1,0 +1,8 @@
+{
+  "id": "library.documents.pred_expire_date_present",
+  "type": "rule",
+  "description": "Дата окончания действия документа передана",
+  "role": "predicate",
+  "operator": "not_empty",
+  "field": "beneficiary.idDoc.expireDate"
+}

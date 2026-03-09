@@ -1,0 +1,27 @@
+{
+  "id": "library.documents.cond_passport_rf_fields",
+  "type": "condition",
+  "description": "Если тип документа — паспорт РФ, проверяем паспортные поля и код подразделения",
+  "when": {
+    "all": [
+      "library.documents.pred_type_code_passport_rf"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "library.documents.series_required"
+    },
+    {
+      "rule": "library.documents.series_passport_rf_format"
+    },
+    {
+      "rule": "library.documents.number_passport_rf_format"
+    },
+    {
+      "rule": "library.documents.issuer_code_required"
+    },
+    {
+      "rule": "library.documents.issuer_code_format"
+    }
+  ]
+}

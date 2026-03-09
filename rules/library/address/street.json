@@ -1,0 +1,12 @@
+{
+  "id": "library.address.street",
+  "type": "rule",
+  "description": "Проверка поля beneficiary.address.registration.street",
+  "role": "check",
+  "operator": "length_max",
+  "level": "ERROR",
+  "code": "BEN.ADDR.REG.STREET.LENGTH",
+  "message": "Улица адреса регистрации слишком длинная",
+  "field": "beneficiary.address.registration.street",
+  "value": 255
+}

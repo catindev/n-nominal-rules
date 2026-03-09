@@ -1,0 +1,18 @@
+{
+  "id": "library.common.cond_email_if_present",
+  "type": "condition",
+  "description": "Если email указан, проверяем формат и длину",
+  "when": {
+    "all": [
+      "library.common.pred_email_present"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "library.common.email_format"
+    },
+    {
+      "rule": "library.common.email_length"
+    }
+  ]
+}

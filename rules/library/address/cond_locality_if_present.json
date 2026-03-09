@@ -1,0 +1,15 @@
+{
+  "id": "library.address.cond_locality_if_present",
+  "type": "condition",
+  "description": "Если beneficiary.address.registration.locality заполнено, проверяем формат/длину",
+  "when": {
+    "all": [
+      "library.address.pred_locality_present"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "library.address.locality"
+    }
+  ]
+}

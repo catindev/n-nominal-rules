@@ -1,0 +1,12 @@
+{
+  "id": "library.documents.expire_date_format",
+  "type": "rule",
+  "description": "Дата окончания действия документа должна быть в формате YYYY-MM-DD",
+  "role": "check",
+  "operator": "matches_regex",
+  "level": "ERROR",
+  "code": "BEN.IDDOC.EXPIRE_DATE.FORMAT",
+  "message": "Дата окончания действия документа должна быть в формате YYYY-MM-DD",
+  "field": "beneficiary.idDoc.expireDate",
+  "value": "^\\d{4}-\\d{2}-\\d{2}$"
+}

@@ -1,0 +1,11 @@
+{
+  "id": "library.fl.inn_required",
+  "type": "rule",
+  "description": "ИНН физического лица-резидента обязателен",
+  "role": "check",
+  "operator": "not_empty",
+  "level": "ERROR",
+  "code": "FL.INN.REQUIRED",
+  "message": "Не указан ИНН физического лица",
+  "field": "beneficiary.inn"
+}

@@ -1,0 +1,11 @@
+{
+  "id": "library.documents.issue_date_required",
+  "type": "rule",
+  "description": "Дата выдачи документа обязательна",
+  "role": "check",
+  "operator": "not_empty",
+  "level": "ERROR",
+  "code": "BEN.IDDOC.ISSUE_DATE.REQUIRED",
+  "message": "Не указана дата выдачи документа",
+  "field": "beneficiary.idDoc.issueDate"
+}

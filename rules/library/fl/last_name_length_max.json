@@ -1,0 +1,12 @@
+{
+  "id": "library.fl.last_name_length_max",
+  "type": "rule",
+  "description": "Фамилия не должна превышать 100 символов",
+  "role": "check",
+  "operator": "length_max",
+  "level": "ERROR",
+  "code": "FL.LAST_NAME.LENGTH_MAX",
+  "message": "Фамилия не должна превышать 100 символов",
+  "field": "beneficiary.fl.lastName",
+  "value": 100
+}

@@ -1,0 +1,15 @@
+{
+  "id": "library.address.cond_apartment_if_present",
+  "type": "condition",
+  "description": "Если beneficiary.address.registration.apartment заполнено, проверяем формат/длину",
+  "when": {
+    "all": [
+      "library.address.pred_apartment_present"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "library.address.apartment"
+    }
+  ]
+}

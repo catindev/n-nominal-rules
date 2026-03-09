@@ -1,8 +1,0 @@
-{
-  "id": "beneficiary_ul_nonresident.full_validation.pred_faddr_3_present",
-  "type": "rule",
-  "description": "Foreign address field beneficiary.tax.foreignAddress.regionName present",
-  "role": "predicate",
-  "operator": "not_empty",
-  "field": "beneficiary.tax.foreignAddress.regionName"
-}

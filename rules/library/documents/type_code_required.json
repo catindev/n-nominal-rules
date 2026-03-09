@@ -1,0 +1,11 @@
+{
+  "id": "library.documents.type_code_required",
+  "type": "rule",
+  "description": "Код типа документа обязателен",
+  "role": "check",
+  "operator": "not_empty",
+  "level": "ERROR",
+  "code": "BEN.IDDOC.TYPE_CODE.REQUIRED",
+  "message": "Не указан код типа документа",
+  "field": "beneficiary.idDoc.typeCode"
+}

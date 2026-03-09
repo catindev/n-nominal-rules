@@ -1,8 +1,0 @@
-{
-  "id": "beneficiary_fl_nonresident.full_validation.pred_addr_11_present",
-  "type": "rule",
-  "description": "Адресное поле beneficiary.address.registration.addressLine указано",
-  "role": "predicate",
-  "operator": "not_empty",
-  "field": "beneficiary.address.registration.addressLine"
-}

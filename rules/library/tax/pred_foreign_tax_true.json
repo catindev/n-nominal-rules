@@ -1,0 +1,9 @@
+{
+  "id": "library.tax.pred_foreign_tax_true",
+  "type": "rule",
+  "description": "Указано иностранное налоговое резидентство",
+  "role": "predicate",
+  "operator": "equals",
+  "field": "beneficiary.tax.foreignTaxResident",
+  "value": true
+}

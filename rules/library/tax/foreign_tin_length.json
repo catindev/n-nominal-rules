@@ -1,0 +1,12 @@
+{
+  "id": "library.tax.foreign_tin_length",
+  "type": "rule",
+  "description": "Иностранный ИНН не должен быть длиннее 64 символов",
+  "role": "check",
+  "operator": "length_max",
+  "level": "ERROR",
+  "code": "BEN.TAX.FOREIGN_TIN.LENGTH",
+  "message": "Иностранный ИНН слишком длинный",
+  "field": "beneficiary.tax.foreignResidencies0.tin",
+  "value": 64
+}

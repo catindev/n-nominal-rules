@@ -1,0 +1,18 @@
+{
+  "id": "library.fl.precheck_identity_any",
+  "type": "rule",
+  "description": "Для FL_RESIDENT должен быть указан хотя бы один идентификатор: inn или beneficiary.idDoc.number",
+  "role": "check",
+  "operator": "any_filled",
+  "level": "EXCEPTION",
+  "code": "FL.IDENTITY.MIN.ONE",
+  "message": "Для FL_RESIDENT должен быть указан inn или beneficiary.idDoc.number",
+  "fields": [
+    "beneficiary.inn",
+    "beneficiary.idDoc.number"
+  ],
+  "paths": [
+    "beneficiary.inn",
+    "beneficiary.idDoc.number"
+  ]
+}

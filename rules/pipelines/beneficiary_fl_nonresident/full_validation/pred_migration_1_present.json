@@ -1,8 +1,0 @@
-{
-  "id": "beneficiary_fl_nonresident.full_validation.pred_migration_1_present",
-  "type": "rule",
-  "description": "Поле beneficiary.fl.migrationCard.number указано",
-  "role": "predicate",
-  "operator": "not_empty",
-  "field": "beneficiary.fl.migrationCard.number"
-}

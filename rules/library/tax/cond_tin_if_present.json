@@ -1,0 +1,15 @@
+{
+  "id": "library.tax.cond_tin_if_present",
+  "type": "condition",
+  "description": "Если иностранный ИНН указан, проверяем длину",
+  "when": {
+    "all": [
+      "library.tax.pred_tin_present"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "library.tax.foreign_tin_length"
+    }
+  ]
+}

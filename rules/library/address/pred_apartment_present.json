@@ -1,0 +1,8 @@
+{
+  "id": "library.address.pred_apartment_present",
+  "type": "rule",
+  "description": "Поле beneficiary.address.registration.apartment заполнено",
+  "role": "predicate",
+  "operator": "not_empty",
+  "field": "beneficiary.address.registration.apartment"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "library.address.cond_city_if_present",
+  "type": "condition",
+  "description": "Если beneficiary.address.registration.city заполнено, проверяем формат/длину",
+  "when": {
+    "all": [
+      "library.address.pred_city_present"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "library.address.city"
+    }
+  ]
+}

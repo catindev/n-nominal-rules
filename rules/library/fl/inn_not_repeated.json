@@ -1,0 +1,12 @@
+{
+  "id": "library.fl.inn_not_repeated",
+  "type": "rule",
+  "description": "ИНН ФЛ не должен состоять из одинаковых цифр или нулей",
+  "role": "check",
+  "operator": "matches_regex",
+  "level": "ERROR",
+  "code": "FL.INN.NOT_REPEATED",
+  "message": "ИНН ФЛ не должен состоять из одинаковых цифр или нулей",
+  "field": "beneficiary.inn",
+  "value": "^(?!([0-9])\\1{11}$)\\d{12}$"
+}

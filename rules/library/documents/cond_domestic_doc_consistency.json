@@ -1,0 +1,15 @@
+{
+  "id": "library.documents.cond_domestic_doc_consistency",
+  "type": "condition",
+  "description": "Если код документа относится к отечественной группе, проверяем признак иностранного документа",
+  "when": {
+    "all": [
+      "library.documents.pred_type_code_domestic_group"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "library.documents.rule_is_foreign_false"
+    }
+  ]
+}

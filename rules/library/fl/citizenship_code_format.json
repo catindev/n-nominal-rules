@@ -1,0 +1,12 @@
+{
+  "id": "library.fl.citizenship_code_format",
+  "type": "rule",
+  "description": "Код гражданства должен быть двухбуквенным кодом страны",
+  "role": "check",
+  "operator": "matches_regex",
+  "level": "ERROR",
+  "code": "FL.CITIZENSHIP_CODE.FORMAT",
+  "message": "Код гражданства должен быть в формате ISO 3166-1 alpha-2",
+  "field": "beneficiary.fl.citizenshipCode",
+  "value": "^[A-Z]{2}$"
+}

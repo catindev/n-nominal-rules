@@ -1,9 +1,0 @@
-{
-  "id": "beneficiary_ip_nonresident.full_validation.pred_foreign_citizenship",
-  "type": "rule",
-  "description": "Гражданство не РФ",
-  "role": "predicate",
-  "operator": "not_equals",
-  "field": "beneficiary.ip.citizenship",
-  "value": "RU"
-}

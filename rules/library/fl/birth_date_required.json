@@ -1,0 +1,11 @@
+{
+  "id": "library.fl.birth_date_required",
+  "type": "rule",
+  "description": "Дата рождения обязательна",
+  "role": "check",
+  "operator": "not_empty",
+  "level": "ERROR",
+  "code": "FL.BIRTH_DATE.REQUIRED",
+  "message": "Не указана дата рождения физического лица",
+  "field": "beneficiary.fl.birthDate"
+}

@@ -1,0 +1,11 @@
+{
+  "id": "library.fl.last_name_required",
+  "type": "rule",
+  "description": "Фамилия обязательна",
+  "role": "check",
+  "operator": "not_empty",
+  "level": "ERROR",
+  "code": "FL.LAST_NAME.REQUIRED",
+  "message": "Не указана фамилия физического лица",
+  "field": "beneficiary.fl.lastName"
+}

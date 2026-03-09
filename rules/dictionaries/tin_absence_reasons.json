@@ -1,7 +1,7 @@
 {
   "id": "tin_absence_reasons",
   "type": "dictionary",
-  "description": "Коды причин отсутствия иностранного ИНН",
+  "description": "Причины отсутствия иностранного ИНН",
   "entries": [
     "A",
     "B",

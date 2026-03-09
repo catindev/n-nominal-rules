@@ -1,0 +1,12 @@
+{
+  "id": "library.fl.last_name_letters_hyphen",
+  "type": "rule",
+  "description": "Фамилия должна содержать только буквы, пробелы и дефис",
+  "role": "check",
+  "operator": "matches_regex",
+  "level": "ERROR",
+  "code": "FL.LAST_NAME.FORMAT",
+  "message": "Допустимы буквы, пробел и дефис; начальные и конечные пробелы не допускаются",
+  "field": "beneficiary.fl.lastName",
+  "value": "^[A-Za-zА-Яа-яЁё](?:[A-Za-zА-Яа-яЁё -]*[A-Za-zА-Яа-яЁё])?$"
+}

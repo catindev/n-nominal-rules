@@ -1,0 +1,15 @@
+{
+  "id": "library.address.cond_region_code_if_present",
+  "type": "condition",
+  "description": "Если beneficiary.address.registration.regionCode заполнено, проверяем формат/длину",
+  "when": {
+    "all": [
+      "library.address.pred_region_code_present"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "library.address.region_code"
+    }
+  ]
+}

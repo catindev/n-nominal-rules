@@ -1,0 +1,15 @@
+{
+  "id": "library.common.cond_phone_if_present",
+  "type": "condition",
+  "description": "Если телефон указан, проверяем формат",
+  "when": {
+    "all": [
+      "library.common.pred_phone_present"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "library.common.phone_e164"
+    }
+  ]
+}

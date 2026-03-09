@@ -1,0 +1,11 @@
+{
+  "id": "library.documents.type_name_required",
+  "type": "rule",
+  "description": "Наименование типа документа обязательно",
+  "role": "check",
+  "operator": "not_empty",
+  "level": "ERROR",
+  "code": "BEN.IDDOC.TYPE_NAME.REQUIRED",
+  "message": "Не указано наименование типа документа",
+  "field": "beneficiary.idDoc.typeName"
+}

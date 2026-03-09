@@ -1,0 +1,12 @@
+{
+  "id": "library.fl.birth_date_format",
+  "type": "rule",
+  "description": "Дата рождения должна быть в формате YYYY-MM-DD",
+  "role": "check",
+  "operator": "matches_regex",
+  "level": "ERROR",
+  "code": "FL.BIRTH_DATE.FORMAT",
+  "message": "Дата рождения должна быть в формате YYYY-MM-DD",
+  "field": "beneficiary.fl.birthDate",
+  "value": "^\\d{4}-\\d{2}-\\d{2}$"
+}

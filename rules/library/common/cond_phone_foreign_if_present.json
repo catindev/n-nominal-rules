@@ -1,0 +1,15 @@
+{
+  "id": "library.common.cond_phone_foreign_if_present",
+  "type": "condition",
+  "description": "Если иностранный телефон указан, проверяем формат",
+  "when": {
+    "all": [
+      "library.common.pred_phone_foreign_present"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "library.common.phone_foreign_e164"
+    }
+  ]
+}

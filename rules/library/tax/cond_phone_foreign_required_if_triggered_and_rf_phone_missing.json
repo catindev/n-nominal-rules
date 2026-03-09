@@ -1,0 +1,16 @@
+{
+  "id": "library.tax.cond_phone_foreign_required_if_triggered_and_rf_phone_missing",
+  "type": "condition",
+  "description": "Если foreignTaxResident=true и отсутствует телефон РФ, требуем иностранный телефон",
+  "when": {
+    "all": [
+      "library.tax.pred_phone_missing",
+      "library.tax.pred_foreign_tax_true"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "library.tax.phone_foreign_required"
+    }
+  ]
+}

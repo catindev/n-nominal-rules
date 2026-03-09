@@ -1,0 +1,63 @@
+{
+  "id": "internal.blocks.fl.identity_core",
+  "type": "pipeline",
+  "description": "Базовые персональные данные FL_RESIDENT (v2)",
+  "strict": false,
+  "flow": [
+    {
+      "rule": "library.fl.inn_required"
+    },
+    {
+      "rule": "library.fl.inn_length_12"
+    },
+    {
+      "rule": "library.fl.inn_not_repeated"
+    },
+    {
+      "rule": "library.fl.inn_valid"
+    },
+    {
+      "rule": "library.fl.last_name_required"
+    },
+    {
+      "rule": "library.fl.last_name_length_max"
+    },
+    {
+      "rule": "library.fl.last_name_letters_hyphen"
+    },
+    {
+      "rule": "library.fl.first_name_required"
+    },
+    {
+      "rule": "library.fl.first_name_length_max"
+    },
+    {
+      "rule": "library.fl.first_name_letters_hyphen"
+    },
+    {
+      "condition": "library.fl.cond_middle_name_if_present"
+    },
+    {
+      "rule": "library.fl.birth_date_required"
+    },
+    {
+      "rule": "library.fl.birth_date_format"
+    },
+    {
+      "rule": "library.fl.birth_place_required"
+    },
+    {
+      "rule": "library.fl.birth_place_not_usa"
+    },
+    {
+      "rule": "library.fl.citizenship_required"
+    },
+    {
+      "rule": "library.fl.citizenship_code_format"
+    },
+    {
+      "rule": "library.fl.citizenship_not_us"
+    }
+  ],
+  "entrypoint": false
+}

@@ -5,7 +5,7 @@
   "role": "check",
   "operator": "not_empty",
   "level": "ERROR",
-  "code": "BEN.STATUS.START_DATE.REQUIRED",
-  "message": "Не указана дата начала статуса бенефициара",
+  "code": "BEN.STATUS.START.REQUIRED",
+  "message": "Не указана beneficiary.status.startDate",
   "field": "beneficiary.status.startDate"
 }

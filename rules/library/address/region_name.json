@@ -1,0 +1,12 @@
+{
+  "id": "library.address.region_name",
+  "type": "rule",
+  "description": "Проверка поля beneficiary.address.registration.regionName",
+  "role": "check",
+  "operator": "length_max",
+  "level": "ERROR",
+  "code": "BEN.ADDR.REG.REGION_NAME.LENGTH",
+  "message": "Наименование региона адреса регистрации слишком длинное",
+  "field": "beneficiary.address.registration.regionName",
+  "value": 255
+}

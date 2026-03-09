@@ -1,0 +1,11 @@
+{
+  "id": "library.documents.issuer_required",
+  "type": "rule",
+  "description": "Орган выдачи документа обязателен",
+  "role": "check",
+  "operator": "not_empty",
+  "level": "ERROR",
+  "code": "BEN.IDDOC.ISSUER.REQUIRED",
+  "message": "Не указан орган, выдавший документ",
+  "field": "beneficiary.idDoc.issuer"
+}

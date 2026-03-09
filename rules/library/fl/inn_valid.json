@@ -1,0 +1,11 @@
+{
+  "id": "library.fl.inn_valid",
+  "type": "rule",
+  "description": "ИНН физического лица должен быть корректным",
+  "role": "check",
+  "operator": "valid_inn",
+  "level": "ERROR",
+  "code": "FL.INN.INVALID",
+  "message": "Некорректный ИНН физического лица",
+  "field": "beneficiary.inn"
+}

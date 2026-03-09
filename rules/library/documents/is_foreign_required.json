@@ -1,0 +1,11 @@
+{
+  "id": "library.documents.is_foreign_required",
+  "type": "rule",
+  "description": "Признак иностранного документа обязателен",
+  "role": "check",
+  "operator": "not_empty",
+  "level": "ERROR",
+  "code": "BEN.IDDOC.IS_FOREIGN.REQUIRED",
+  "message": "Необходимо заполнить beneficiary.idDoc.isForeignIdDoc",
+  "field": "beneficiary.idDoc.isForeignIdDoc"
+}

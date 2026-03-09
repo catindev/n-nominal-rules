@@ -1,8 +1,0 @@
-{
-  "id": "library.common.pred_beneficiary_tax_foreignaddress_postalcode_present",
-  "type": "rule",
-  "description": "Поле beneficiary.tax.foreignAddress.postalCode указано",
-  "role": "predicate",
-  "operator": "not_empty",
-  "field": "beneficiary.tax.foreignAddress.postalCode"
-}

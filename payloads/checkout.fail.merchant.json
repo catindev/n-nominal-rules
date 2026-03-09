@@ -1,0 +1,30 @@
+{
+  "context": {
+    "pipelineId": "checkout_main",
+    "merchantId": "unknown-merchant",
+    "currentDate": "2026-03-06",
+    "rulesetVersion": "draft-1"
+  },
+  "payload": {
+    "order.id": "ORD-1003",
+    "order.amount": 500.0,
+    "order.currency": "RUB",
+    "order.country": "RU",
+    "order.isCrossBorder": false,
+
+    "customer.id": "C-001",
+    "customer.email": "user@example.com",
+
+    "card.pan": "4111111111111111",
+    "card.exp": "12/29",
+    "card.cvv": "123",
+
+    "risk.ip": "10.0.0.1",
+    "risk.deviceFingerprint": "dfp_abc123",
+    "risk.geoCountry": "RU",
+    "risk.ordersLast10m": 1,
+
+    "threeDS.requested": false,
+    "threeDS.method": "NONE"
+  }
+}

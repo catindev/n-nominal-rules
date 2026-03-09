@@ -1,0 +1,12 @@
+{
+  "id": "library.address.house",
+  "type": "rule",
+  "description": "Проверка поля beneficiary.address.registration.house",
+  "role": "check",
+  "operator": "length_max",
+  "level": "ERROR",
+  "code": "BEN.ADDR.REG.HOUSE.LENGTH",
+  "message": "Поле house адреса регистрации слишком длинное",
+  "field": "beneficiary.address.registration.house",
+  "value": 32
+}

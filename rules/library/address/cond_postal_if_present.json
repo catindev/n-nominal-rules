@@ -1,0 +1,15 @@
+{
+  "id": "library.address.cond_postal_if_present",
+  "type": "condition",
+  "description": "Если beneficiary.address.registration.postalCode заполнено, проверяем формат/длину",
+  "when": {
+    "all": [
+      "library.address.pred_postal_present"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "library.address.postal"
+    }
+  ]
+}

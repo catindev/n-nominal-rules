@@ -1,8 +1,0 @@
-{
-  "id": "beneficiary_fl_nonresident.full_validation.pred_residency_3_present",
-  "type": "rule",
-  "description": "Поле beneficiary.fl.residency.number указано",
-  "role": "predicate",
-  "operator": "not_empty",
-  "field": "beneficiary.fl.residency.number"
-}

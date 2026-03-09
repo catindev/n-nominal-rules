@@ -6,6 +6,6 @@
   "operator": "not_empty",
   "level": "EXCEPTION",
   "code": "BEN.TYPE.REQUIRED",
-  "message": "Не указан тип бенефициара",
+  "message": "Не указан beneficiary.type",
   "field": "beneficiary.type"
 }

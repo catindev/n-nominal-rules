@@ -1,0 +1,12 @@
+{
+  "id": "library.documents.series_passport_rf_format",
+  "type": "rule",
+  "description": "Серия паспорта РФ должна содержать ровно 4 цифры",
+  "role": "check",
+  "operator": "matches_regex",
+  "level": "ERROR",
+  "code": "BEN.IDDOC.SERIES.PASSPORT_RF.FORMAT",
+  "message": "Серия паспорта РФ должна содержать 4 цифры и не может быть 0000",
+  "field": "beneficiary.idDoc.series",
+  "value": "^(?!0000)\\d{4}$"
+}
