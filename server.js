@@ -9,14 +9,14 @@ const { CompilationError } = require("./lib/compiler/compilation-error");
 const mountDocs = require("./docs-routes");
 const EventEmitter = require("events");
 
-// ---- config
+// config
 const PORT = Number(process.env.PORT || 3000);
 const TRACE = (process.env.TRACE || "0") === "1";
 
 // Режим определяется по NODE_ENV:
-//   development (default) — fs-режим: сканирует ./rules при старте.
+//   development (default) - fs-режим: сканирует ./rules при старте.
 //                           Используется локально разработчиком и аналитиком.
-//   production / test     — snapshot-режим: грузит SNAPSHOT_PATH.
+//   production / test     - snapshot-режим: грузит SNAPSHOT_PATH.
 //                           Используется в любом деплое (прод, тест, канарейка).
 //                           Если SNAPSHOT_PATH не задан или файл не найден — падает.
 const NODE_ENV = process.env.NODE_ENV || "development";
@@ -24,13 +24,13 @@ const IS_DEV = NODE_ENV === "development";
 const SNAPSHOT_PATH = process.env.SNAPSHOT_PATH || null;
 const RULES_DIR = process.env.RULES_DIR || path.join(__dirname, "rules");
 
-// ---- hot-reload (dev-mode only) ────────────────────────────────────────────
+// hot-reload (только dev-mode)
 //
-// Следит за изменениями *.json файлов в RULES_DIR.
-// При изменении — пересобирает правила и заменяет ctx.compiled.
-// Если компиляция упала — логирует все ошибки и оставляет старую версию.
+// Следит за изменениями *.json файлов в RULES_DIR
+// При изменении пересобирает правила и заменяет ctx.compiled
+// Если компиляция упала, то логирует все ошибки и оставляет старую версию
 //
-// Debounce 150ms: fs.watch на macOS стреляет дважды на одно сохранение.
+// Debounce 150ms потому, что fs.watch на macOS стреляет дважды на одно сохранение
 
 function startHotReload(engine, rulesDir, ctx) {
   let debounceTimer = null;
@@ -72,12 +72,12 @@ function startHotReload(engine, rulesDir, ctx) {
   console.log(`[hot-reload] watching ${rulesDir}`);
 }
 
-// ---- bootstrap engine
+// bootstrap engine (врум-врум)
 function bootstrap() {
   const engine = createEngine({ operators: Operators });
 
   if (IS_DEV) {
-    // ── development: fs-режим ────────────────────────────────────────────────
+    // development: fs-режим
     if (!fs.existsSync(RULES_DIR)) {
       throw new Error(`[dev] RULES_DIR not found: ${RULES_DIR}`);
     }
@@ -87,9 +87,9 @@ function bootstrap() {
     console.log(`[engine] rules dir: ${RULES_DIR}`);
     console.log(`[engine] artifacts: ${artifacts.length}`);
 
-    // Контейнер — мутабельная обёртка над compiled.
-    // Все обработчики запросов читают из ctx.compiled.
-    // Hot-reload меняет ctx.compiled не трогая обработчики.
+    // Контейнер это мутабельная обёртка над compiled
+    // Все обработчики запросов читают из ctx.compiled
+    // Hot-reload меняет ctx.compiled не трогая обработчики
     const ctx = Object.assign(new EventEmitter(), {
       compiled,
       rulesDir: RULES_DIR,
@@ -97,7 +97,7 @@ function bootstrap() {
     startHotReload(engine, RULES_DIR, ctx);
     return { engine, ctx, meta: { mode: "development", rulesDir: RULES_DIR } };
   } else {
-    // ── production / test: snapshot-режим ───────────────────────────────────
+    //  production / test: snapshot-режим
     if (!SNAPSHOT_PATH) {
       throw new Error(
         `[${NODE_ENV}] SNAPSHOT_PATH is required when NODE_ENV=${NODE_ENV}. ` +
@@ -152,7 +152,7 @@ function bootstrap() {
 
 const { engine, ctx, meta } = bootstrap();
 
-// ---- http app
+// http app
 const app = express();
 app.use(express.json({ limit: "2mb" }));
 
@@ -178,7 +178,7 @@ app.get("/health", (_req, res) => {
  *     "merchantId": "demo-merchant",   // доступно в правилах как $context.merchantId
  *     ...
  *   },
- *   "payload": { ... }                 // вложенный JSON или flat-map — оба принимаются
+ *   "payload": { ... }                 // вложенный JSON или flat-map (принимаются оба)
  * }
  */
 app.post("/v1/validate", (req, res) => {
@@ -231,8 +231,24 @@ app.post("/v1/validate", (req, res) => {
   }
 });
 
-// ── Documentation UI (dev-mode only) ─────────────────────────────────────
-// Документация: в dev всегда, в prod — если DOCS_ENABLED=true
+// Песочница - форма для ручных тестов проверок
+/**
+ * GET  /sandbox/fl_resident  - форма ручного тестирования ФЛ-резидент
+ * GET  /static/cdn/*         - локальные копии React/Babel (нужны форме)
+ *
+ * Оба роута работают в любом NODE_ENV, независимо от DOCS_ENABLED,
+ * чтобы форма открывалась и в prod и test окружениях.
+ */
+const STATIC_DIR = path.join(__dirname, "static");
+
+app.use("/static/cdn", express.static(path.join(STATIC_DIR, "cdn")));
+
+app.get("/sandbox/fl_resident", (_req, res) => {
+  res.sendFile(path.join(STATIC_DIR, "fl-resident-sandbox.html"));
+});
+
+// UI для автодокументации (dev-mode only)
+// в dev всегда, в prod  толкьо если DOCS_ENABLED=true
 const DOCS_ENABLED = IS_DEV || process.env.DOCS_ENABLED === "true";
 if (DOCS_ENABLED) mountDocs(app, ctx);
 
