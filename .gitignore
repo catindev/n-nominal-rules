@@ -25,3 +25,10 @@ dist-ssr
 
 #local
 *.puml
+
+
+*.snapshot.json
+.env
+.env.*
+!.env.example
+coverage/

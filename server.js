@@ -252,10 +252,24 @@ app.get("/sandbox/fl_resident", (_req, res) => {
 const DOCS_ENABLED = IS_DEV || process.env.DOCS_ENABLED === "true";
 if (DOCS_ENABLED) mountDocs(app, ctx);
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`[rules-engine] listening on http://localhost:${PORT}`);
   console.log(`[rules-engine] endpoint: POST /v1/validate`);
   console.log(
     `[rules-engine] trace: ${TRACE ? "on" : "off"} (set TRACE=1 to include trace)`,
   );
 });
+
+// Graceful shutdown для кубера
+function shutdown(signal) {
+  console.log(`[rules-engine] ${signal} received shutting down`);
+  server.close(() => {
+    console.log("[rules-engine] HTTP server closed");
+    process.exit(0);
+  });
+  // Принудительный выход если соединения не закрылись за 25s
+  setTimeout(() => process.exit(1), 25_000).unref();
+}
+
+process.on("SIGTERM", () => shutdown("SIGTERM"));
+process.on("SIGINT", () => shutdown("SIGINT"));

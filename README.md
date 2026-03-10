@@ -7,7 +7,7 @@
 ## Что делает движок
 
 1. Загружает артефакты (правила, пайплайны, словари) из файловой системы или снэпшота
-2. Компилирует их в единый registry — проверяет схемы, ссылки, коды и видимость
+2. Компилирует их в единый registry и проверяет схемы, ссылки, коды и видимость
 3. Исполняет выбранный pipeline для заданного payload
 4. Возвращает результат: `status`, `issues`, `trace`
 
@@ -105,11 +105,9 @@ NODE_ENV=production SNAPSHOT_PATH=./snapshot.json DOCS_ENABLED=true node server.
 
 В dev-режиме: `{ "ok": true, "mode": "development", "rulesDir": "..." }`
 
----
-
 ## Формат payload
 
-Движок принимает **вложенный JSON** (рекомендуется) и **flat-map** (для обратной совместимости). Перед прогоном правил вложенный JSON автоматически конвертируется в flat-map — клиент выбирает удобный формат.
+Движок принимает обычный JSON (рекомендуется) и flat-map. Перед выполнением правил вложенный JSON автоматически конвертируется в flat-map.
 
 ```json
 { "order": { "id": "A100", "amount": 1200 } }
@@ -121,9 +119,7 @@ NODE_ENV=production SNAPSHOT_PATH=./snapshot.json DOCS_ENABLED=true node server.
 { "order.id": "A100", "order.amount": 1200 }
 ```
 
-Подробнее — в [docs/flat_payload_spec.md](./docs/flat_payload_spec.md).
-
----
+Подробнее в [документации на flat-map](./docs/flat_payload_spec.md).
 
 ## Wildcard и агрегации
 
@@ -139,14 +135,12 @@ NODE_ENV=production SNAPSHOT_PATH=./snapshot.json DOCS_ENABLED=true node server.
 
 Режимы агрегации: `EACH` (default), `ALL`, `COUNT`, `MIN`, `MAX`.
 
-Подробнее — в [docs/wildcart.md](./docs/wildcart.md).
-
----
+Подробнее в [описании работы с wildcard](./docs/wildcard.md).
 
 ## Артефакты
 
-Подробная документация по написанию правил — в [docs/how to rule.md](./docs/how%20to%20rule.md).  
-Структура папок и правила видимости — в [docs/rules structure.md](./docs/rules%20structure.md).
+Подробная документация по написанию правил в [отдельной инструкции](./docs/how%20to%20rule.md).  
+Структура папок и правила видимости в [описании структуры](./docs/rules%20structure.md).
 
 ### Rule
 
@@ -168,7 +162,7 @@ NODE_ENV=production SNAPSHOT_PATH=./snapshot.json DOCS_ENABLED=true node server.
 ```
 
 Для `role: "check"` обязательны `level`, `code`, `message`.  
-Для `role: "predicate"` эти поля **запрещены**.
+Для `role: "predicate"` эти поля запрещены.
 
 ### Condition
 
@@ -178,7 +172,7 @@ NODE_ENV=production SNAPSHOT_PATH=./snapshot.json DOCS_ENABLED=true node server.
 {
   "id": "checkout_main.threeds_validate.condition_3ds_required",
   "type": "condition",
-  "description": "3DS-проверки только если threeDS.requested=true",
+  "description": "3DS-проверки (если включены)",
   "when": "pred_is_3ds_required",
   "steps": [{ "rule": "rule_3ds_method_required" }]
 }
@@ -190,7 +184,7 @@ NODE_ENV=production SNAPSHOT_PATH=./snapshot.json DOCS_ENABLED=true node server.
 
 Последовательность шагов. Шаги: `{ "rule" }`, `{ "condition" }`, `{ "pipeline" }`.
 
-`strict: true` — если внутри появилась хотя бы одна ERROR/EXCEPTION, движок добавляет итоговый EXCEPTION и останавливает выполнение. Используется для логических границ: блок документов, FATCA, риск-проверки.
+`strict: true` если внутри появилась хотя бы одна ERROR/EXCEPTION, движок добавляет итоговый EXCEPTION и останавливает выполнение. Используется для логических границ: блок документов, FATCA, риск-проверки.
 
 ### Dictionary
 
@@ -204,8 +198,6 @@ NODE_ENV=production SNAPSHOT_PATH=./snapshot.json DOCS_ENABLED=true node server.
   "entries": ["RUB", "USD", "EUR", "CNY"]
 }
 ```
-
----
 
 ## Операторы
 
@@ -230,8 +222,6 @@ NODE_ENV=production SNAPSHOT_PATH=./snapshot.json DOCS_ENABLED=true node server.
 
 Подмножество check-операторов без `valid_inn`, `valid_ogrn`, `any_filled`, `length_*`.
 
----
-
 ## Уровни ошибок
 
 | level       | Поведение                                       |
@@ -239,8 +229,6 @@ NODE_ENV=production SNAPSHOT_PATH=./snapshot.json DOCS_ENABLED=true node server.
 | `WARNING`   | накапливается в issues, выполнение продолжается |
 | `ERROR`     | накапливается в issues, выполнение продолжается |
 | `EXCEPTION` | немедленно останавливает выполнение             |
-
----
 
 ## Результат выполнения
 
@@ -251,13 +239,11 @@ NODE_ENV=production SNAPSHOT_PATH=./snapshot.json DOCS_ENABLED=true node server.
 | `issues`  | array                          | найденные проблемы                |
 | `trace`   | array                          | трассировка (включить: `TRACE=1`) |
 
----
-
 ## Сборка и деплой
 
 ### Снэпшот
 
-Снэпшот — единственный JSON-файл со всеми скомпилированными артефактами. Сервер в production/test загружает его при старте. **Компиляция происходит при сборке** — на сервер попадают только валидные правила.
+Снэпшот это единственный JSON-файл со всеми скомпилированными артефактами. Сервер в production/test загружает его при старте. Компиляция происходит при сборке и на сервер попадают только валидные правила.
 
 ```bash
 node tools/build-snapshot.js \
@@ -267,7 +253,7 @@ node tools/build-snapshot.js \
   --pretty
 ```
 
-Если правила содержат ошибки — снэпшот не создаётся, выводится **полный список всех проблем** за один прогон:
+Если правила содержат ошибки, то снэпшот не создаётся, выводится полный список всех проблем найденных в артефактах снэпшота:
 
 ```
 [build-snapshot] COMPILATION ERROR — snapshot NOT saved
@@ -318,9 +304,7 @@ NODE_ENV=test SNAPSHOT_PATH=./snapshots/v2.json PORT=3001 node server.js
          └── 10% ──→ instance-v2 (canary)
 ```
 
----
-
-## Использование как библиотека
+## Использование движка как библиотеки в своем коде
 
 ```js
 const { createEngine } = require("./lib");
@@ -333,11 +317,9 @@ const compiled = engine.compile(artifacts, { sources });
 
 const result = engine.runPipeline(compiled, "checkout_main", {
   ...payload,
-  __context: context, // зарезервированный ключ — контекст внутри движка
+  __context: context, // зарезервированный ключ, контекст внутри движка
 });
 ```
-
----
 
 ## Документация
 
@@ -346,5 +328,5 @@ const result = engine.runPipeline(compiled, "checkout_main", {
 | [docs/how to rule.md](./docs/how%20to%20rule.md)         | Как писать правила: пошаговое руководство для аналитика |
 | [docs/rules structure.md](./docs/rules%20structure.md)   | Структура папок, правила видимости, формирование id     |
 | [docs/flat_payload_spec.md](./docs/flat_payload_spec.md) | Форматы входных данных: JSON и flat-map                 |
-| [docs/wildcart.md](./docs/wildcart.md)                   | Wildcard `[*]`, вложенные массивы, режимы агрегации     |
+| [docs/wildcart.md](./docs/wildcard.md)                   | Wildcard `[*]`, вложенные массивы, режимы агрегации     |
 | [docs/todo.md](./docs/todo.md)                           | План развития                                           |
