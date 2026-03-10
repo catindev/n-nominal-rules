@@ -165,6 +165,9 @@ app.use((req, res, next) => {
 });
 
 app.get("/health", (_req, res) => {
+  if (!ctx.compiled || !ctx.compiled.registry) {
+    return res.status(503).json({ ok: false, reason: "not ready" });
+  }
   res.json({ ok: true, ...meta });
 });
 
