@@ -1,5 +1,5 @@
 {
-  "name": "dsl-engine-prototype",
+  "name": "jsonspecs",
   "version": "0.8.0",
   "type": "commonjs",
   "main": "lib/index.js",

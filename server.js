@@ -256,18 +256,18 @@ const DOCS_ENABLED = IS_DEV || process.env.DOCS_ENABLED === "true";
 if (DOCS_ENABLED) mountDocs(app, ctx);
 
 const server = app.listen(PORT, () => {
-  console.log(`[rules-engine] listening on http://localhost:${PORT}`);
-  console.log(`[rules-engine] endpoint: POST /v1/validate`);
+  console.log(`[jsonspecs-rules-engine] listening on http://localhost:${PORT}`);
+  console.log(`[jsonspecs-rules-engine] endpoint: POST /v1/validate`);
   console.log(
-    `[rules-engine] trace: ${TRACE ? "on" : "off"} (set TRACE=1 to include trace)`,
+    `[jsonspecs-rules-engine] trace: ${TRACE ? "on" : "off"} (set TRACE=1 to include trace)`,
   );
 });
 
 // Graceful shutdown для кубера
 function shutdown(signal) {
-  console.log(`[rules-engine] ${signal} received shutting down`);
+  console.log(`[jsonspecs-rules-engine] ${signal} received shutting down`);
   server.close(() => {
-    console.log("[rules-engine] HTTP server closed");
+    console.log("[jsonspecs-rules-engine] HTTP server closed");
     process.exit(0);
   });
   // Принудительный выход если соединения не закрылись за 25s

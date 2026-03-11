@@ -1,8 +1,6 @@
-# DSL Rule Engine
+# JSONSpecs 0.8.0
 
-Движок декларативной валидации JSON-пэйлоадов через набор артефактов в `rules/**`.
-
-Версия: `0.8.0`
+Движок декларативной валидации JSON-пэйлоадов через набор JSON-артефактов.
 
 ## Что делает движок
 
@@ -16,10 +14,10 @@
 ## Быстрый старт
 
 ```bash
-# dev-режим: сканирует ./rules, hot-reload при изменении файлов
+# dev-режим: сканирует ./rules, поддерживает hot-reload при изменении файлов
 node server.js
 
-# production / test: из снэпшота
+# production или test работают со снэпшотом
 NODE_ENV=production SNAPSHOT_PATH=./snapshot.json node server.js
 ```
 
@@ -139,8 +137,11 @@ NODE_ENV=production SNAPSHOT_PATH=./snapshot.json DOCS_ENABLED=true node server.
 
 ## Артефакты
 
-Подробная документация по написанию правил в [отдельной инструкции](./docs/how%20to%20rule.md).  
-Структура папок и правила видимости в [описании структуры](./docs/rules%20structure.md).
+Подробнее пртефакты описаны в отдельных документах:
+
+- [Инструкция по написанию правил](./docs/how_to_rule.md).
+- [Полная тех. спецификация по артефактам](./docs/artifact_schema.md)
+- [Структура файлов, папок и правила видимости](./docs/rules_structure.md).
 
 ### Rule
 
@@ -325,8 +326,9 @@ const result = engine.runPipeline(compiled, "checkout_main", {
 
 | Документ                                                 | Описание                                                |
 | -------------------------------------------------------- | ------------------------------------------------------- |
-| [docs/how to rule.md](./docs/how%20to%20rule.md)         | Как писать правила: пошаговое руководство для аналитика |
-| [docs/rules structure.md](./docs/rules%20structure.md)   | Структура папок, правила видимости, формирование id     |
+| [docs/how_to_rule.md](./docs/how_to_rule.md)             | Как писать правила: пошаговое руководство для аналитика |
+| [docs/artifact_schema.md](./docs/artifact_schema.md)     | Спецификация по артефактам движка                       |
+| [docs/rules_structure.md](./docs/rules_structure.md)     | Структура папок, правила видимости, формирование id     |
 | [docs/flat_payload_spec.md](./docs/flat_payload_spec.md) | Форматы входных данных: JSON и flat-map                 |
-| [docs/wildcart.md](./docs/wildcard.md)                   | Wildcard `[*]`, вложенные массивы, режимы агрегации     |
+| [docs/wildcard.md](./docs/wildcard.md)                   | Wildcard `[*]`, вложенные массивы, режимы агрегации     |
 | [docs/todo.md](./docs/todo.md)                           | План развития                                           |

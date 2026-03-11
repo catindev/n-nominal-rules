@@ -1471,19 +1471,19 @@
 
       /* ── constants ── */
       const PRESET_LABELS = {
-        "PC-POS-01": "Предпроверка: минимальный набор полей, всё корректно",
-        "PC-POS-02": "Предпроверка: ФИО без отчества, всё корректно",
-        "PC-POS-03": "Предпроверка: с иностранным паспортом, всё корректно",
-        "FV-POS-01": "Полная проверка: российский клиент — данные без ошибок",
-        "FV-POS-02": "Полная проверка: без отчества и ИНН — данные без ошибок",
+        // "PC-POS-01": "Предпроверка: минимальный набор полей, всё корректно",
+        // "PC-POS-02": "Предпроверка: ФИО без отчества, всё корректно",
+        // "PC-POS-03": "Предпроверка: с иностранным паспортом, всё корректно",
+        "FV-POS-01": "Полная проверка: российский клиент (данные без ошибок)",
+        "FV-POS-02": "Полная проверка: без отчества и ИНН (данные без ошибок)",
         "FV-POS-03":
-          "Полная проверка: иностранный паспорт + налоговый резидент — без ошибок",
-        "FV-NEG-01": "Ошибка: participationId не заполнен",
+          "Полная проверка: иностранный паспорт + налоговый резидент (без ошибок)",
+        "FV-NEG-01": "Ошибка: Идентификатор участия не заполнен",
         "FV-NEG-02":
           "Ошибка: код подразделения документа пустой и неверного формата",
         "FV-NEG-03":
-          "Ошибка: ИНН некорректен — неверная длина и контрольная сумма",
-        "FV-NEG-04": "Стоп: гражданство US — резиденты США запрещены",
+          "Ошибка: ИНН некорректен (неверная длина и контрольная сумма)",
+        "FV-NEG-04": "Стоп: гражданство US (резиденты США запрещены)",
         "FV-NEG-05": "Стоп: место рождения содержит указание на США",
         "FV-NEG-06": "Ошибка: серия паспорта РФ не соответствует формату",
         "FV-NEG-07":
@@ -2038,39 +2038,39 @@
             "beneficiary.contacts.email": "pa.test.03@example.com",
           },
         },
-        "PC-POS-01": {
-          context: {
-            pipelineId: "entrypoints.c.fl_resident.precheck_min",
-          },
-          payload: {
-            "beneficiary.type": "FL_RESIDENT",
-            "beneficiary.inn": "744404355804",
-            "beneficiary.fl.lastName": "Петров",
-            "beneficiary.fl.firstName": "Алексей",
-          },
-        },
-        "PC-POS-02": {
-          context: {
-            pipelineId: "entrypoints.c.fl_resident.precheck_min",
-          },
-          payload: {
-            "beneficiary.type": "FL_RESIDENT",
-            "beneficiary.inn": "511201186251",
-            "beneficiary.fl.lastName": "Стаценко",
-            "beneficiary.fl.firstName": "Анастасия",
-          },
-        },
-        "PC-POS-03": {
-          context: {
-            pipelineId: "entrypoints.c.fl_resident.precheck_min",
-          },
-          payload: {
-            "beneficiary.type": "FL_RESIDENT",
-            "beneficiary.inn": "366110509430",
-            "beneficiary.fl.lastName": "Меркулов",
-            "beneficiary.fl.firstName": "Олег",
-          },
-        },
+        // "PC-POS-01": {
+        //   context: {
+        //     pipelineId: "entrypoints.c.fl_resident.precheck_min",
+        //   },
+        //   payload: {
+        //     "beneficiary.type": "FL_RESIDENT",
+        //     "beneficiary.inn": "744404355804",
+        //     "beneficiary.fl.lastName": "Петров",
+        //     "beneficiary.fl.firstName": "Алексей",
+        //   },
+        // },
+        // "PC-POS-02": {
+        //   context: {
+        //     pipelineId: "entrypoints.c.fl_resident.precheck_min",
+        //   },
+        //   payload: {
+        //     "beneficiary.type": "FL_RESIDENT",
+        //     "beneficiary.inn": "511201186251",
+        //     "beneficiary.fl.lastName": "Стаценко",
+        //     "beneficiary.fl.firstName": "Анастасия",
+        //   },
+        // },
+        // "PC-POS-03": {
+        //   context: {
+        //     pipelineId: "entrypoints.c.fl_resident.precheck_min",
+        //   },
+        //   payload: {
+        //     "beneficiary.type": "FL_RESIDENT",
+        //     "beneficiary.inn": "366110509430",
+        //     "beneficiary.fl.lastName": "Меркулов",
+        //     "beneficiary.fl.firstName": "Олег",
+        //   },
+        // },
       };
 
       const PIPELINES = [
@@ -2265,7 +2265,7 @@
           <div className={"Поле" + (wide ? " wide" : "")}>
             <span className="Поле-lbl">
               {label}
-              {hint && <span className="Поле-hint"> · {hint}</span>}
+              {hint && <span className="Поле-hint"> {hint}</span>}
             </span>
             {children}
           </div>
@@ -2927,15 +2927,6 @@
                     onChange={(e) => applyPreset(e.target.value)}
                   >
                     <option value="">— выбрать готовый сценарий —</option>
-                    <optgroup label="Предпроверка · позитив">
-                      {Object.keys(PA_PRESETS)
-                        .filter((k) => k.startsWith("PC-"))
-                        .map((k) => (
-                          <option key={k} value={k}>
-                            {PRESET_LABELS[k] || k}
-                          </option>
-                        ))}
-                    </optgroup>
                     <optgroup label="Полная проверка · позитив">
                       {Object.keys(PA_PRESETS)
                         .filter((k) => k.startsWith("FV-POS"))
