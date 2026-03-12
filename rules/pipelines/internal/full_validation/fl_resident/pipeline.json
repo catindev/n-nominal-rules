@@ -1,7 +1,7 @@
 {
   "id": "internal.full_validation.fl_resident",
   "type": "pipeline",
-  "description": "Внутренний pipeline full_validation для FL_RESIDENT",
+  "description": "Сценарий полной проверки заявки на ФЛ-резидента",
   "strict": false,
   "flow": [
     {

@@ -1,11 +1,9 @@
 {
   "id": "library.address.cond_country_if_present",
   "type": "condition",
-  "description": "Если beneficiary.address.registration.countryCode заполнено, проверяем формат и запрет США",
+  "description": "Если страна адреса регистрации заполнена, проверяем формат и запрет США",
   "when": {
-    "all": [
-      "library.address.pred_country_present"
-    ]
+    "all": ["library.address.pred_country_present"]
   },
   "steps": [
     {

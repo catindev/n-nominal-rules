@@ -1,7 +1,7 @@
 {
   "id": "internal.blocks.fl.identity_core",
   "type": "pipeline",
-  "description": "Базовые персональные данные FL_RESIDENT (v2)",
+  "description": "Основные персональные данные",
   "strict": false,
   "flow": [
     {

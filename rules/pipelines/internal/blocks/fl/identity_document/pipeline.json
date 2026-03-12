@@ -1,7 +1,7 @@
 {
   "id": "internal.blocks.fl.identity_document",
   "type": "pipeline",
-  "description": "Документ удостоверяющий личность для FL_RESIDENT (v2)",
+  "description": "Проверка документа удостоверяющего личность",
   "strict": false,
   "flow": [
     {

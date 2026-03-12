@@ -1,11 +1,9 @@
 {
   "id": "library.address.cond_address_line_if_present",
   "type": "condition",
-  "description": "Если beneficiary.address.registration.addressLine заполнено, проверяем формат/длину",
+  "description": "Если адрес регистрации (одной строкой) заполнен, проверяем формат и длину",
   "when": {
-    "all": [
-      "library.address.pred_address_line_present"
-    ]
+    "all": ["library.address.pred_address_line_present"]
   },
   "steps": [
     {

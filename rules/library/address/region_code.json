@@ -1,7 +1,7 @@
 {
   "id": "library.address.region_code",
   "type": "rule",
-  "description": "Проверка поля beneficiary.address.registration.regionCode",
+  "description": "Проверка кода региона адреса регистрации на длину",
   "role": "check",
   "operator": "length_max",
   "level": "ERROR",

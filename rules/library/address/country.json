@@ -1,7 +1,7 @@
 {
   "id": "library.address.country",
   "type": "rule",
-  "description": "Проверка поля beneficiary.address.registration.countryCode",
+  "description": "Проверка страны адреса регистрации",
   "role": "check",
   "operator": "matches_regex",
   "level": "ERROR",

@@ -1,7 +1,7 @@
 {
   "id": "internal.blocks.address.registration_required",
   "type": "pipeline",
-  "description": "Блок адреса регистрации и почтового адреса (v2)",
+  "description": "Проверки адреса регистрации и почтового адреса",
   "strict": false,
   "flow": [
     {

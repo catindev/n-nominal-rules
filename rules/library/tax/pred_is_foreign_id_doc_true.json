@@ -1,7 +1,7 @@
 {
   "id": "library.tax.pred_is_foreign_id_doc_true",
   "type": "rule",
-  "description": "Признак иностранного документа равен true",
+  "description": "Есть признак иностранного документа",
   "role": "predicate",
   "operator": "equals",
   "field": "beneficiary.idDoc.isForeignIdDoc",

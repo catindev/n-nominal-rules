@@ -1,7 +1,7 @@
 {
   "id": "internal.blocks.fl.tax_flags",
   "type": "pipeline",
-  "description": "Регуляторные флаги и иностранное налоговое резидентство для FL_RESIDENT (v3)",
+  "description": "Регуляторные флаги и иностранное налоговое резидентство",
   "strict": false,
   "flow": [
     {

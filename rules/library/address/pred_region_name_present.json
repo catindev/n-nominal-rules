@@ -1,7 +1,7 @@
 {
   "id": "library.address.pred_region_name_present",
   "type": "rule",
-  "description": "Поле beneficiary.address.registration.regionName заполнено",
+  "description": "Заполнен регион адреса регистрации",
   "role": "predicate",
   "operator": "not_empty",
   "field": "beneficiary.address.registration.regionName"

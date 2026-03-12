@@ -1,11 +1,9 @@
 {
   "id": "library.documents.cond_passport_rf_fields",
   "type": "condition",
-  "description": "Если тип документа — паспорт РФ, проверяем паспортные поля и код подразделения",
+  "description": "Если тип документа = паспорт РФ, проверяем паспортные поля и код подразделения",
   "when": {
-    "all": [
-      "library.documents.pred_type_code_passport_rf"
-    ]
+    "all": ["library.documents.pred_type_code_passport_rf"]
   },
   "steps": [
     {

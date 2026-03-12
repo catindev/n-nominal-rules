@@ -1,11 +1,9 @@
 {
   "id": "library.address.cond_street_if_present",
   "type": "condition",
-  "description": "Если beneficiary.address.registration.street заполнено, проверяем формат/длину",
+  "description": "Если заполнена улица адреса регистрации, проверяем формат и длину",
   "when": {
-    "all": [
-      "library.address.pred_street_present"
-    ]
+    "all": ["library.address.pred_street_present"]
   },
   "steps": [
     {

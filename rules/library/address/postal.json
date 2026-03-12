@@ -1,7 +1,7 @@
 {
   "id": "library.address.postal",
   "type": "rule",
-  "description": "Проверка поля beneficiary.address.registration.postalCode",
+  "description": "Проверка почтового индекса адреса регистрации",
   "role": "check",
   "operator": "length_max",
   "level": "ERROR",
