@@ -1,0 +1,33 @@
+{
+  "id": "internal.fl_resident.blocks.contacts_and_status",
+  "type": "pipeline",
+  "description": "Общие проверки контактов и статуса связи",
+  "strict": false,
+  "flow": [
+    {
+      "rule": "library.common.participation_required"
+    },
+    {
+      "condition": "library.common.cond_participation_if_present"
+    },
+    {
+      "rule": "library.common.contacts_any"
+    },
+    {
+      "condition": "library.common.cond_phone_if_present"
+    },
+    {
+      "condition": "library.common.cond_email_if_present"
+    },
+    {
+      "rule": "library.common.status_start_required"
+    },
+    {
+      "condition": "library.common.cond_status_start_if_present"
+    },
+    {
+      "condition": "library.common.cond_status_end_if_present"
+    }
+  ],
+  "entrypoint": false
+}

@@ -33,13 +33,13 @@
 {
   "id": "rule_inn_required",
   "type": "rule",
-  "description": "ИНН обязателен",
+  "description": "Email обязателен",
   "role": "check",
   "operator": "not_empty",
   "level": "ERROR",
-  "code": "ERR_INN_REQUIRED",
-  "message": "Не указан ИНН",
-  "field": "beneficiary.inn"
+  "code": "ERR_EMAIL_REQUIRED",
+  "message": "Не указан email",
+  "field": "customer.email"
 }
 ```
 
@@ -78,7 +78,7 @@ Predicate - это правило, которое возвращает true ил
 
 ```json
 {
-  "id": "pred_is_foreign_tax_yes",
+  "id": "pred_is_international_order",
   "type": "rule",
   "role": "predicate",
   "operator": "equals",
@@ -97,13 +97,13 @@ Condition выполняет `steps` только если `when` выполня
 
 ```json
 {
-  "id": "cond_foreign_tax_fields",
+  "id": "cond_international_order_fields",
   "type": "condition",
-  "description": "Если есть иностранное налогообложение",
-  "when": { "all": ["pred_is_foreign_tax_yes"] },
+  "description": "Если заказ международный",
+  "when": { "all": ["pred_is_international_order"] },
   "steps": [
-    { "rule": "rule_tax_country_required" },
-    { "rule": "rule_tax_tin_required" }
+    { "rule": "rule_country_required" },
+    { "rule": "rule_postal_code_required" }
   ]
 }
 ```
@@ -114,7 +114,19 @@ Condition выполняет `steps` только если `when` выполня
 "pred_name"                          // одиночный predicate
 { "all": ["pred1", "pred2"] }        // все должны быть true
 { "any": ["pred1", "pred2"] }        // хотя бы один true
+{
+  "all": [
+    "pred_a",
+    { "any": ["pred_b", "pred_c"] }
+  ]
+}                                      // вложенные комбинации AND/OR
 ```
+
+Вложенность `all` и `any` поддерживается рекурсивно. Это позволяет описывать условия вида:
+- `A и (B или C)`
+- `(A или B) и (C или D)`
+
+Рекомендуется держать в библиотеке атомарные predicates, а бизнес-комбинацию собирать на уровне condition через вложенный `when`.
 
 # 8. Pipeline (сценарий проверки)
 
@@ -129,7 +141,7 @@ Pipeline - это список шагов с проверками (сценар�
   "strict": false,
   "flow": [
     { "rule": "rule_inn_required" },
-    { "condition": "cond_foreign_tax_fields" }
+    { "condition": "cond_international_order_fields" }
   ]
 }
 ```

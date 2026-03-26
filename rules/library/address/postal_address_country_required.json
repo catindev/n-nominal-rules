@@ -1,0 +1,11 @@
+{
+  "id": "library.address.postal_address_country_required",
+  "type": "rule",
+  "description": "Код страны почтового адреса обязателен, если почтовый адрес заполнен",
+  "role": "check",
+  "operator": "not_empty",
+  "level": "ERROR",
+  "code": "BEN.CONTACTS.POSTAL_COUNTRY.REQUIRED",
+  "message": "Не указан код страны почтового адреса",
+  "field": "beneficiary.contacts.postalAddressCountryCode"
+}

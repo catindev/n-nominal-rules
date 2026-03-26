@@ -1,0 +1,12 @@
+{
+  "id": "internal.fl_resident.blocks.identity_core.citizenship_not_us",
+  "type": "rule",
+  "description": "Код гражданства не должен быть US",
+  "role": "check",
+  "operator": "not_equals",
+  "level": "EXCEPTION",
+  "code": "FL.CITIZENSHIP.NOT_US",
+  "message": "Гражданство США не допускается для FL_RESIDENT",
+  "field": "beneficiary.fl.citizenshipCode",
+  "value": "US"
+}

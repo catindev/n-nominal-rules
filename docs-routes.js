@@ -22,6 +22,7 @@ const path = require("path");
 const fs = require("fs");
 const ejs = require("ejs");
 const express = require("express");
+const { renderWhenText, renderWhenTreeHtml, escapeHtml, stripLeadingIf } = require("./lib/when-render");
 
 const VIEWS_DIR = path.join(__dirname, "views");
 const STATIC_DIR = path.join(__dirname, "static");
@@ -83,7 +84,7 @@ function render(res, view, locals, manifest) {
   const file = path.join(VIEWS_DIR, view + ".ejs");
   ejs.renderFile(
     file,
-    { ...locals, icons, manifest: manifest || {} },
+    { ...locals, icons, manifest: manifest || {}, whenTools: { renderWhenText, renderWhenTreeHtml, escapeHtml } },
     { views: VIEWS_DIR },
     (err, html) => {
       if (err) {
@@ -254,6 +255,11 @@ function generatePipelineDoc(rootPipelineId, compiled, manifest, fmt) {
     return f && f.description ? f.description : fieldId;
   }
 
+  function prettyFieldId(fieldId) {
+    if (!fieldId) return "";
+    return String(fieldId).replace(/([A-Za-z_][A-Za-z0-9_]*?)(\d+)(?=\.|$)/g, (_, base, idx) => `${base}[${idx}]`);
+  }
+
   // Строчная первая буква
   function lc(s) {
     if (!s) return s;
@@ -280,14 +286,11 @@ function generatePipelineDoc(rootPipelineId, compiled, manifest, fmt) {
         .map((f) => {
           const fd = fields[f];
           const d = fd && fd.description ? fd.description : f;
-          return d === f ? bold(f) : `${italic(lc(d))} (${bold(f)})`;
+          return d === f ? bold(prettyFieldId(f)) : `${italic(lc(d))} (${bold(prettyFieldId(f))})`;
         })
         .join(", ");
       r = r.replace("{fields}", humanList);
-      return [
-        r,
-        `Проверяем, что заполнено одно из полей: ${rule.fields.map((f) => bold(f)).join(", ")}.`,
-      ].join("\n");
+      return r;
     }
 
     // field_*_field  оба поля вторичны
@@ -296,17 +299,17 @@ function generatePipelineDoc(rootPipelineId, compiled, manifest, fmt) {
       const vDesc = fieldLabel(rule.value_field);
       const fStr =
         fDesc === rule.field
-          ? bold(rule.field)
-          : `${italic(lc(fDesc))} (${bold(rule.field)})`;
+          ? bold(prettyFieldId(rule.field))
+          : `${italic(lc(fDesc))} (${bold(prettyFieldId(rule.field))})`;
       const vStr =
         vDesc === rule.value_field
-          ? bold(rule.value_field)
-          : `${italic(lc(vDesc))} (${bold(rule.value_field)})`;
+          ? bold(prettyFieldId(rule.value_field))
+          : `${italic(lc(vDesc))} (${bold(prettyFieldId(rule.value_field))})`;
       r = r.replace("{field}", fStr);
       r = r.replace("{value_field}", vStr);
       return [
         r,
-        `Сравниваются поля ${bold(rule.field)} и ${bold(rule.value_field)}.`,
+        `Сравниваются поля ${bold(prettyFieldId(rule.field))} и ${bold(prettyFieldId(rule.value_field))}.`,
       ].join("\n");
     }
 
@@ -315,8 +318,8 @@ function generatePipelineDoc(rootPipelineId, compiled, manifest, fmt) {
       const desc = fieldLabel(rule.field);
       const isPrimary = desc === rule.field; // нет описания в манифесте
       const fieldStr = isPrimary
-        ? bold(rule.field)
-        : `${italic(lc(desc))} (${bold(rule.field)})`;
+        ? bold(prettyFieldId(rule.field))
+        : `${italic(lc(desc))} (${bold(prettyFieldId(rule.field))})`;
       r = r.replace("{field}", fieldStr);
     }
 
@@ -347,6 +350,76 @@ function generatePipelineDoc(rootPipelineId, compiled, manifest, fmt) {
 
   function push(...args) {
     args.forEach((a) => lines.push(a));
+  }
+
+  function renderWhenOutline(expr, leafRenderer) {
+    if (!expr) return [];
+
+    function introFor(mode, nested) {
+      if (nested) {
+        return mode === "any"
+          ? "выполнено одно из этих условий:"
+          : "выполнены все эти условия:";
+      }
+      return mode === "any"
+        ? "Если выполнено одно из этих условий:"
+        : "Если выполнены все эти условия:";
+    }
+
+    function leafText(node) {
+      const raw = leafRenderer(node.predId || node.pred || node.ref || "");
+      return stripLeadingIf(raw);
+    }
+
+    function renderMdNode(node, depth, numberPrefix) {
+      const indent = "   ".repeat(depth);
+      if (node.mode === "single") {
+        return [`${indent}${numberPrefix}. ${leafText(node)}`];
+      }
+
+      const items = node.items || [];
+      if (depth === 0 && items.length === 1) {
+        return renderMdNode(items[0], depth, numberPrefix || 1);
+      }
+
+      const out = [];
+      if (numberPrefix == null) {
+        out.push(introFor(node.mode, false), "");
+      } else {
+        out.push(`${indent}${numberPrefix}. ${introFor(node.mode, true)}`);
+      }
+
+      items.forEach((item, index) => {
+        out.push(...renderMdNode(item, depth + 1, index + 1));
+      });
+      return out;
+    }
+
+    function renderWikiNode(node, depth, numberPrefix) {
+      if (node.mode === "single") {
+        const bullet = "#".repeat(Math.max(1, depth));
+        return [`${bullet} ${numberPrefix}. ${leafText(node)}`];
+      }
+
+      const items = node.items || [];
+      if (depth === 0 && items.length === 1) {
+        return renderWikiNode(items[0], 1, numberPrefix || 1);
+      }
+
+      const bullet = "#".repeat(Math.max(1, depth || 1));
+      const out = [];
+      if (numberPrefix == null) {
+        out.push(introFor(node.mode, false), "");
+      } else {
+        out.push(`${bullet} ${numberPrefix}. ${introFor(node.mode, true)}`);
+      }
+      items.forEach((item, index) => {
+        out.push(...renderWikiNode(item, depth + 1, index + 1));
+      });
+      return out;
+    }
+
+    return isMd ? renderMdNode(expr, 0, null) : renderWikiNode(expr, 0, null);
   }
 
   function renderRule(rule, num) {
@@ -423,13 +496,14 @@ function generatePipelineDoc(rootPipelineId, compiled, manifest, fmt) {
         const ccmp = conditions && conditions.get(cid);
         if (!ccmp) continue;
 
-        // Строим фразу условия
-        const predTexts = ccmp.when.predIds.map((predId) => {
-          const pred = registry.get(predId);
-          return pred ? applyTemplate(pred, "predicate") : predId;
-        });
-        const mode = ccmp.when.mode === "any" ? "или" : "и";
-        const when = predTexts.join(` ${mode} `);
+        const whenLines = renderWhenOutline(
+          ccmp.when,
+          (predId) => {
+            const pred = registry.get(predId);
+            return pred ? applyTemplate(pred, "predicate") : predId;
+          },
+          [],
+        );
 
         // Условный блок  не увеличивает счётчик, но создаёт заголовок если есть description
         const condTitle = cart && cart.description ? cart.description : null;
@@ -441,10 +515,20 @@ function generatePipelineDoc(rootPipelineId, compiled, manifest, fmt) {
             h(Math.min(num.length + 1, 4), `${num.join(".")}. ${condTitle}`),
             "",
           );
-          push(quote(`Проверка применяется если ${lc(when)}.`), "");
+          whenLines.forEach((line) => push(line));
+          if (ccmp.steps && ccmp.steps.length) {
+            push("", isMd ? "то далее выполняются следующие вложенные проверки:" : "то далее выполняются следующие вложенные проверки:", "");
+          } else {
+            push("");
+          }
           walkSteps(ccmp.steps, num);
         } else {
-          push(quote(`Проверка применяется если ${lc(when)}.`), "");
+          whenLines.forEach((line) => push(line));
+          if (ccmp.steps && ccmp.steps.length) {
+            push("", isMd ? "то далее выполняются следующие вложенные проверки:" : "то далее выполняются следующие вложенные проверки:", "");
+          } else {
+            push("");
+          }
           walkSteps(ccmp.steps, parentNum);
         }
       } else if (step.kind === "pipeline") {

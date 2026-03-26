@@ -1,0 +1,18 @@
+{
+  "id": "library.tax.foreign_address_or_postal_required",
+  "type": "rule",
+  "description": "При foreign-tax trigger должен быть указан адрес в иностранном государстве или почтовый адрес",
+  "role": "check",
+  "operator": "any_filled",
+  "level": "ERROR",
+  "code": "BEN.TAX.FOREIGN_ADDRESS.OR_POSTAL_REQUIRED",
+  "message": "Укажите адрес в иностранном государстве или почтовый адрес",
+  "fields": [
+    "beneficiary.tax.foreignResidencies0.address",
+    "beneficiary.contacts.postalAddress"
+  ],
+  "paths": [
+    "beneficiary.tax.foreignResidencies0.address",
+    "beneficiary.contacts.postalAddress"
+  ]
+}

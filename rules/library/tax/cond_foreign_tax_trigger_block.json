@@ -1,11 +1,12 @@
 {
   "id": "library.tax.cond_foreign_tax_trigger_block",
   "type": "condition",
-  "description": "Если указано иностранное налоговое резидентство или документ иностранного образца, то проверяем данные иностранного резидентства",
+  "description": "Если указан иностранный документ или адрес не РФ, то проверяем данные иностранного налогового резидентства",
   "when": {
     "any": [
-      "library.tax.pred_foreign_tax_true",
-      "library.tax.pred_is_foreign_id_doc_true"
+      "library.tax.pred_is_foreign_id_doc_true",
+      "library.tax.pred_registration_country_non_ru",
+      "library.tax.pred_postal_country_non_ru"
     ]
   },
   "steps": [
@@ -22,10 +23,10 @@
       "rule": "library.tax.foreign_tin_or_reason"
     },
     {
-      "rule": "library.tax.foreign_address_required"
+      "rule": "library.tax.foreign_address_or_postal_required"
     },
     {
-      "rule": "library.tax.foreign_address_not_us"
+      "condition": "library.tax.cond_foreign_address_if_present"
     },
     {
       "condition": "library.tax.cond_tin_if_present"

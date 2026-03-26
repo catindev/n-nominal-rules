@@ -1,0 +1,9 @@
+{
+  "id": "library.tax.pred_registration_country_non_ru",
+  "type": "rule",
+  "description": "Страна адреса регистрации указана и не равна RU",
+  "role": "predicate",
+  "operator": "matches_regex",
+  "field": "beneficiary.address.registration.countryCode",
+  "value": "^(?!RU$)[A-Z]{2}$"
+}

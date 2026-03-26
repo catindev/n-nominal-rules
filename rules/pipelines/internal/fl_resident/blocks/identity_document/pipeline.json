@@ -1,0 +1,54 @@
+{
+  "id": "internal.fl_resident.blocks.identity_document",
+  "type": "pipeline",
+  "description": "Проверка документа удостоверяющего личность",
+  "strict": false,
+  "flow": [
+    {
+      "rule": "library.documents.type_code_required"
+    },
+    {
+      "rule": "library.documents.type_code_in_dictionary"
+    },
+    {
+      "rule": "library.documents.type_code_not_35"
+    },
+    {
+      "rule": "library.documents.is_foreign_required"
+    },
+    {
+      "condition": "library.documents.cond_foreign_doc_consistency"
+    },
+    {
+      "condition": "library.documents.cond_domestic_doc_consistency"
+    },
+    {
+      "rule": "library.documents.type_name_required"
+    },
+    {
+      "rule": "library.documents.number_required"
+    },
+    {
+      "rule": "library.documents.issuer_required"
+    },
+    {
+      "condition": "library.documents.cond_issuer_if_present"
+    },
+    {
+      "rule": "library.documents.issue_date_required"
+    },
+    {
+      "condition": "library.documents.cond_issue_date_if_present"
+    },
+    {
+      "condition": "library.documents.cond_expire_date_if_present"
+    },
+    {
+      "condition": "library.documents.cond_passport_rf_fields"
+    },
+    {
+      "rule": "library.documents.is_foreign_bool"
+    }
+  ],
+  "entrypoint": false
+}

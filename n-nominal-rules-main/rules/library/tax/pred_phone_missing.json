@@ -1,8 +1,0 @@
-{
-  "id": "library.tax.pred_phone_missing",
-  "type": "rule",
-  "description": "Телефон РФ отсутствует",
-  "role": "predicate",
-  "operator": "is_empty",
-  "field": "beneficiary.contacts.phone"
-}

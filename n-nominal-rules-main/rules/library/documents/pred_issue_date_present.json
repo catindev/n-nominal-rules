@@ -1,8 +1,0 @@
-{
-  "id": "library.documents.pred_issue_date_present",
-  "type": "rule",
-  "description": "Дата выдачи документа указана",
-  "role": "predicate",
-  "operator": "not_empty",
-  "field": "beneficiary.idDoc.issueDate"
-}

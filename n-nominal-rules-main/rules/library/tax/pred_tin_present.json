@@ -1,8 +1,0 @@
-{
-  "id": "library.tax.pred_tin_present",
-  "type": "rule",
-  "description": "Иностранный ИНН указан",
-  "role": "predicate",
-  "operator": "not_empty",
-  "field": "beneficiary.tax.foreignResidencies0.tin"
-}

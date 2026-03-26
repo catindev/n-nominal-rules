@@ -1,0 +1,12 @@
+{
+  "id": "internal.fl_resident.blocks.identity_core.birth_place_not_usa",
+  "type": "rule",
+  "description": "Место рождения не должно содержать указание на США",
+  "role": "check",
+  "operator": "matches_regex",
+  "level": "EXCEPTION",
+  "code": "FL.BIRTH_PLACE.NOT_USA",
+  "message": "Место рождения не должно указывать на США",
+  "field": "beneficiary.fl.birthPlace",
+  "value": "^(?!.*(?:США|USA|Usa|usa|US|U\\.S\\.)).*$"
+}

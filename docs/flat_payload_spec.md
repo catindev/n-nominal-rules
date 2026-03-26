@@ -103,7 +103,7 @@ order.*
 customer.*
 items[*].*
 payment.*
-beneficiary.*
+shipping.*
 accounts[*].*
 accounts[*].transactions[*].*
 ```

@@ -1,13 +1,16 @@
 {
   "id": "library.documents.cond_issue_date_gt_birth_if_format_ok",
   "type": "condition",
-  "description": "Если формат issueDate корректен, то проверяем, что дата позже рождения",
+  "description": "Если формат issueDate корректен, то проверяем, что дата не больше текущей даты и позже рождения",
   "when": {
     "all": [
       "library.documents.pred_issue_date_format_valid"
     ]
   },
   "steps": [
+    {
+      "rule": "library.documents.issue_date_not_future"
+    },
     {
       "rule": "library.documents.issue_date_gt_birth_date"
     }

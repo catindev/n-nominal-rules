@@ -1,0 +1,8 @@
+{
+  "id": "library.documents.pred_issuer_present",
+  "type": "rule",
+  "description": "Орган выдачи документа указан",
+  "role": "predicate",
+  "operator": "not_empty",
+  "field": "beneficiary.idDoc.issuer"
+}

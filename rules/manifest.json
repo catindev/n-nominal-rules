@@ -66,6 +66,26 @@
       "description": "ИНН корректен по контрольным разрядам",
       "check_template": "{field} должен быть корректным по контрольным разрядам",
       "predicate_template": "если {field} корректен по контрольным разрядам"
+    },
+    "field_equals_field": {
+      "description": "значение поля равно значению другого поля",
+      "check_template": "{field} должен быть равен {value_field}",
+      "predicate_template": "если {field} равен {value_field}"
+    },
+    "field_not_equals_field": {
+      "description": "значение поля не равно значению другого поля",
+      "check_template": "{field} не должен быть равен {value_field}",
+      "predicate_template": "если {field} не равен {value_field}"
+    },
+    "field_less_or_equal_than_field": {
+      "description": "значение поля меньше или равно значению другого поля",
+      "check_template": "{field} должен быть раньше или равен {value_field}",
+      "predicate_template": "если {field} раньше или равен {value_field}"
+    },
+    "field_greater_or_equal_than_field": {
+      "description": "значение поля больше или равно значению другого поля",
+      "check_template": "{field} должен быть позже или равен {value_field}",
+      "predicate_template": "если {field} позже или равен {value_field}"
     }
   },
   "fields": {
@@ -194,6 +214,12 @@
     },
     "beneficiary.tax.foreignResidencies0.address": {
       "description": "Адрес в иностранном государстве"
+    },
+    "beneficiary.contacts.postalAddressCountryCode": {
+      "description": "Код страны почтового адреса"
+    },
+    "$context.currentDate": {
+      "description": "Текущая дата из runtime-контекста"
     }
   }
 }

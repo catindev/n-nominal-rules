@@ -1,0 +1,36 @@
+{
+  "id": "entrypoints.fl_resident.full_validation",
+  "type": "pipeline",
+  "description": "FL_RESIDENT / full_validation",
+  "strict": false,
+  "flow": [
+    {
+      "rule": "library.common.beneficiary_type_required"
+    },
+    {
+      "rule": "library.common.beneficiary_type_supported"
+    },
+    {
+      "rule": "type_is_fl_resident"
+    },
+    {
+      "pipeline": "internal.fl_resident.blocks.contacts_and_status"
+    },
+    {
+      "pipeline": "internal.fl_resident.blocks.identity_core"
+    },
+    {
+      "pipeline": "internal.fl_resident.blocks.identity_document"
+    },
+    {
+      "pipeline": "internal.fl_resident.blocks.address"
+    },
+    {
+      "pipeline": "internal.fl_resident.blocks.tax_flags"
+    }
+  ],
+  "entrypoint": true,
+  "required_context": [
+    "currentDate"
+  ]
+}

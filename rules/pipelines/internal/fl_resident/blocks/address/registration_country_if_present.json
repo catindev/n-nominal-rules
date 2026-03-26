@@ -1,0 +1,18 @@
+{
+  "id": "internal.fl_resident.blocks.address.registration_country_if_present",
+  "type": "condition",
+  "description": "Если страна адреса регистрации заполнена, проверяем формат и запрет США",
+  "when": {
+    "all": [
+      "library.address.pred_country_present"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "library.address.country"
+    },
+    {
+      "rule": "registration_country_not_us"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "id": "library.documents.issuer_no_garbage_symbols",
+  "type": "rule",
+  "description": "Орган выдачи не должен содержать мусорные символы",
+  "role": "check",
+  "operator": "matches_regex",
+  "level": "WARNING",
+  "code": "BEN.IDDOC.ISSUER.SYMBOLS",
+  "message": "Поле beneficiary.idDoc.issuer содержит недопустимые символы",
+  "field": "beneficiary.idDoc.issuer",
+  "value": "^[A-Za-zА-Яа-яЁё0-9№.\\/\\- ]+$"
+}

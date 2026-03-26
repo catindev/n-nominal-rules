@@ -20,7 +20,7 @@
         </svg>
       </div>
       <div class="flow-nested">
-        <%- include('_flow', { steps: subSteps, compiled: compiled, icons: icons, nested: true }) %>
+        <%- include('_flow', { steps: subSteps, compiled: compiled, icons: icons, nested: true, whenTools: whenTools }) %>
       </div>
     </li>
 
@@ -40,37 +40,15 @@
       var cond    = compiled.registry.get(step.conditionId);
       var cLib    = step.conditionId.startsWith('library.');
       var cIco    = cLib ? icons['condition-list-icon-library'] : icons['condition-list-icon'];
-
-      // Собираем правила условия для inline-отображения
-      var cmpCond   = compiled.conditions && compiled.conditions.get(step.conditionId);
+      var cmpCond = compiled.conditions && compiled.conditions.get(step.conditionId);
       var condSteps = cmpCond ? cmpCond.steps : [];
-
-      // Предикаты из when
-      var when      = cond ? (cond.when || {}) : {};
-      var whenPreds = [];
-      var whenLabel = '';
-      if (typeof when === 'string') {
-        whenPreds = [when];
-      } else if (when.all) {
-        whenPreds = when.all; whenLabel = 'все';
-      } else if (when.any) {
-        whenPreds = when.any; whenLabel = 'хотя бы одно';
-      } else if (when.preds) {
-        whenPreds = when.preds;
-        whenLabel = when.mode === 'any' ? 'хотя бы одно' : 'все';
-      }
-
-      // resolveId в контексте conditionId
-      function resolveCondRef(ref) {
-        var nsBase = step.conditionId.slice(0, step.conditionId.lastIndexOf('.'));
-        if (compiled.registry.has(ref)) return ref;
-        var full = nsBase + '.' + ref;
-        return compiled.registry.has(full) ? full : ref;
-      }
+      var whenHtml = cmpCond ? whenTools.renderWhenTreeHtml(cmpCond.when, function(predId) {
+        var pred = compiled.registry.get(predId);
+        var lbl  = pred ? (pred.description || pred.id) : predId;
+        return '<a href="/rules/' + encodeURIComponent(predId) + '" class="flow-cond-rule-link">' + whenTools.escapeHtml(lbl) + '</a>';
+      }, { className: 'flow-cond-rules' }) : '';
     %>
     <li class="flow-item flow-item--condition">
-
-      <%# ── заголовок условия  ссылка ── %>
       <a class="flow-cond-header<%= cLib ? ' flow-leaf--library' : '' %>" href="/conditions/<%= encodeURIComponent(step.conditionId) %>">
         <span class="flow-leaf-icon"><%- cIco %></span>
         <span class="flow-leaf-title"><%= cond ? (cond.description || cond.id) : step.conditionId %></span>
@@ -79,38 +57,23 @@
         </svg>
       </a>
 
-      <%# ── inline-раскрытие правил условия ── %>
-      <% if (whenPreds.length > 0 || condSteps.length > 0) { %>
+      <% if (whenHtml || condSteps.length > 0) { %>
       <div class="flow-cond-body">
-
-        <% if (whenPreds.length > 0) { %>
+        <% if (whenHtml) { %>
         <div class="flow-cond-section">
-          <span class="flow-cond-section-label">Если<%= whenLabel ? ' (' + whenLabel + ')' : '' %>:</span>
-          <ul class="flow-cond-rules">
-            <% whenPreds.forEach(function(ref) {
-              var rid  = resolveCondRef(ref);
-              var pred = compiled.registry.get(rid);
-              var lbl  = pred ? (pred.description || pred.id) : ref;
-            %>
-            <li class="flow-cond-rule">
-              <span class="flow-cond-rule-icon"><%- icons['predicate-list-icon'] %></span>
-              <a href="/rules/<%= encodeURIComponent(rid) %>" class="flow-cond-rule-link"><%= lbl %></a>
-            </li>
-            <% }) %>
-          </ul>
+          <span class="flow-cond-section-label">Если:</span>
+          <%- whenHtml %>
         </div>
         <% } %>
 
         <% if (condSteps.length > 0) { %>
         <div class="flow-cond-section">
           <span class="flow-cond-section-label">Проверить:</span>
-          <%- include('_flow', { steps: condSteps, compiled: compiled, icons: icons, nested: true }) %>
+          <%- include('_flow', { steps: condSteps, compiled: compiled, icons: icons, nested: true, whenTools: whenTools }) %>
         </div>
         <% } %>
-
       </div>
       <% } %>
-
     </li>
 
     <% } %>
