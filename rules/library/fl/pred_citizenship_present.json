@@ -1,0 +1,8 @@
+{
+  "id": "library.fl.pred_citizenship_present",
+  "type": "rule",
+  "description": "Гражданство указано",
+  "role": "predicate",
+  "operator": "not_empty",
+  "field": "beneficiary.fl.citizenshipCode"
+}

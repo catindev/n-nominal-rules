@@ -1,0 +1,8 @@
+{
+  "id": "library.fl.pred_last_name_present",
+  "type": "rule",
+  "description": "Фамилия указана",
+  "role": "predicate",
+  "operator": "not_empty",
+  "field": "beneficiary.fl.lastName"
+}

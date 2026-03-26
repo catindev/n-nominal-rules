@@ -1,0 +1,8 @@
+{
+  "id": "library.fl.pred_first_name_present",
+  "type": "rule",
+  "description": "Имя указано",
+  "role": "predicate",
+  "operator": "not_empty",
+  "field": "beneficiary.fl.firstName"
+}

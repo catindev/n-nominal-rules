@@ -1,0 +1,9 @@
+{
+  "id": "library.fl.pred_inn_length_valid",
+  "type": "rule",
+  "description": "ИНН содержит ровно 12 цифр",
+  "role": "predicate",
+  "operator": "matches_regex",
+  "field": "beneficiary.inn",
+  "value": "^\\d{12}$"
+}
