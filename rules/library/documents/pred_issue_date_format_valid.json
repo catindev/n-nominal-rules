@@ -1,0 +1,9 @@
+{
+  "id": "library.documents.pred_issue_date_format_valid",
+  "type": "rule",
+  "description": "Дата выдачи документа в формате YYYY-MM-DD",
+  "role": "predicate",
+  "operator": "matches_regex",
+  "field": "beneficiary.idDoc.issueDate",
+  "value": "^\\\\d{4}-\\\\d{2}-\\\\d{2}$"
+}

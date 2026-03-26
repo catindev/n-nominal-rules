@@ -1,0 +1,9 @@
+{
+  "id": "library.common.pred_status_end_format_valid",
+  "type": "rule",
+  "description": "Дата окончания статуса в формате YYYY-MM-DD",
+  "role": "predicate",
+  "operator": "matches_regex",
+  "field": "beneficiary.status.endDate",
+  "value": "^\\\\d{4}-\\\\d{2}-\\\\d{2}$"
+}

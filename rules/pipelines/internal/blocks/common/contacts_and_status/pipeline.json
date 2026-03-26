@@ -8,7 +8,7 @@
       "rule": "library.common.participation_required"
     },
     {
-      "rule": "library.common.participation_length"
+      "condition": "library.common.cond_participation_if_present"
     },
     {
       "rule": "library.common.contacts_any"
@@ -23,7 +23,7 @@
       "rule": "library.common.status_start_required"
     },
     {
-      "rule": "library.common.status_start_format"
+      "condition": "library.common.cond_status_start_if_present"
     },
     {
       "condition": "library.common.cond_status_end_if_present"

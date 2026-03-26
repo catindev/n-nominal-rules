@@ -26,16 +26,13 @@
       "rule": "library.documents.number_required"
     },
     {
-      "rule": "library.documents.issue_date_required"
-    },
-    {
       "rule": "library.documents.issuer_required"
     },
     {
-      "rule": "library.documents.issue_date_format"
+      "rule": "library.documents.issue_date_required"
     },
     {
-      "rule": "library.documents.issue_date_gt_birth_date"
+      "condition": "library.documents.cond_issue_date_if_present"
     },
     {
       "condition": "library.documents.cond_expire_date_if_present"

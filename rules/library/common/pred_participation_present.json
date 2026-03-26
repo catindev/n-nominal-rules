@@ -1,0 +1,8 @@
+{
+  "id": "library.common.pred_participation_present",
+  "type": "rule",
+  "description": "Идентификатор участия указан",
+  "role": "predicate",
+  "operator": "not_empty",
+  "field": "beneficiary.participationId"
+}
