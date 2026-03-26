@@ -139,7 +139,28 @@ module.exports = function mountDocs(app, ctx) {
     );
   });
 
-  // Правило
+  // Playground — тест пайплайна
+  app.get("/pipelines/:id/playground", (req, res) => {
+    const a = ctx.compiled.registry.get(req.params.id);
+    if (!a || a.type !== "pipeline")
+      return res.status(404).send("Pipeline not found: " + req.params.id);
+    const payloadsDir = path.join(rulesDir, '..', 'payloads');
+    const examples = [];
+    if (fs.existsSync(payloadsDir)) {
+      for (const f of fs.readdirSync(payloadsDir)) {
+        if (!f.endsWith('.json')) continue;
+        try {
+          const raw = fs.readFileSync(path.join(payloadsDir, f), 'utf8');
+          const obj = JSON.parse(raw);
+          if (obj.context && obj.context.pipelineId === a.id)
+            examples.push({ name: f.replace('.json', ''), body: raw });
+        } catch(e) { /* skip */ }
+      }
+    }
+    render(res, "playground", { pipeline: a, examples }, manifest);
+  });
+
+    // Правило
   app.get("/rules/:id", (req, res) => {
     const a = ctx.compiled.registry.get(req.params.id);
     if (!a || a.type !== "rule")
