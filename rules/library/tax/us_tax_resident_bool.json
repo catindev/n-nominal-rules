@@ -1,12 +1,12 @@
 {
   "id": "library.tax.us_tax_resident_bool",
   "type": "rule",
-  "description": "beneficiary.tax.usTaxResident должен быть true или false",
+  "description": "Признак налогового резидентства США должен быть булевым (true/false)",
   "role": "check",
   "operator": "in_dictionary",
   "level": "EXCEPTION",
   "code": "BEN.TAX.US_TAX_RESIDENT.BOOL",
-  "message": "beneficiary.tax.usTaxResident должен быть true или false",
+  "message": "Признак налогового резидентства США должен иметь значение true или false",
   "field": "beneficiary.tax.usTaxResident",
   "dictionary": {
     "type": "static",

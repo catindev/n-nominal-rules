@@ -1,4 +1,4 @@
-<%- include('_header', { title: (pipeline.description || pipeline.id) + ' — Тест', isLibrary: pipeline.id.startsWith('library.'), icons }) %>
+<%- include('_header', { title: (pipeline.description || pipeline.id) + '   Тест', isLibrary: pipeline.id.startsWith('library.'), icons }) %>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.17/codemirror.min.css">
 
@@ -32,7 +32,7 @@
 
 <!-- Тулбар режима результата -->
 <div class="pg-toolbar" id="pg-result-actions" style="display:none">
-  <span id="pg-status-badge" class="pg-status-badge pg-status-badge--idle">—</span>
+  <span id="pg-status-badge" class="pg-status-badge pg-status-badge--idle"> </span>
   <button class="pg-btn pg-btn--secondary" id="pg-back">
     <svg viewBox="0 0 16 16" fill="none" width="14" height="14"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     Изменить данные
@@ -41,7 +41,7 @@
 
 <!-- Редактор -->
 <div id="pg-editor-wrap" class="pg-panel">
-  <!-- Панель над редактором: слева — инструменты, справа — запуск -->
+  <!-- Панель над редактором: слева   инструменты, справа   запуск -->
   <div id="pg-editor-actions" class="pg-editor-toolbar">
     <div class="pg-editor-toolbar-left">
       <% if (examples && examples.length) { %>
@@ -141,13 +141,13 @@
               + '<a class="tev-link" href="/rules/' + encodeURIComponent(rid) + '">' + esc(rdesc) + '</a>';
         if (field) details.push(kv('поле', field));
         if (op)    details.push(kv('оператор', op));
-        if (val)   details.push(kv('значение в пэйлоаде', val));
+        if (val)   details.push(kv('значение для оператора', val));
 
       } else if (msg === 'exec pipeline step') {
         var pid   = data.pipelineId || '';
         var pdesc = data.description || pid;
         icon = ''; cls = 'tev tev--pipeline';
-        label = 'Сценарий <a class="tev-link tev-link--pipeline" href="/pipelines/'
+        label = 'Вложенный сценарий  <a class="tev-link tev-link--pipeline" href="/pipelines/'
               + encodeURIComponent(pid) + '">' + esc(pdesc) + '</a>';
 
       } else if (msg === 'exec condition step') {
@@ -173,7 +173,7 @@
         var urid  = data.ruleId || '';
         var urdesc = (RULE_REGISTRY[urid] && RULE_REGISTRY[urid].description) || '';
         var urfield = (RULE_REGISTRY[urid] && RULE_REGISTRY[urid].field) || '';
-        label = 'Поле отсутствует в данных — условие не применялось';
+        label = 'Поле отсутствует в данных   условие не применялось';
         if (urdesc)  details.push(kv('предикат', urdesc));
         if (urfield) details.push(kv('поле', urfield));
 
@@ -197,17 +197,17 @@
 
       } else if (msg === 'pipeline stopped by EXCEPTION') {
         icon = ''; cls = 'tev tev--stop';
-        label = 'Сценарий остановлен — EXCEPTION';
+        label = 'Сценарий остановлен исключением из правил (EXCEPTION)';
 
       } else if (msg === 'STOP by EXCEPTION-level rule') {
         icon = ''; cls = 'tev tev--stop';
         var sid = data.ruleId || '';
-        label = 'Остановка по правилу <a class="tev-link" href="/rules/'
-              + encodeURIComponent(sid) + '">' + esc(sid) + '</a>';
+        label = 'Правило <a class="tev-link" href="/rules/'
+              + encodeURIComponent(sid) + '">' + esc(sid) + '</a> не прошло проверку';
 
       } else if (msg === 'STOP by strict pipeline boundary') {
         icon = ''; cls = 'tev tev--stop';
-        label = 'Строгий блок — остановка';
+        label = 'Строгий блок   остановка';
         details.push(kv('сценарий', data.pipelineId || ''));
 
       } else if (msg === 'wildcard expanded') {
@@ -273,7 +273,7 @@
   // Выполнить проверки
   document.getElementById('pg-run').addEventListener('click', run);
 
-  // Изменить данные — вернуться к редактору
+  // Изменить данные   вернуться к редактору
   document.getElementById('pg-back').addEventListener('click', showEditor);
 
   function showEditor() {
@@ -356,8 +356,9 @@
       var reqMs  = result.__requestMs !== undefined ? result.__requestMs + ' мс' : '';
       html += '<div class="pg-section">';
       html += '<div class="pg-trace-header">';
-      html += '<span class="pg-trace-title">Trace (' + result.trace.length + ' событий)</span>';
+      html += '<span class="pg-trace-title">Лог операций и событий (trace)</span>';
       html += '<span class="pg-trace-meta">';
+        html += '<span class="pg-trace-metric"><span class="pg-trace-metric-label">размер лога</span><span class="pg-trace-metric-val">' + result.trace.length + '</span></span>';
       html += '<span class="pg-trace-metric"><span class="pg-trace-metric-label">выполнение</span><span class="pg-trace-metric-val">' + execMs + '</span></span>';
       if (reqMs) html += '<span class="pg-trace-metric"><span class="pg-trace-metric-label">запрос</span><span class="pg-trace-metric-val">' + reqMs + '</span></span>';
       html += '</span></div>';

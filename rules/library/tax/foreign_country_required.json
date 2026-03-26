@@ -6,6 +6,6 @@
   "operator": "not_empty",
   "level": "EXCEPTION",
   "code": "BEN.TAX.FOREIGN_COUNTRY.REQUIRED",
-  "message": "Не указан beneficiary.tax.foreignResidencies0.countryCode",
+  "message": "Не указана страна иностранного налогового резидентства",
   "field": "beneficiary.tax.foreignResidencies0.countryCode"
 }

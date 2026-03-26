@@ -1,11 +1,11 @@
 {
   "id": "library.tax.phone_foreign_required",
   "type": "rule",
-  "description": "При foreign-tax trigger и отсутствии телефона РФ требуется иностранный телефон",
+  "description": "При иностранном налоговом резидентстве и отсутствии российского телефона требуется иностранный телефон",
   "role": "check",
   "operator": "not_empty",
   "level": "ERROR",
   "code": "BEN.CONTACTS.PHONE_FOREIGN.REQUIRED",
-  "message": "При foreign-tax trigger и отсутствии телефона РФ необходимо заполнить beneficiary.contacts.phoneForeign",
+  "message": "Не указан иностранный телефон — он обязателен при иностранном налоговом резидентстве и отсутствии телефона РФ",
   "field": "beneficiary.contacts.phoneForeign"
 }

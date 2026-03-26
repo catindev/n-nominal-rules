@@ -6,7 +6,7 @@
   "operator": "any_filled",
   "level": "EXCEPTION",
   "code": "BEN.TAX.FOREIGN_TIN.OR_REASON",
-  "message": "Укажите beneficiary.tax.foreignResidencies0.tin или beneficiary.tax.foreignResidencies0.tinAbsenceReason",
+  "message": "Укажите иностранный ИНН или причину его отсутствия",
   "fields": [
     "beneficiary.tax.foreignResidencies0.tin",
     "beneficiary.tax.foreignResidencies0.tinAbsenceReason"

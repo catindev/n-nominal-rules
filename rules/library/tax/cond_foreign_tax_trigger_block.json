@@ -1,7 +1,7 @@
 {
   "id": "library.tax.cond_foreign_tax_trigger_block",
   "type": "condition",
-  "description": "Если есть foreign-tax trigger (foreignTaxResident=true или isForeignIdDoc=true), проверяем foreign-tax блок",
+  "description": "Если указано иностранное налоговое резидентство или документ иностранного образца — проверяем данные иностранного резидентства",
   "when": {
     "any": [
       "library.tax.pred_foreign_tax_true",
