@@ -83,7 +83,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.c.fl_resident.precheck_min\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"744404355804\",\n    \"beneficiary.fl.lastName\": \"Петров\",\n    \"beneficiary.fl.firstName\": \"Алексей\"\n  }\n}",
+              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"744404355804\",\n    \"beneficiary.fl.lastName\": \"Петров\",\n    \"beneficiary.fl.firstName\": \"Алексей\"\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -100,7 +100,7 @@
                 "validate"
               ]
             },
-            "description": "Сценарий: PC-POS-01\nГруппа: Precheck / позитив\nPipeline: entrypoints.c.fl_resident.precheck_min\nExcel row: 7\nКейс: Индивидуальный предприниматель Петров Алексей Анатольевич\nИсточник: Источник → трансформация IP в FL-поля\nРучное обогащение: Только маппинг имени и установка beneficiary.type=FL_RESIDENT\nОжидание: Позитивный precheck: ошибок правил не ожидается\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
+            "description": "Сценарий: PC-POS-01\nГруппа: Precheck / позитив\nPipeline: entrypoints.fl_resident.full_validation\nExcel row: 7\nКейс: Индивидуальный предприниматель Петров Алексей Анатольевич\nИсточник: Источник → трансформация IP в FL-поля\nРучное обогащение: Только маппинг имени и установка beneficiary.type=FL_RESIDENT\nОжидание: Позитивный precheck: ошибок правил не ожидается\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
           },
           "response": []
         },
@@ -177,7 +177,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.c.fl_resident.precheck_min\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"511201186251\",\n    \"beneficiary.fl.lastName\": \"Стаценко\",\n    \"beneficiary.fl.firstName\": \"Анастасия\"\n  }\n}",
+              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"511201186251\",\n    \"beneficiary.fl.lastName\": \"Стаценко\",\n    \"beneficiary.fl.firstName\": \"Анастасия\"\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -194,7 +194,7 @@
                 "validate"
               ]
             },
-            "description": "Сценарий: PC-POS-02\nГруппа: Precheck / позитив\nPipeline: entrypoints.c.fl_resident.precheck_min\nExcel row: 11\nКейс: Индивидуальный предприниматель Стаценко Анастасия Владимировна\nИсточник: Источник → трансформация IP в FL-поля\nРучное обогащение: Только маппинг имени и установка beneficiary.type=FL_RESIDENT\nОжидание: Позитивный precheck: ошибок правил не ожидается\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
+            "description": "Сценарий: PC-POS-02\nГруппа: Precheck / позитив\nPipeline: entrypoints.fl_resident.full_validation\nExcel row: 11\nКейс: Индивидуальный предприниматель Стаценко Анастасия Владимировна\nИсточник: Источник → трансформация IP в FL-поля\nРучное обогащение: Только маппинг имени и установка beneficiary.type=FL_RESIDENT\nОжидание: Позитивный precheck: ошибок правил не ожидается\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
           },
           "response": []
         },
@@ -271,7 +271,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.c.fl_resident.precheck_min\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"366110509430\",\n    \"beneficiary.fl.lastName\": \"Меркулов\",\n    \"beneficiary.fl.firstName\": \"Олег\"\n  }\n}",
+              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"366110509430\",\n    \"beneficiary.fl.lastName\": \"Меркулов\",\n    \"beneficiary.fl.firstName\": \"Олег\"\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -288,12 +288,12 @@
                 "validate"
               ]
             },
-            "description": "Сценарий: PC-POS-03\nГруппа: Precheck / позитив\nPipeline: entrypoints.c.fl_resident.precheck_min\nExcel row: 21\nКейс: Индивидуальный предприниматель Меркулов Олег Геннадьевич\nИсточник: Источник → трансформация IP в FL-поля\nРучное обогащение: Только маппинг имени и установка beneficiary.type=FL_RESIDENT\nОжидание: Позитивный precheck: ошибок правил не ожидается\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
+            "description": "Сценарий: PC-POS-03\nГруппа: Precheck / позитив\nPipeline: entrypoints.fl_resident.full_validation\nExcel row: 21\nКейс: Индивидуальный предприниматель Меркулов Олег Геннадьевич\nИсточник: Источник → трансформация IP в FL-поля\nРучное обогащение: Только маппинг имени и установка beneficiary.type=FL_RESIDENT\nОжидание: Позитивный precheck: ошибок правил не ожидается\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
           },
           "response": []
         }
       ],
-      "description": "Позитивные сценарии для entrypoints.c.fl_resident.precheck_min"
+      "description": "Позитивные сценарии для entrypoints.fl_resident.full_validation"
     },
     {
       "name": "Full validation / позитив",
@@ -373,7 +373,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.b.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary\": {\n      \"type\": \"FL_RESIDENT\",\n      \"inn\": \"744404355804\",\n      \"participationId\": \"TEST-536779508951\",\n      \"status\": {\n        \"startDate\": \"2024-01-26\"\n      },\n      \"fl\": {\n        \"lastName\": \"Петров\",\n        \"firstName\": \"Алексей\",\n        \"middleName\": \"Анатольевич\",\n        \"birthDate\": \"1979-12-01\",\n        \"birthPlace\": \"гор. МАГНИТОГОРСК ЧЕЛЯБИНСКОЙ ОБЛАСТИ\",\n        \"citizenshipCode\": \"RU\"\n      },\n      \"address\": {\n        \"registration\": {\n          \"addressLine\": \"350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20\",\n          \"countryCode\": \"RU\"\n        }\n      },\n      \"idDoc\": {\n        \"typeCode\": \"21\",\n        \"typeName\": \"Паспорт РФ\",\n        \"series\": \"4507\",\n        \"number\": \"360952\",\n        \"issueDate\": \"2004-03-29\",\n        \"issuer\": \"ОВД РАЙОНА \\\"БОГОРОДСКОЕ\\\" ГОРОДА МОСКВЫ\",\n        \"issuerCode\": \"770-001\",\n        \"isForeignIdDoc\": false\n      },\n      \"tax\": {\n        \"usTaxResident\": false,\n        \"usResident\": false,\n        \"foreignTaxResident\": false\n      },\n      \"contacts\": {\n        \"phone\": \"9801611004\",\n        \"email\": \"pa.test.01@example.com\"\n      }\n    }\n  }\n}",
+              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary\": {\n      \"type\": \"FL_RESIDENT\",\n      \"inn\": \"744404355804\",\n      \"participationId\": \"TEST-536779508951\",\n      \"status\": {\n        \"startDate\": \"2024-01-26\"\n      },\n      \"fl\": {\n        \"lastName\": \"Петров\",\n        \"firstName\": \"Алексей\",\n        \"middleName\": \"Анатольевич\",\n        \"birthDate\": \"1979-12-01\",\n        \"birthPlace\": \"гор. МАГНИТОГОРСК ЧЕЛЯБИНСКОЙ ОБЛАСТИ\",\n        \"citizenshipCode\": \"RU\"\n      },\n      \"address\": {\n        \"registration\": {\n          \"addressLine\": \"350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20\",\n          \"countryCode\": \"RU\"\n        }\n      },\n      \"idDoc\": {\n        \"typeCode\": \"21\",\n        \"typeName\": \"Паспорт РФ\",\n        \"series\": \"4507\",\n        \"number\": \"360952\",\n        \"issueDate\": \"2004-03-29\",\n        \"issuer\": \"ОВД РАЙОНА \\\"БОГОРОДСКОЕ\\\" ГОРОДА МОСКВЫ\",\n        \"issuerCode\": \"770-001\",\n        \"isForeignIdDoc\": false\n      },\n      \"tax\": {\n        \"usTaxResident\": false,\n        \"usResident\": false,\n        \"foreignTaxResident\": false\n      },\n      \"contacts\": {\n        \"phone\": \"9801611004\",\n        \"email\": \"pa.test.01@example.com\"\n      }\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -390,7 +390,7 @@
                 "validate"
               ]
             },
-            "description": "Сценарий: FV-POS-01\nГруппа: Full validation / позитив\nPipeline: entrypoints.b.fl_resident.full_validation\nExcel row: 7\nКейс: Индивидуальный предприниматель Петров Алексей Анатольевич\nИсточник: Источник + ручное обогащение недостающих технических полей\nРучное обогащение: Добавлены технические поля, которых нет в выгрузке: participationId, issuerCode, isForeignIdDoc=false, tax-флаги=false, email.\nОжидание: Позитивный full_validation: ошибок правил не ожидается\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
+            "description": "Сценарий: FV-POS-01\nГруппа: Full validation / позитив\nPipeline: entrypoints.fl_resident.full_validation\nExcel row: 7\nКейс: Индивидуальный предприниматель Петров Алексей Анатольевич\nИсточник: Источник + ручное обогащение недостающих технических полей\nРучное обогащение: Добавлены технические поля, которых нет в выгрузке: participationId, issuerCode, isForeignIdDoc=false, tax-флаги=false, email.\nОжидание: Позитивный full_validation: ошибок правил не ожидается\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
           },
           "response": []
         },
@@ -467,7 +467,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.b.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"511201186251\",\n    \"beneficiary.participationId\": \"TEST-552976161977\",\n    \"beneficiary.contacts.phone\": \"9632449030\",\n    \"beneficiary.status.startDate\": \"2023-05-29\",\n    \"beneficiary.fl.lastName\": \"Стаценко\",\n    \"beneficiary.fl.firstName\": \"Анастасия\",\n    \"beneficiary.fl.middleName\": \"Владимировна\",\n    \"beneficiary.fl.birthDate\": \"1999-11-12\",\n    \"beneficiary.fl.birthPlace\": \"Г. МУРМАНСК\",\n    \"beneficiary.fl.citizenshipCode\": \"RU\",\n    \"beneficiary.address.registration.addressLine\": \"Мурманская обл, г Снежногорск, ул Мира, д 12, кв 187\",\n    \"beneficiary.address.registration.countryCode\": \"RU\",\n    \"beneficiary.idDoc.typeCode\": \"21\",\n    \"beneficiary.idDoc.typeName\": \"Паспорт РФ\",\n    \"beneficiary.idDoc.series\": \"4719\",\n    \"beneficiary.idDoc.number\": \"671983\",\n    \"beneficiary.idDoc.issueDate\": \"2019-11-13\",\n    \"beneficiary.idDoc.issuer\": \"УМВД РОССИИ ПО МУРМАНСКОЙ ОБЛАСТИ\",\n    \"beneficiary.idDoc.issuerCode\": \"510-001\",\n    \"beneficiary.idDoc.isForeignIdDoc\": false,\n    \"beneficiary.tax.usTaxResident\": false,\n    \"beneficiary.tax.usResident\": false,\n    \"beneficiary.tax.foreignTaxResident\": false,\n    \"beneficiary.contacts.email\": \"pa.test.02@example.com\"\n  }\n}",
+              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"511201186251\",\n    \"beneficiary.participationId\": \"TEST-552976161977\",\n    \"beneficiary.contacts.phone\": \"9632449030\",\n    \"beneficiary.status.startDate\": \"2023-05-29\",\n    \"beneficiary.fl.lastName\": \"Стаценко\",\n    \"beneficiary.fl.firstName\": \"Анастасия\",\n    \"beneficiary.fl.middleName\": \"Владимировна\",\n    \"beneficiary.fl.birthDate\": \"1999-11-12\",\n    \"beneficiary.fl.birthPlace\": \"Г. МУРМАНСК\",\n    \"beneficiary.fl.citizenshipCode\": \"RU\",\n    \"beneficiary.address.registration.addressLine\": \"Мурманская обл, г Снежногорск, ул Мира, д 12, кв 187\",\n    \"beneficiary.address.registration.countryCode\": \"RU\",\n    \"beneficiary.idDoc.typeCode\": \"21\",\n    \"beneficiary.idDoc.typeName\": \"Паспорт РФ\",\n    \"beneficiary.idDoc.series\": \"4719\",\n    \"beneficiary.idDoc.number\": \"671983\",\n    \"beneficiary.idDoc.issueDate\": \"2019-11-13\",\n    \"beneficiary.idDoc.issuer\": \"УМВД РОССИИ ПО МУРМАНСКОЙ ОБЛАСТИ\",\n    \"beneficiary.idDoc.issuerCode\": \"510-001\",\n    \"beneficiary.idDoc.isForeignIdDoc\": false,\n    \"beneficiary.tax.usTaxResident\": false,\n    \"beneficiary.tax.usResident\": false,\n    \"beneficiary.tax.foreignTaxResident\": false,\n    \"beneficiary.contacts.email\": \"pa.test.02@example.com\"\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -484,7 +484,7 @@
                 "validate"
               ]
             },
-            "description": "Сценарий: FV-POS-02\nГруппа: Full validation / позитив\nPipeline: entrypoints.b.fl_resident.full_validation\nExcel row: 11\nКейс: Индивидуальный предприниматель Стаценко Анастасия Владимировна\nИсточник: Источник + ручное обогащение недостающих технических полей\nРучное обогащение: Добавлены технические поля, которых нет в выгрузке: participationId, issuerCode, isForeignIdDoc=false, tax-флаги=false, email.\nОжидание: Позитивный full_validation: ошибок правил не ожидается\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
+            "description": "Сценарий: FV-POS-02\nГруппа: Full validation / позитив\nPipeline: entrypoints.fl_resident.full_validation\nExcel row: 11\nКейс: Индивидуальный предприниматель Стаценко Анастасия Владимировна\nИсточник: Источник + ручное обогащение недостающих технических полей\nРучное обогащение: Добавлены технические поля, которых нет в выгрузке: participationId, issuerCode, isForeignIdDoc=false, tax-флаги=false, email.\nОжидание: Позитивный full_validation: ошибок правил не ожидается\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
           },
           "response": []
         },
@@ -561,7 +561,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.b.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"366110509430\",\n    \"beneficiary.participationId\": \"TEST-553678199916\",\n    \"beneficiary.contacts.phone\": \"9257578736\",\n    \"beneficiary.status.startDate\": \"2024-02-21\",\n    \"beneficiary.fl.lastName\": \"Меркулов\",\n    \"beneficiary.fl.firstName\": \"Олег\",\n    \"beneficiary.fl.middleName\": \"Геннадьевич\",\n    \"beneficiary.fl.birthDate\": \"1988-04-16\",\n    \"beneficiary.fl.birthPlace\": \"г. Воронеж\",\n    \"beneficiary.fl.citizenshipCode\": \"RU\",\n    \"beneficiary.address.registration.addressLine\": \"г Москва, ул Молдавская, д 2 к 1, кв 11\",\n    \"beneficiary.address.registration.countryCode\": \"RU\",\n    \"beneficiary.idDoc.typeCode\": \"21\",\n    \"beneficiary.idDoc.typeName\": \"Паспорт РФ\",\n    \"beneficiary.idDoc.series\": \"4518\",\n    \"beneficiary.idDoc.number\": \"917951\",\n    \"beneficiary.idDoc.issueDate\": \"2018-10-16\",\n    \"beneficiary.idDoc.issuer\": \"ГУ МВД РОССИИ ПО Г. МОСКВЕ\",\n    \"beneficiary.idDoc.issuerCode\": \"770-002\",\n    \"beneficiary.idDoc.isForeignIdDoc\": false,\n    \"beneficiary.tax.usTaxResident\": false,\n    \"beneficiary.tax.usResident\": false,\n    \"beneficiary.tax.foreignTaxResident\": false,\n    \"beneficiary.contacts.email\": \"pa.test.03@example.com\"\n  }\n}",
+              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"366110509430\",\n    \"beneficiary.participationId\": \"TEST-553678199916\",\n    \"beneficiary.contacts.phone\": \"9257578736\",\n    \"beneficiary.status.startDate\": \"2024-02-21\",\n    \"beneficiary.fl.lastName\": \"Меркулов\",\n    \"beneficiary.fl.firstName\": \"Олег\",\n    \"beneficiary.fl.middleName\": \"Геннадьевич\",\n    \"beneficiary.fl.birthDate\": \"1988-04-16\",\n    \"beneficiary.fl.birthPlace\": \"г. Воронеж\",\n    \"beneficiary.fl.citizenshipCode\": \"RU\",\n    \"beneficiary.address.registration.addressLine\": \"г Москва, ул Молдавская, д 2 к 1, кв 11\",\n    \"beneficiary.address.registration.countryCode\": \"RU\",\n    \"beneficiary.idDoc.typeCode\": \"21\",\n    \"beneficiary.idDoc.typeName\": \"Паспорт РФ\",\n    \"beneficiary.idDoc.series\": \"4518\",\n    \"beneficiary.idDoc.number\": \"917951\",\n    \"beneficiary.idDoc.issueDate\": \"2018-10-16\",\n    \"beneficiary.idDoc.issuer\": \"ГУ МВД РОССИИ ПО Г. МОСКВЕ\",\n    \"beneficiary.idDoc.issuerCode\": \"770-002\",\n    \"beneficiary.idDoc.isForeignIdDoc\": false,\n    \"beneficiary.tax.usTaxResident\": false,\n    \"beneficiary.tax.usResident\": false,\n    \"beneficiary.tax.foreignTaxResident\": false,\n    \"beneficiary.contacts.email\": \"pa.test.03@example.com\"\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -578,12 +578,12 @@
                 "validate"
               ]
             },
-            "description": "Сценарий: FV-POS-03\nГруппа: Full validation / позитив\nPipeline: entrypoints.b.fl_resident.full_validation\nExcel row: 21\nКейс: Индивидуальный предприниматель Меркулов Олег Геннадьевич\nИсточник: Источник + ручное обогащение недостающих технических полей\nРучное обогащение: Добавлены технические поля, которых нет в выгрузке: participationId, issuerCode, isForeignIdDoc=false, tax-флаги=false, email.\nОжидание: Позитивный full_validation: ошибок правил не ожидается\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
+            "description": "Сценарий: FV-POS-03\nГруппа: Full validation / позитив\nPipeline: entrypoints.fl_resident.full_validation\nExcel row: 21\nКейс: Индивидуальный предприниматель Меркулов Олег Геннадьевич\nИсточник: Источник + ручное обогащение недостающих технических полей\nРучное обогащение: Добавлены технические поля, которых нет в выгрузке: participationId, issuerCode, isForeignIdDoc=false, tax-флаги=false, email.\nОжидание: Позитивный full_validation: ошибок правил не ожидается\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
           },
           "response": []
         }
       ],
-      "description": "Позитивные сценарии для entrypoints.b.fl_resident.full_validation"
+      "description": "Позитивные сценарии для entrypoints.fl_resident.full_validation"
     },
     {
       "name": "Full validation / негатив",
@@ -661,7 +661,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.b.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"744404355804\",\n    \"beneficiary.contacts.phone\": \"9801611004\",\n    \"beneficiary.status.startDate\": \"2024-01-26\",\n    \"beneficiary.fl.lastName\": \"Петров\",\n    \"beneficiary.fl.firstName\": \"Алексей\",\n    \"beneficiary.fl.middleName\": \"Анатольевич\",\n    \"beneficiary.fl.birthDate\": \"1979-12-01\",\n    \"beneficiary.fl.birthPlace\": \"гор. МАГНИТОГОРСК ЧЕЛЯБИНСКОЙ ОБЛАСТИ\",\n    \"beneficiary.fl.citizenshipCode\": \"RU\",\n    \"beneficiary.address.registration.addressLine\": \"350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20\",\n    \"beneficiary.address.registration.countryCode\": \"RU\",\n    \"beneficiary.idDoc.typeCode\": \"21\",\n    \"beneficiary.idDoc.typeName\": \"Паспорт РФ\",\n    \"beneficiary.idDoc.series\": \"4507\",\n    \"beneficiary.idDoc.number\": \"360952\",\n    \"beneficiary.idDoc.issueDate\": \"2004-03-29\",\n    \"beneficiary.idDoc.issuer\": \"ОВД РАЙОНА \\\"БОГОРОДСКОЕ\\\" ГОРОДА МОСКВЫ\",\n    \"beneficiary.idDoc.issuerCode\": \"770-001\",\n    \"beneficiary.idDoc.isForeignIdDoc\": false,\n    \"beneficiary.tax.usTaxResident\": false,\n    \"beneficiary.tax.usResident\": false,\n    \"beneficiary.tax.foreignTaxResident\": false,\n    \"beneficiary.contacts.email\": \"pa.test.01@example.com\"\n  }\n}",
+              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"744404355804\",\n    \"beneficiary.contacts.phone\": \"9801611004\",\n    \"beneficiary.status.startDate\": \"2024-01-26\",\n    \"beneficiary.fl.lastName\": \"Петров\",\n    \"beneficiary.fl.firstName\": \"Алексей\",\n    \"beneficiary.fl.middleName\": \"Анатольевич\",\n    \"beneficiary.fl.birthDate\": \"1979-12-01\",\n    \"beneficiary.fl.birthPlace\": \"гор. МАГНИТОГОРСК ЧЕЛЯБИНСКОЙ ОБЛАСТИ\",\n    \"beneficiary.fl.citizenshipCode\": \"RU\",\n    \"beneficiary.address.registration.addressLine\": \"350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20\",\n    \"beneficiary.address.registration.countryCode\": \"RU\",\n    \"beneficiary.idDoc.typeCode\": \"21\",\n    \"beneficiary.idDoc.typeName\": \"Паспорт РФ\",\n    \"beneficiary.idDoc.series\": \"4507\",\n    \"beneficiary.idDoc.number\": \"360952\",\n    \"beneficiary.idDoc.issueDate\": \"2004-03-29\",\n    \"beneficiary.idDoc.issuer\": \"ОВД РАЙОНА \\\"БОГОРОДСКОЕ\\\" ГОРОДА МОСКВЫ\",\n    \"beneficiary.idDoc.issuerCode\": \"770-001\",\n    \"beneficiary.idDoc.isForeignIdDoc\": false,\n    \"beneficiary.tax.usTaxResident\": false,\n    \"beneficiary.tax.usResident\": false,\n    \"beneficiary.tax.foreignTaxResident\": false,\n    \"beneficiary.contacts.email\": \"pa.test.01@example.com\"\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -678,7 +678,7 @@
                 "validate"
               ]
             },
-            "description": "Сценарий: FV-NEG-01\nГруппа: Full validation / негатив\nPipeline: entrypoints.b.fl_resident.full_validation\nExcel row: 7\nКейс: Индивидуальный предприниматель Петров Алексей Анатольевич\nИсточник: Источник + мутация\nРучное обогащение: Использован позитивный шаблон и намеренно изменено одно/несколько полей\nОжидание: Ожидаемый код: BEN.PARTICIPATION.REQUIRED\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
+            "description": "Сценарий: FV-NEG-01\nГруппа: Full validation / негатив\nPipeline: entrypoints.fl_resident.full_validation\nExcel row: 7\nКейс: Индивидуальный предприниматель Петров Алексей Анатольевич\nИсточник: Источник + мутация\nРучное обогащение: Использован позитивный шаблон и намеренно изменено одно/несколько полей\nОжидание: Ожидаемый код: BEN.PARTICIPATION.REQUIRED\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
           },
           "response": []
         },
@@ -755,7 +755,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.b.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"744404355804\",\n    \"beneficiary.participationId\": \"TEST-536779508951\",\n    \"beneficiary.contacts.phone\": \"9801611004\",\n    \"beneficiary.status.startDate\": \"2024-01-26\",\n    \"beneficiary.fl.lastName\": \"Петров\",\n    \"beneficiary.fl.firstName\": \"Алексей\",\n    \"beneficiary.fl.middleName\": \"Анатольевич\",\n    \"beneficiary.fl.birthDate\": \"1979-12-01\",\n    \"beneficiary.fl.birthPlace\": \"гор. МАГНИТОГОРСК ЧЕЛЯБИНСКОЙ ОБЛАСТИ\",\n    \"beneficiary.fl.citizenshipCode\": \"RU\",\n    \"beneficiary.address.registration.addressLine\": \"350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20\",\n    \"beneficiary.address.registration.countryCode\": \"RU\",\n    \"beneficiary.idDoc.typeCode\": \"21\",\n    \"beneficiary.idDoc.typeName\": \"Паспорт РФ\",\n    \"beneficiary.idDoc.series\": \"4507\",\n    \"beneficiary.idDoc.number\": \"360952\",\n    \"beneficiary.idDoc.issueDate\": \"2004-03-29\",\n    \"beneficiary.idDoc.issuer\": \"ОВД РАЙОНА \\\"БОГОРОДСКОЕ\\\" ГОРОДА МОСКВЫ\",\n    \"beneficiary.idDoc.isForeignIdDoc\": false,\n    \"beneficiary.tax.usTaxResident\": false,\n    \"beneficiary.tax.usResident\": false,\n    \"beneficiary.tax.foreignTaxResident\": false,\n    \"beneficiary.contacts.email\": \"pa.test.01@example.com\"\n  }\n}",
+              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"744404355804\",\n    \"beneficiary.participationId\": \"TEST-536779508951\",\n    \"beneficiary.contacts.phone\": \"9801611004\",\n    \"beneficiary.status.startDate\": \"2024-01-26\",\n    \"beneficiary.fl.lastName\": \"Петров\",\n    \"beneficiary.fl.firstName\": \"Алексей\",\n    \"beneficiary.fl.middleName\": \"Анатольевич\",\n    \"beneficiary.fl.birthDate\": \"1979-12-01\",\n    \"beneficiary.fl.birthPlace\": \"гор. МАГНИТОГОРСК ЧЕЛЯБИНСКОЙ ОБЛАСТИ\",\n    \"beneficiary.fl.citizenshipCode\": \"RU\",\n    \"beneficiary.address.registration.addressLine\": \"350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20\",\n    \"beneficiary.address.registration.countryCode\": \"RU\",\n    \"beneficiary.idDoc.typeCode\": \"21\",\n    \"beneficiary.idDoc.typeName\": \"Паспорт РФ\",\n    \"beneficiary.idDoc.series\": \"4507\",\n    \"beneficiary.idDoc.number\": \"360952\",\n    \"beneficiary.idDoc.issueDate\": \"2004-03-29\",\n    \"beneficiary.idDoc.issuer\": \"ОВД РАЙОНА \\\"БОГОРОДСКОЕ\\\" ГОРОДА МОСКВЫ\",\n    \"beneficiary.idDoc.isForeignIdDoc\": false,\n    \"beneficiary.tax.usTaxResident\": false,\n    \"beneficiary.tax.usResident\": false,\n    \"beneficiary.tax.foreignTaxResident\": false,\n    \"beneficiary.contacts.email\": \"pa.test.01@example.com\"\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -772,7 +772,7 @@
                 "validate"
               ]
             },
-            "description": "Сценарий: FV-NEG-02\nГруппа: Full validation / негатив\nPipeline: entrypoints.b.fl_resident.full_validation\nExcel row: 7\nКейс: Индивидуальный предприниматель Петров Алексей Анатольевич\nИсточник: Источник + мутация\nРучное обогащение: Использован позитивный шаблон и намеренно изменено одно/несколько полей\nОжидание: Показывает, что raw-выгрузка не подходит как готовый full payload\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
+            "description": "Сценарий: FV-NEG-02\nГруппа: Full validation / негатив\nPipeline: entrypoints.fl_resident.full_validation\nExcel row: 7\nКейс: Индивидуальный предприниматель Петров Алексей Анатольевич\nИсточник: Источник + мутация\nРучное обогащение: Использован позитивный шаблон и намеренно изменено одно/несколько полей\nОжидание: Показывает, что raw-выгрузка не подходит как готовый full payload\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
           },
           "response": []
         },
@@ -849,7 +849,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.b.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"51120118625\",\n    \"beneficiary.participationId\": \"TEST-552976161977\",\n    \"beneficiary.contacts.phone\": \"9632449030\",\n    \"beneficiary.status.startDate\": \"2023-05-29\",\n    \"beneficiary.fl.lastName\": \"Стаценко\",\n    \"beneficiary.fl.firstName\": \"Анастасия\",\n    \"beneficiary.fl.middleName\": \"Владимировна\",\n    \"beneficiary.fl.birthDate\": \"1999-11-12\",\n    \"beneficiary.fl.birthPlace\": \"Г. МУРМАНСК\",\n    \"beneficiary.fl.citizenshipCode\": \"RU\",\n    \"beneficiary.address.registration.addressLine\": \"Мурманская обл, г Снежногорск, ул Мира, д 12, кв 187\",\n    \"beneficiary.address.registration.countryCode\": \"RU\",\n    \"beneficiary.idDoc.typeCode\": \"21\",\n    \"beneficiary.idDoc.typeName\": \"Паспорт РФ\",\n    \"beneficiary.idDoc.series\": \"4719\",\n    \"beneficiary.idDoc.number\": \"671983\",\n    \"beneficiary.idDoc.issueDate\": \"2019-11-13\",\n    \"beneficiary.idDoc.issuer\": \"УМВД РОССИИ ПО МУРМАНСКОЙ ОБЛАСТИ\",\n    \"beneficiary.idDoc.issuerCode\": \"510-001\",\n    \"beneficiary.idDoc.isForeignIdDoc\": false,\n    \"beneficiary.tax.usTaxResident\": false,\n    \"beneficiary.tax.usResident\": false,\n    \"beneficiary.tax.foreignTaxResident\": false,\n    \"beneficiary.contacts.email\": \"pa.test.02@example.com\"\n  }\n}",
+              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"51120118625\",\n    \"beneficiary.participationId\": \"TEST-552976161977\",\n    \"beneficiary.contacts.phone\": \"9632449030\",\n    \"beneficiary.status.startDate\": \"2023-05-29\",\n    \"beneficiary.fl.lastName\": \"Стаценко\",\n    \"beneficiary.fl.firstName\": \"Анастасия\",\n    \"beneficiary.fl.middleName\": \"Владимировна\",\n    \"beneficiary.fl.birthDate\": \"1999-11-12\",\n    \"beneficiary.fl.birthPlace\": \"Г. МУРМАНСК\",\n    \"beneficiary.fl.citizenshipCode\": \"RU\",\n    \"beneficiary.address.registration.addressLine\": \"Мурманская обл, г Снежногорск, ул Мира, д 12, кв 187\",\n    \"beneficiary.address.registration.countryCode\": \"RU\",\n    \"beneficiary.idDoc.typeCode\": \"21\",\n    \"beneficiary.idDoc.typeName\": \"Паспорт РФ\",\n    \"beneficiary.idDoc.series\": \"4719\",\n    \"beneficiary.idDoc.number\": \"671983\",\n    \"beneficiary.idDoc.issueDate\": \"2019-11-13\",\n    \"beneficiary.idDoc.issuer\": \"УМВД РОССИИ ПО МУРМАНСКОЙ ОБЛАСТИ\",\n    \"beneficiary.idDoc.issuerCode\": \"510-001\",\n    \"beneficiary.idDoc.isForeignIdDoc\": false,\n    \"beneficiary.tax.usTaxResident\": false,\n    \"beneficiary.tax.usResident\": false,\n    \"beneficiary.tax.foreignTaxResident\": false,\n    \"beneficiary.contacts.email\": \"pa.test.02@example.com\"\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -866,7 +866,7 @@
                 "validate"
               ]
             },
-            "description": "Сценарий: FV-NEG-03\nГруппа: Full validation / негатив\nPipeline: entrypoints.b.fl_resident.full_validation\nExcel row: 11\nКейс: Индивидуальный предприниматель Стаценко Анастасия Владимировна\nИсточник: Источник + мутация\nРучное обогащение: Использован позитивный шаблон и намеренно изменено одно/несколько полей\nОжидание: Нарушение формата ИНН\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
+            "description": "Сценарий: FV-NEG-03\nГруппа: Full validation / негатив\nPipeline: entrypoints.fl_resident.full_validation\nExcel row: 11\nКейс: Индивидуальный предприниматель Стаценко Анастасия Владимировна\nИсточник: Источник + мутация\nРучное обогащение: Использован позитивный шаблон и намеренно изменено одно/несколько полей\nОжидание: Нарушение формата ИНН\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
           },
           "response": []
         },
@@ -943,7 +943,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.b.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"511201186251\",\n    \"beneficiary.participationId\": \"TEST-552976161977\",\n    \"beneficiary.contacts.phone\": \"9632449030\",\n    \"beneficiary.status.startDate\": \"2023-05-29\",\n    \"beneficiary.fl.lastName\": \"Стаценко\",\n    \"beneficiary.fl.firstName\": \"Анастасия\",\n    \"beneficiary.fl.middleName\": \"Владимировна\",\n    \"beneficiary.fl.birthDate\": \"1999-11-12\",\n    \"beneficiary.fl.birthPlace\": \"Г. МУРМАНСК\",\n    \"beneficiary.fl.citizenshipCode\": \"US\",\n    \"beneficiary.address.registration.addressLine\": \"Мурманская обл, г Снежногорск, ул Мира, д 12, кв 187\",\n    \"beneficiary.address.registration.countryCode\": \"RU\",\n    \"beneficiary.idDoc.typeCode\": \"21\",\n    \"beneficiary.idDoc.typeName\": \"Паспорт РФ\",\n    \"beneficiary.idDoc.series\": \"4719\",\n    \"beneficiary.idDoc.number\": \"671983\",\n    \"beneficiary.idDoc.issueDate\": \"2019-11-13\",\n    \"beneficiary.idDoc.issuer\": \"УМВД РОССИИ ПО МУРМАНСКОЙ ОБЛАСТИ\",\n    \"beneficiary.idDoc.issuerCode\": \"510-001\",\n    \"beneficiary.idDoc.isForeignIdDoc\": false,\n    \"beneficiary.tax.usTaxResident\": false,\n    \"beneficiary.tax.usResident\": false,\n    \"beneficiary.tax.foreignTaxResident\": false,\n    \"beneficiary.contacts.email\": \"pa.test.02@example.com\"\n  }\n}",
+              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"511201186251\",\n    \"beneficiary.participationId\": \"TEST-552976161977\",\n    \"beneficiary.contacts.phone\": \"9632449030\",\n    \"beneficiary.status.startDate\": \"2023-05-29\",\n    \"beneficiary.fl.lastName\": \"Стаценко\",\n    \"beneficiary.fl.firstName\": \"Анастасия\",\n    \"beneficiary.fl.middleName\": \"Владимировна\",\n    \"beneficiary.fl.birthDate\": \"1999-11-12\",\n    \"beneficiary.fl.birthPlace\": \"Г. МУРМАНСК\",\n    \"beneficiary.fl.citizenshipCode\": \"US\",\n    \"beneficiary.address.registration.addressLine\": \"Мурманская обл, г Снежногорск, ул Мира, д 12, кв 187\",\n    \"beneficiary.address.registration.countryCode\": \"RU\",\n    \"beneficiary.idDoc.typeCode\": \"21\",\n    \"beneficiary.idDoc.typeName\": \"Паспорт РФ\",\n    \"beneficiary.idDoc.series\": \"4719\",\n    \"beneficiary.idDoc.number\": \"671983\",\n    \"beneficiary.idDoc.issueDate\": \"2019-11-13\",\n    \"beneficiary.idDoc.issuer\": \"УМВД РОССИИ ПО МУРМАНСКОЙ ОБЛАСТИ\",\n    \"beneficiary.idDoc.issuerCode\": \"510-001\",\n    \"beneficiary.idDoc.isForeignIdDoc\": false,\n    \"beneficiary.tax.usTaxResident\": false,\n    \"beneficiary.tax.usResident\": false,\n    \"beneficiary.tax.foreignTaxResident\": false,\n    \"beneficiary.contacts.email\": \"pa.test.02@example.com\"\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -960,7 +960,7 @@
                 "validate"
               ]
             },
-            "description": "Сценарий: FV-NEG-04\nГруппа: Full validation / негатив\nPipeline: entrypoints.b.fl_resident.full_validation\nExcel row: 11\nКейс: Индивидуальный предприниматель Стаценко Анастасия Владимировна\nИсточник: Источник + мутация\nРучное обогащение: Использован позитивный шаблон и намеренно изменено одно/несколько полей\nОжидание: Запрет citizenshipCode=US\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
+            "description": "Сценарий: FV-NEG-04\nГруппа: Full validation / негатив\nPipeline: entrypoints.fl_resident.full_validation\nExcel row: 11\nКейс: Индивидуальный предприниматель Стаценко Анастасия Владимировна\nИсточник: Источник + мутация\nРучное обогащение: Использован позитивный шаблон и намеренно изменено одно/несколько полей\nОжидание: Запрет citizenshipCode=US\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
           },
           "response": []
         },
@@ -1037,7 +1037,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.b.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"366110509430\",\n    \"beneficiary.participationId\": \"TEST-553678199916\",\n    \"beneficiary.contacts.phone\": \"9257578736\",\n    \"beneficiary.status.startDate\": \"2024-02-21\",\n    \"beneficiary.fl.lastName\": \"Меркулов\",\n    \"beneficiary.fl.firstName\": \"Олег\",\n    \"beneficiary.fl.middleName\": \"Геннадьевич\",\n    \"beneficiary.fl.birthDate\": \"1988-04-16\",\n    \"beneficiary.fl.birthPlace\": \"USA, New York\",\n    \"beneficiary.fl.citizenshipCode\": \"RU\",\n    \"beneficiary.address.registration.addressLine\": \"г Москва, ул Молдавская, д 2 к 1, кв 11\",\n    \"beneficiary.address.registration.countryCode\": \"RU\",\n    \"beneficiary.idDoc.typeCode\": \"21\",\n    \"beneficiary.idDoc.typeName\": \"Паспорт РФ\",\n    \"beneficiary.idDoc.series\": \"4518\",\n    \"beneficiary.idDoc.number\": \"917951\",\n    \"beneficiary.idDoc.issueDate\": \"2018-10-16\",\n    \"beneficiary.idDoc.issuer\": \"ГУ МВД РОССИИ ПО Г. МОСКВЕ\",\n    \"beneficiary.idDoc.issuerCode\": \"770-002\",\n    \"beneficiary.idDoc.isForeignIdDoc\": false,\n    \"beneficiary.tax.usTaxResident\": false,\n    \"beneficiary.tax.usResident\": false,\n    \"beneficiary.tax.foreignTaxResident\": false,\n    \"beneficiary.contacts.email\": \"pa.test.03@example.com\"\n  }\n}",
+              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"366110509430\",\n    \"beneficiary.participationId\": \"TEST-553678199916\",\n    \"beneficiary.contacts.phone\": \"9257578736\",\n    \"beneficiary.status.startDate\": \"2024-02-21\",\n    \"beneficiary.fl.lastName\": \"Меркулов\",\n    \"beneficiary.fl.firstName\": \"Олег\",\n    \"beneficiary.fl.middleName\": \"Геннадьевич\",\n    \"beneficiary.fl.birthDate\": \"1988-04-16\",\n    \"beneficiary.fl.birthPlace\": \"USA, New York\",\n    \"beneficiary.fl.citizenshipCode\": \"RU\",\n    \"beneficiary.address.registration.addressLine\": \"г Москва, ул Молдавская, д 2 к 1, кв 11\",\n    \"beneficiary.address.registration.countryCode\": \"RU\",\n    \"beneficiary.idDoc.typeCode\": \"21\",\n    \"beneficiary.idDoc.typeName\": \"Паспорт РФ\",\n    \"beneficiary.idDoc.series\": \"4518\",\n    \"beneficiary.idDoc.number\": \"917951\",\n    \"beneficiary.idDoc.issueDate\": \"2018-10-16\",\n    \"beneficiary.idDoc.issuer\": \"ГУ МВД РОССИИ ПО Г. МОСКВЕ\",\n    \"beneficiary.idDoc.issuerCode\": \"770-002\",\n    \"beneficiary.idDoc.isForeignIdDoc\": false,\n    \"beneficiary.tax.usTaxResident\": false,\n    \"beneficiary.tax.usResident\": false,\n    \"beneficiary.tax.foreignTaxResident\": false,\n    \"beneficiary.contacts.email\": \"pa.test.03@example.com\"\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1054,7 +1054,7 @@
                 "validate"
               ]
             },
-            "description": "Сценарий: FV-NEG-05\nГруппа: Full validation / негатив\nPipeline: entrypoints.b.fl_resident.full_validation\nExcel row: 21\nКейс: Индивидуальный предприниматель Меркулов Олег Геннадьевич\nИсточник: Источник + мутация\nРучное обогащение: Использован позитивный шаблон и намеренно изменено одно/несколько полей\nОжидание: Запрет birthPlace на США\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
+            "description": "Сценарий: FV-NEG-05\nГруппа: Full validation / негатив\nPipeline: entrypoints.fl_resident.full_validation\nExcel row: 21\nКейс: Индивидуальный предприниматель Меркулов Олег Геннадьевич\nИсточник: Источник + мутация\nРучное обогащение: Использован позитивный шаблон и намеренно изменено одно/несколько полей\nОжидание: Запрет birthPlace на США\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
           },
           "response": []
         },
@@ -1131,7 +1131,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.b.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"366110509430\",\n    \"beneficiary.participationId\": \"TEST-553678199916\",\n    \"beneficiary.contacts.phone\": \"9257578736\",\n    \"beneficiary.status.startDate\": \"2024-02-21\",\n    \"beneficiary.fl.lastName\": \"Меркулов\",\n    \"beneficiary.fl.firstName\": \"Олег\",\n    \"beneficiary.fl.middleName\": \"Геннадьевич\",\n    \"beneficiary.fl.birthDate\": \"1988-04-16\",\n    \"beneficiary.fl.birthPlace\": \"г. Воронеж\",\n    \"beneficiary.fl.citizenshipCode\": \"RU\",\n    \"beneficiary.address.registration.addressLine\": \"г Москва, ул Молдавская, д 2 к 1, кв 11\",\n    \"beneficiary.address.registration.countryCode\": \"RU\",\n    \"beneficiary.idDoc.typeCode\": \"21\",\n    \"beneficiary.idDoc.typeName\": \"Паспорт РФ\",\n    \"beneficiary.idDoc.series\": \"0000\",\n    \"beneficiary.idDoc.number\": \"917951\",\n    \"beneficiary.idDoc.issueDate\": \"2018-10-16\",\n    \"beneficiary.idDoc.issuer\": \"ГУ МВД РОССИИ ПО Г. МОСКВЕ\",\n    \"beneficiary.idDoc.issuerCode\": \"770-002\",\n    \"beneficiary.idDoc.isForeignIdDoc\": false,\n    \"beneficiary.tax.usTaxResident\": false,\n    \"beneficiary.tax.usResident\": false,\n    \"beneficiary.tax.foreignTaxResident\": false,\n    \"beneficiary.contacts.email\": \"pa.test.03@example.com\"\n  }\n}",
+              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"366110509430\",\n    \"beneficiary.participationId\": \"TEST-553678199916\",\n    \"beneficiary.contacts.phone\": \"9257578736\",\n    \"beneficiary.status.startDate\": \"2024-02-21\",\n    \"beneficiary.fl.lastName\": \"Меркулов\",\n    \"beneficiary.fl.firstName\": \"Олег\",\n    \"beneficiary.fl.middleName\": \"Геннадьевич\",\n    \"beneficiary.fl.birthDate\": \"1988-04-16\",\n    \"beneficiary.fl.birthPlace\": \"г. Воронеж\",\n    \"beneficiary.fl.citizenshipCode\": \"RU\",\n    \"beneficiary.address.registration.addressLine\": \"г Москва, ул Молдавская, д 2 к 1, кв 11\",\n    \"beneficiary.address.registration.countryCode\": \"RU\",\n    \"beneficiary.idDoc.typeCode\": \"21\",\n    \"beneficiary.idDoc.typeName\": \"Паспорт РФ\",\n    \"beneficiary.idDoc.series\": \"0000\",\n    \"beneficiary.idDoc.number\": \"917951\",\n    \"beneficiary.idDoc.issueDate\": \"2018-10-16\",\n    \"beneficiary.idDoc.issuer\": \"ГУ МВД РОССИИ ПО Г. МОСКВЕ\",\n    \"beneficiary.idDoc.issuerCode\": \"770-002\",\n    \"beneficiary.idDoc.isForeignIdDoc\": false,\n    \"beneficiary.tax.usTaxResident\": false,\n    \"beneficiary.tax.usResident\": false,\n    \"beneficiary.tax.foreignTaxResident\": false,\n    \"beneficiary.contacts.email\": \"pa.test.03@example.com\"\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1148,7 +1148,7 @@
                 "validate"
               ]
             },
-            "description": "Сценарий: FV-NEG-06\nГруппа: Full validation / негатив\nPipeline: entrypoints.b.fl_resident.full_validation\nExcel row: 21\nКейс: Индивидуальный предприниматель Меркулов Олег Геннадьевич\nИсточник: Источник + мутация\nРучное обогащение: Использован позитивный шаблон и намеренно изменено одно/несколько полей\nОжидание: Запрет серии паспорта РФ 0000\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
+            "description": "Сценарий: FV-NEG-06\nГруппа: Full validation / негатив\nPipeline: entrypoints.fl_resident.full_validation\nExcel row: 21\nКейс: Индивидуальный предприниматель Меркулов Олег Геннадьевич\nИсточник: Источник + мутация\nРучное обогащение: Использован позитивный шаблон и намеренно изменено одно/несколько полей\nОжидание: Запрет серии паспорта РФ 0000\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
           },
           "response": []
         },
@@ -1225,7 +1225,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.b.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"744404355804\",\n    \"beneficiary.participationId\": \"TEST-536779508951\",\n    \"beneficiary.contacts.phone\": \"9801611004\",\n    \"beneficiary.status.startDate\": \"2024-01-26\",\n    \"beneficiary.fl.lastName\": \"Петров\",\n    \"beneficiary.fl.firstName\": \"Алексей\",\n    \"beneficiary.fl.middleName\": \"Анатольевич\",\n    \"beneficiary.fl.birthDate\": \"1979-12-01\",\n    \"beneficiary.fl.birthPlace\": \"гор. МАГНИТОГОРСК ЧЕЛЯБИНСКОЙ ОБЛАСТИ\",\n    \"beneficiary.fl.citizenshipCode\": \"RU\",\n    \"beneficiary.address.registration.addressLine\": \"350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20\",\n    \"beneficiary.address.registration.countryCode\": \"RU\",\n    \"beneficiary.idDoc.typeCode\": \"21\",\n    \"beneficiary.idDoc.typeName\": \"Паспорт РФ\",\n    \"beneficiary.idDoc.series\": \"4507\",\n    \"beneficiary.idDoc.number\": \"360952\",\n    \"beneficiary.idDoc.issueDate\": \"2004-03-29\",\n    \"beneficiary.idDoc.issuer\": \"ОВД РАЙОНА \\\"БОГОРОДСКОЕ\\\" ГОРОДА МОСКВЫ\",\n    \"beneficiary.idDoc.issuerCode\": \"770-001\",\n    \"beneficiary.idDoc.isForeignIdDoc\": true,\n    \"beneficiary.tax.usTaxResident\": false,\n    \"beneficiary.tax.usResident\": false,\n    \"beneficiary.tax.foreignTaxResident\": false,\n    \"beneficiary.contacts.email\": \"pa.test.01@example.com\"\n  }\n}",
+              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"744404355804\",\n    \"beneficiary.participationId\": \"TEST-536779508951\",\n    \"beneficiary.contacts.phone\": \"9801611004\",\n    \"beneficiary.status.startDate\": \"2024-01-26\",\n    \"beneficiary.fl.lastName\": \"Петров\",\n    \"beneficiary.fl.firstName\": \"Алексей\",\n    \"beneficiary.fl.middleName\": \"Анатольевич\",\n    \"beneficiary.fl.birthDate\": \"1979-12-01\",\n    \"beneficiary.fl.birthPlace\": \"гор. МАГНИТОГОРСК ЧЕЛЯБИНСКОЙ ОБЛАСТИ\",\n    \"beneficiary.fl.citizenshipCode\": \"RU\",\n    \"beneficiary.address.registration.addressLine\": \"350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20\",\n    \"beneficiary.address.registration.countryCode\": \"RU\",\n    \"beneficiary.idDoc.typeCode\": \"21\",\n    \"beneficiary.idDoc.typeName\": \"Паспорт РФ\",\n    \"beneficiary.idDoc.series\": \"4507\",\n    \"beneficiary.idDoc.number\": \"360952\",\n    \"beneficiary.idDoc.issueDate\": \"2004-03-29\",\n    \"beneficiary.idDoc.issuer\": \"ОВД РАЙОНА \\\"БОГОРОДСКОЕ\\\" ГОРОДА МОСКВЫ\",\n    \"beneficiary.idDoc.issuerCode\": \"770-001\",\n    \"beneficiary.idDoc.isForeignIdDoc\": true,\n    \"beneficiary.tax.usTaxResident\": false,\n    \"beneficiary.tax.usResident\": false,\n    \"beneficiary.tax.foreignTaxResident\": false,\n    \"beneficiary.contacts.email\": \"pa.test.01@example.com\"\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1242,7 +1242,7 @@
                 "validate"
               ]
             },
-            "description": "Сценарий: FV-NEG-07\nГруппа: Full validation / негатив\nPipeline: entrypoints.b.fl_resident.full_validation\nExcel row: 7\nКейс: Индивидуальный предприниматель Петров Алексей Анатольевич\nИсточник: Источник + мутация\nРучное обогащение: Использован позитивный шаблон и намеренно изменено одно/несколько полей\nОжидание: Ожидаемый целевой код: BEN.IDDOC.IS_FOREIGN.CONSISTENT.DOMESTIC; дополнительно возможны ошибки foreign-tax блока, это ожидаемо\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
+            "description": "Сценарий: FV-NEG-07\nГруппа: Full validation / негатив\nPipeline: entrypoints.fl_resident.full_validation\nExcel row: 7\nКейс: Индивидуальный предприниматель Петров Алексей Анатольевич\nИсточник: Источник + мутация\nРучное обогащение: Использован позитивный шаблон и намеренно изменено одно/несколько полей\nОжидание: Ожидаемый целевой код: BEN.IDDOC.IS_FOREIGN.CONSISTENT.DOMESTIC; дополнительно возможны ошибки foreign-tax блока, это ожидаемо\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
           },
           "response": []
         },
@@ -1319,7 +1319,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.b.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"744404355804\",\n    \"beneficiary.participationId\": \"TEST-536779508951\",\n    \"beneficiary.contacts.phone\": \"9801611004\",\n    \"beneficiary.status.startDate\": \"2024-01-26\",\n    \"beneficiary.fl.lastName\": \"Петров\",\n    \"beneficiary.fl.firstName\": \"Алексей\",\n    \"beneficiary.fl.middleName\": \"Анатольевич\",\n    \"beneficiary.fl.birthDate\": \"1979-12-01\",\n    \"beneficiary.fl.birthPlace\": \"гор. МАГНИТОГОРСК ЧЕЛЯБИНСКОЙ ОБЛАСТИ\",\n    \"beneficiary.fl.citizenshipCode\": \"RU\",\n    \"beneficiary.address.registration.addressLine\": \"350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20\",\n    \"beneficiary.address.registration.countryCode\": \"RU\",\n    \"beneficiary.idDoc.typeCode\": \"21\",\n    \"beneficiary.idDoc.typeName\": \"Паспорт РФ\",\n    \"beneficiary.idDoc.series\": \"4507\",\n    \"beneficiary.idDoc.number\": \"360952\",\n    \"beneficiary.idDoc.issueDate\": \"2004-03-29\",\n    \"beneficiary.idDoc.issuer\": \"ОВД РАЙОНА \\\"БОГОРОДСКОЕ\\\" ГОРОДА МОСКВЫ\",\n    \"beneficiary.idDoc.issuerCode\": \"770-001\",\n    \"beneficiary.idDoc.isForeignIdDoc\": false,\n    \"beneficiary.tax.usTaxResident\": false,\n    \"beneficiary.tax.usResident\": false,\n    \"beneficiary.tax.foreignTaxResident\": true,\n    \"beneficiary.contacts.email\": \"pa.test.01@example.com\"\n  }\n}",
+              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"744404355804\",\n    \"beneficiary.participationId\": \"TEST-536779508951\",\n    \"beneficiary.contacts.phone\": \"9801611004\",\n    \"beneficiary.status.startDate\": \"2024-01-26\",\n    \"beneficiary.fl.lastName\": \"Петров\",\n    \"beneficiary.fl.firstName\": \"Алексей\",\n    \"beneficiary.fl.middleName\": \"Анатольевич\",\n    \"beneficiary.fl.birthDate\": \"1979-12-01\",\n    \"beneficiary.fl.birthPlace\": \"гор. МАГНИТОГОРСК ЧЕЛЯБИНСКОЙ ОБЛАСТИ\",\n    \"beneficiary.fl.citizenshipCode\": \"RU\",\n    \"beneficiary.address.registration.addressLine\": \"350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20\",\n    \"beneficiary.address.registration.countryCode\": \"RU\",\n    \"beneficiary.idDoc.typeCode\": \"21\",\n    \"beneficiary.idDoc.typeName\": \"Паспорт РФ\",\n    \"beneficiary.idDoc.series\": \"4507\",\n    \"beneficiary.idDoc.number\": \"360952\",\n    \"beneficiary.idDoc.issueDate\": \"2004-03-29\",\n    \"beneficiary.idDoc.issuer\": \"ОВД РАЙОНА \\\"БОГОРОДСКОЕ\\\" ГОРОДА МОСКВЫ\",\n    \"beneficiary.idDoc.issuerCode\": \"770-001\",\n    \"beneficiary.idDoc.isForeignIdDoc\": false,\n    \"beneficiary.tax.usTaxResident\": false,\n    \"beneficiary.tax.usResident\": false,\n    \"beneficiary.tax.foreignTaxResident\": true,\n    \"beneficiary.contacts.email\": \"pa.test.01@example.com\"\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1336,7 +1336,7 @@
                 "validate"
               ]
             },
-            "description": "Сценарий: FV-NEG-08\nГруппа: Full validation / негатив\nPipeline: entrypoints.b.fl_resident.full_validation\nExcel row: 7\nКейс: Индивидуальный предприниматель Петров Алексей Анатольевич\nИсточник: Источник + мутация\nРучное обогащение: Использован позитивный шаблон и намеренно изменено одно/несколько полей\nОжидание: Должны потребоваться countryCode/tin-or-reason/address\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
+            "description": "Сценарий: FV-NEG-08\nГруппа: Full validation / негатив\nPipeline: entrypoints.fl_resident.full_validation\nExcel row: 7\nКейс: Индивидуальный предприниматель Петров Алексей Анатольевич\nИсточник: Источник + мутация\nРучное обогащение: Использован позитивный шаблон и намеренно изменено одно/несколько полей\nОжидание: Должны потребоваться countryCode/tin-or-reason/address\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
           },
           "response": []
         },
@@ -1413,7 +1413,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.b.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"511201186251\",\n    \"beneficiary.participationId\": \"TEST-552976161977\",\n    \"beneficiary.contacts.phone\": \"9632449030\",\n    \"beneficiary.status.startDate\": \"2023-05-29\",\n    \"beneficiary.fl.lastName\": \"Стаценко\",\n    \"beneficiary.fl.firstName\": \"Анастасия\",\n    \"beneficiary.fl.middleName\": \"Владимировна\",\n    \"beneficiary.fl.birthDate\": \"1999-11-12\",\n    \"beneficiary.fl.birthPlace\": \"Г. МУРМАНСК\",\n    \"beneficiary.fl.citizenshipCode\": \"RU\",\n    \"beneficiary.address.registration.addressLine\": \"Мурманская обл, г Снежногорск, ул Мира, д 12, кв 187\",\n    \"beneficiary.address.registration.countryCode\": \"RU\",\n    \"beneficiary.idDoc.typeCode\": \"21\",\n    \"beneficiary.idDoc.typeName\": \"Паспорт РФ\",\n    \"beneficiary.idDoc.series\": \"4719\",\n    \"beneficiary.idDoc.number\": \"671983\",\n    \"beneficiary.idDoc.issueDate\": \"2019-11-13\",\n    \"beneficiary.idDoc.issuer\": \"УМВД РОССИИ ПО МУРМАНСКОЙ ОБЛАСТИ\",\n    \"beneficiary.idDoc.issuerCode\": \"510-001\",\n    \"beneficiary.idDoc.isForeignIdDoc\": false,\n    \"beneficiary.tax.usTaxResident\": false,\n    \"beneficiary.tax.usResident\": false,\n    \"beneficiary.tax.foreignTaxResident\": false,\n    \"beneficiary.contacts.email\": \"pa.test.02@example.com\",\n    \"beneficiary.contacts.postalAddress\": \"USA, New York\"\n  }\n}",
+              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"511201186251\",\n    \"beneficiary.participationId\": \"TEST-552976161977\",\n    \"beneficiary.contacts.phone\": \"9632449030\",\n    \"beneficiary.status.startDate\": \"2023-05-29\",\n    \"beneficiary.fl.lastName\": \"Стаценко\",\n    \"beneficiary.fl.firstName\": \"Анастасия\",\n    \"beneficiary.fl.middleName\": \"Владимировна\",\n    \"beneficiary.fl.birthDate\": \"1999-11-12\",\n    \"beneficiary.fl.birthPlace\": \"Г. МУРМАНСК\",\n    \"beneficiary.fl.citizenshipCode\": \"RU\",\n    \"beneficiary.address.registration.addressLine\": \"Мурманская обл, г Снежногорск, ул Мира, д 12, кв 187\",\n    \"beneficiary.address.registration.countryCode\": \"RU\",\n    \"beneficiary.idDoc.typeCode\": \"21\",\n    \"beneficiary.idDoc.typeName\": \"Паспорт РФ\",\n    \"beneficiary.idDoc.series\": \"4719\",\n    \"beneficiary.idDoc.number\": \"671983\",\n    \"beneficiary.idDoc.issueDate\": \"2019-11-13\",\n    \"beneficiary.idDoc.issuer\": \"УМВД РОССИИ ПО МУРМАНСКОЙ ОБЛАСТИ\",\n    \"beneficiary.idDoc.issuerCode\": \"510-001\",\n    \"beneficiary.idDoc.isForeignIdDoc\": false,\n    \"beneficiary.tax.usTaxResident\": false,\n    \"beneficiary.tax.usResident\": false,\n    \"beneficiary.tax.foreignTaxResident\": false,\n    \"beneficiary.contacts.email\": \"pa.test.02@example.com\",\n    \"beneficiary.contacts.postalAddress\": \"USA, New York\"\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1430,7 +1430,7 @@
                 "validate"
               ]
             },
-            "description": "Сценарий: FV-NEG-09\nГруппа: Full validation / негатив\nPipeline: entrypoints.b.fl_resident.full_validation\nExcel row: 11\nКейс: Индивидуальный предприниматель Стаценко Анастасия Владимировна\nИсточник: Источник + мутация\nРучное обогащение: Использован позитивный шаблон и намеренно изменено одно/несколько полей\nОжидание: Запрет postalAddress на США\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
+            "description": "Сценарий: FV-NEG-09\nГруппа: Full validation / негатив\nPipeline: entrypoints.fl_resident.full_validation\nExcel row: 11\nКейс: Индивидуальный предприниматель Стаценко Анастасия Владимировна\nИсточник: Источник + мутация\nРучное обогащение: Использован позитивный шаблон и намеренно изменено одно/несколько полей\nОжидание: Запрет postalAddress на США\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
           },
           "response": []
         },
@@ -1507,7 +1507,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.b.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"366110509430\",\n    \"beneficiary.participationId\": \"TEST-553678199916\",\n    \"beneficiary.status.startDate\": \"2024-02-21\",\n    \"beneficiary.fl.lastName\": \"Меркулов\",\n    \"beneficiary.fl.firstName\": \"Олег\",\n    \"beneficiary.fl.middleName\": \"Геннадьевич\",\n    \"beneficiary.fl.birthDate\": \"1988-04-16\",\n    \"beneficiary.fl.birthPlace\": \"г. Воронеж\",\n    \"beneficiary.fl.citizenshipCode\": \"RU\",\n    \"beneficiary.address.registration.addressLine\": \"г Москва, ул Молдавская, д 2 к 1, кв 11\",\n    \"beneficiary.address.registration.countryCode\": \"RU\",\n    \"beneficiary.idDoc.typeCode\": \"21\",\n    \"beneficiary.idDoc.typeName\": \"Паспорт РФ\",\n    \"beneficiary.idDoc.series\": \"4518\",\n    \"beneficiary.idDoc.number\": \"917951\",\n    \"beneficiary.idDoc.issueDate\": \"2018-10-16\",\n    \"beneficiary.idDoc.issuer\": \"ГУ МВД РОССИИ ПО Г. МОСКВЕ\",\n    \"beneficiary.idDoc.issuerCode\": \"770-002\",\n    \"beneficiary.idDoc.isForeignIdDoc\": false,\n    \"beneficiary.tax.usTaxResident\": false,\n    \"beneficiary.tax.usResident\": false,\n    \"beneficiary.tax.foreignTaxResident\": false\n  }\n}",
+              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"366110509430\",\n    \"beneficiary.participationId\": \"TEST-553678199916\",\n    \"beneficiary.status.startDate\": \"2024-02-21\",\n    \"beneficiary.fl.lastName\": \"Меркулов\",\n    \"beneficiary.fl.firstName\": \"Олег\",\n    \"beneficiary.fl.middleName\": \"Геннадьевич\",\n    \"beneficiary.fl.birthDate\": \"1988-04-16\",\n    \"beneficiary.fl.birthPlace\": \"г. Воронеж\",\n    \"beneficiary.fl.citizenshipCode\": \"RU\",\n    \"beneficiary.address.registration.addressLine\": \"г Москва, ул Молдавская, д 2 к 1, кв 11\",\n    \"beneficiary.address.registration.countryCode\": \"RU\",\n    \"beneficiary.idDoc.typeCode\": \"21\",\n    \"beneficiary.idDoc.typeName\": \"Паспорт РФ\",\n    \"beneficiary.idDoc.series\": \"4518\",\n    \"beneficiary.idDoc.number\": \"917951\",\n    \"beneficiary.idDoc.issueDate\": \"2018-10-16\",\n    \"beneficiary.idDoc.issuer\": \"ГУ МВД РОССИИ ПО Г. МОСКВЕ\",\n    \"beneficiary.idDoc.issuerCode\": \"770-002\",\n    \"beneficiary.idDoc.isForeignIdDoc\": false,\n    \"beneficiary.tax.usTaxResident\": false,\n    \"beneficiary.tax.usResident\": false,\n    \"beneficiary.tax.foreignTaxResident\": false\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1524,7 +1524,7 @@
                 "validate"
               ]
             },
-            "description": "Сценарий: FV-NEG-10\nГруппа: Full validation / негатив\nPipeline: entrypoints.b.fl_resident.full_validation\nExcel row: 21\nКейс: Индивидуальный предприниматель Меркулов Олег Геннадьевич\nИсточник: Источник + мутация\nРучное обогащение: Использован позитивный шаблон и намеренно изменено одно/несколько полей\nОжидание: Ожидаемый код: BEN.CONTACTS.MIN_ONE\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
+            "description": "Сценарий: FV-NEG-10\nГруппа: Full validation / негатив\nPipeline: entrypoints.fl_resident.full_validation\nExcel row: 21\nКейс: Индивидуальный предприниматель Меркулов Олег Геннадьевич\nИсточник: Источник + мутация\nРучное обогащение: Использован позитивный шаблон и намеренно изменено одно/несколько полей\nОжидание: Ожидаемый код: BEN.CONTACTS.MIN_ONE\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
           },
           "response": []
         },
@@ -1601,7 +1601,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.b.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"744404355804\",\n    \"beneficiary.participationId\": \"TEST-536779508951\",\n    \"beneficiary.contacts.phone\": \"9801611004\",\n    \"beneficiary.status.startDate\": \"2024-01-26\",\n    \"beneficiary.fl.lastName\": \"Петров\",\n    \"beneficiary.fl.firstName\": \"Алексей\",\n    \"beneficiary.fl.middleName\": \"Анатольевич\",\n    \"beneficiary.fl.birthDate\": \"1979-12-01\",\n    \"beneficiary.fl.birthPlace\": \"гор. МАГНИТОГОРСК ЧЕЛЯБИНСКОЙ ОБЛАСТИ\",\n    \"beneficiary.fl.citizenshipCode\": \"RU\",\n    \"beneficiary.address.registration.addressLine\": \"350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20\",\n    \"beneficiary.address.registration.countryCode\": \"RU\",\n    \"beneficiary.idDoc.typeCode\": \"21\",\n    \"beneficiary.idDoc.typeName\": \"Паспорт РФ\",\n    \"beneficiary.idDoc.series\": \"4507\",\n    \"beneficiary.idDoc.number\": \"360952\",\n    \"beneficiary.idDoc.issueDate\": \"2004-03-29\",\n    \"beneficiary.idDoc.issuer\": \"ОВД РАЙОНА \\\"БОГОРОДСКОЕ\\\" ГОРОДА МОСКВЫ\",\n    \"beneficiary.idDoc.issuerCode\": \"770-001\",\n    \"beneficiary.idDoc.isForeignIdDoc\": false,\n    \"beneficiary.tax.usTaxResident\": true,\n    \"beneficiary.tax.usResident\": false,\n    \"beneficiary.tax.foreignTaxResident\": false,\n    \"beneficiary.contacts.email\": \"pa.test.01@example.com\"\n  }\n}",
+              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"744404355804\",\n    \"beneficiary.participationId\": \"TEST-536779508951\",\n    \"beneficiary.contacts.phone\": \"9801611004\",\n    \"beneficiary.status.startDate\": \"2024-01-26\",\n    \"beneficiary.fl.lastName\": \"Петров\",\n    \"beneficiary.fl.firstName\": \"Алексей\",\n    \"beneficiary.fl.middleName\": \"Анатольевич\",\n    \"beneficiary.fl.birthDate\": \"1979-12-01\",\n    \"beneficiary.fl.birthPlace\": \"гор. МАГНИТОГОРСК ЧЕЛЯБИНСКОЙ ОБЛАСТИ\",\n    \"beneficiary.fl.citizenshipCode\": \"RU\",\n    \"beneficiary.address.registration.addressLine\": \"350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20\",\n    \"beneficiary.address.registration.countryCode\": \"RU\",\n    \"beneficiary.idDoc.typeCode\": \"21\",\n    \"beneficiary.idDoc.typeName\": \"Паспорт РФ\",\n    \"beneficiary.idDoc.series\": \"4507\",\n    \"beneficiary.idDoc.number\": \"360952\",\n    \"beneficiary.idDoc.issueDate\": \"2004-03-29\",\n    \"beneficiary.idDoc.issuer\": \"ОВД РАЙОНА \\\"БОГОРОДСКОЕ\\\" ГОРОДА МОСКВЫ\",\n    \"beneficiary.idDoc.issuerCode\": \"770-001\",\n    \"beneficiary.idDoc.isForeignIdDoc\": false,\n    \"beneficiary.tax.usTaxResident\": true,\n    \"beneficiary.tax.usResident\": false,\n    \"beneficiary.tax.foreignTaxResident\": false,\n    \"beneficiary.contacts.email\": \"pa.test.01@example.com\"\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1618,7 +1618,7 @@
                 "validate"
               ]
             },
-            "description": "Сценарий: FV-NEG-11\nГруппа: Full validation / негатив\nPipeline: entrypoints.b.fl_resident.full_validation\nExcel row: 7\nКейс: Индивидуальный предприниматель Петров Алексей Анатольевич\nИсточник: Источник + мутация\nРучное обогащение: Использован позитивный шаблон и намеренно изменено одно поле\nОжидание: Ожидаемый код: BEN.TAX.US_TAX_RESIDENT.NOT_TRUE\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
+            "description": "Сценарий: FV-NEG-11\nГруппа: Full validation / негатив\nPipeline: entrypoints.fl_resident.full_validation\nExcel row: 7\nКейс: Индивидуальный предприниматель Петров Алексей Анатольевич\nИсточник: Источник + мутация\nРучное обогащение: Использован позитивный шаблон и намеренно изменено одно поле\nОжидание: Ожидаемый код: BEN.TAX.US_TAX_RESIDENT.NOT_TRUE\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
           },
           "response": []
         },
@@ -1695,7 +1695,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.b.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"511201186251\",\n    \"beneficiary.participationId\": \"TEST-552976161977\",\n    \"beneficiary.contacts.phone\": \"9632449030\",\n    \"beneficiary.status.startDate\": \"2023-05-29\",\n    \"beneficiary.fl.lastName\": \"Стаценко\",\n    \"beneficiary.fl.firstName\": \"Анастасия\",\n    \"beneficiary.fl.middleName\": \"Владимировна\",\n    \"beneficiary.fl.birthDate\": \"1999-11-12\",\n    \"beneficiary.fl.birthPlace\": \"Г. МУРМАНСК\",\n    \"beneficiary.fl.citizenshipCode\": \"RU\",\n    \"beneficiary.address.registration.addressLine\": \"Мурманская обл, г Снежногорск, ул Мира, д 12, кв 187\",\n    \"beneficiary.address.registration.countryCode\": \"US\",\n    \"beneficiary.idDoc.typeCode\": \"21\",\n    \"beneficiary.idDoc.typeName\": \"Паспорт РФ\",\n    \"beneficiary.idDoc.series\": \"4719\",\n    \"beneficiary.idDoc.number\": \"671983\",\n    \"beneficiary.idDoc.issueDate\": \"2019-11-13\",\n    \"beneficiary.idDoc.issuer\": \"УМВД РОССИИ ПО МУРМАНСКОЙ ОБЛАСТИ\",\n    \"beneficiary.idDoc.issuerCode\": \"510-001\",\n    \"beneficiary.idDoc.isForeignIdDoc\": false,\n    \"beneficiary.tax.usTaxResident\": false,\n    \"beneficiary.tax.usResident\": false,\n    \"beneficiary.tax.foreignTaxResident\": false,\n    \"beneficiary.contacts.email\": \"pa.test.02@example.com\"\n  }\n}",
+              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"511201186251\",\n    \"beneficiary.participationId\": \"TEST-552976161977\",\n    \"beneficiary.contacts.phone\": \"9632449030\",\n    \"beneficiary.status.startDate\": \"2023-05-29\",\n    \"beneficiary.fl.lastName\": \"Стаценко\",\n    \"beneficiary.fl.firstName\": \"Анастасия\",\n    \"beneficiary.fl.middleName\": \"Владимировна\",\n    \"beneficiary.fl.birthDate\": \"1999-11-12\",\n    \"beneficiary.fl.birthPlace\": \"Г. МУРМАНСК\",\n    \"beneficiary.fl.citizenshipCode\": \"RU\",\n    \"beneficiary.address.registration.addressLine\": \"Мурманская обл, г Снежногорск, ул Мира, д 12, кв 187\",\n    \"beneficiary.address.registration.countryCode\": \"US\",\n    \"beneficiary.idDoc.typeCode\": \"21\",\n    \"beneficiary.idDoc.typeName\": \"Паспорт РФ\",\n    \"beneficiary.idDoc.series\": \"4719\",\n    \"beneficiary.idDoc.number\": \"671983\",\n    \"beneficiary.idDoc.issueDate\": \"2019-11-13\",\n    \"beneficiary.idDoc.issuer\": \"УМВД РОССИИ ПО МУРМАНСКОЙ ОБЛАСТИ\",\n    \"beneficiary.idDoc.issuerCode\": \"510-001\",\n    \"beneficiary.idDoc.isForeignIdDoc\": false,\n    \"beneficiary.tax.usTaxResident\": false,\n    \"beneficiary.tax.usResident\": false,\n    \"beneficiary.tax.foreignTaxResident\": false,\n    \"beneficiary.contacts.email\": \"pa.test.02@example.com\"\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1712,7 +1712,7 @@
                 "validate"
               ]
             },
-            "description": "Сценарий: FV-NEG-12\nГруппа: Full validation / негатив\nPipeline: entrypoints.b.fl_resident.full_validation\nExcel row: 11\nКейс: Индивидуальный предприниматель Стаценко Анастасия Владимировна\nИсточник: Источник + мутация\nРучное обогащение: Использован позитивный шаблон и намеренно изменено одно поле\nОжидание: Ожидаемый код: BEN.ADDRESS.COUNTRY.NOT_US\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
+            "description": "Сценарий: FV-NEG-12\nГруппа: Full validation / негатив\nPipeline: entrypoints.fl_resident.full_validation\nExcel row: 11\nКейс: Индивидуальный предприниматель Стаценко Анастасия Владимировна\nИсточник: Источник + мутация\nРучное обогащение: Использован позитивный шаблон и намеренно изменено одно поле\nОжидание: Ожидаемый код: BEN.ADDRESS.COUNTRY.NOT_US\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
           },
           "response": []
         },
@@ -1789,7 +1789,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.b.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"366110509430\",\n    \"beneficiary.participationId\": \"TEST-553678199916\",\n    \"beneficiary.contacts.phone\": \"9257578736\",\n    \"beneficiary.status.startDate\": \"2024-02-21\",\n    \"beneficiary.fl.lastName\": \"Меркулов\",\n    \"beneficiary.fl.firstName\": \"Олег\",\n    \"beneficiary.fl.middleName\": \"Геннадьевич\",\n    \"beneficiary.fl.birthDate\": \"1988-04-16\",\n    \"beneficiary.fl.birthPlace\": \"г. Воронеж\",\n    \"beneficiary.fl.citizenshipCode\": \"RU\",\n    \"beneficiary.address.registration.addressLine\": \"г Москва, ул Молдавская, д 2 к 1, кв 11\",\n    \"beneficiary.address.registration.countryCode\": \"RU\",\n    \"beneficiary.idDoc.typeCode\": \"21\",\n    \"beneficiary.idDoc.typeName\": \"Паспорт РФ\",\n    \"beneficiary.idDoc.series\": \"4518\",\n    \"beneficiary.idDoc.number\": \"917951\",\n    \"beneficiary.idDoc.issueDate\": \"2018-10-16\",\n    \"beneficiary.idDoc.issuer\": \"ГУ МВД РОССИИ ПО Г. МОСКВЕ\",\n    \"beneficiary.idDoc.issuerCode\": \"770-002\",\n    \"beneficiary.idDoc.isForeignIdDoc\": false,\n    \"beneficiary.tax.usTaxResident\": false,\n    \"beneficiary.tax.usResident\": false,\n    \"beneficiary.tax.foreignTaxResident\": true,\n    \"beneficiary.contacts.email\": \"pa.test.03@example.com\",\n    \"beneficiary.tax.foreignResidencies0.countryCode\": \"DE\",\n    \"beneficiary.tax.foreignResidencies0.tin\": \"DE123456789\",\n    \"beneficiary.tax.foreignResidencies0.address\": \"USA, New York\"\n  }\n}",
+              "raw": "{\n  \"context\": {\n    \"pipelineId\": \"entrypoints.fl_resident.full_validation\"\n  },\n  \"payload\": {\n    \"beneficiary.type\": \"FL_RESIDENT\",\n    \"beneficiary.inn\": \"366110509430\",\n    \"beneficiary.participationId\": \"TEST-553678199916\",\n    \"beneficiary.contacts.phone\": \"9257578736\",\n    \"beneficiary.status.startDate\": \"2024-02-21\",\n    \"beneficiary.fl.lastName\": \"Меркулов\",\n    \"beneficiary.fl.firstName\": \"Олег\",\n    \"beneficiary.fl.middleName\": \"Геннадьевич\",\n    \"beneficiary.fl.birthDate\": \"1988-04-16\",\n    \"beneficiary.fl.birthPlace\": \"г. Воронеж\",\n    \"beneficiary.fl.citizenshipCode\": \"RU\",\n    \"beneficiary.address.registration.addressLine\": \"г Москва, ул Молдавская, д 2 к 1, кв 11\",\n    \"beneficiary.address.registration.countryCode\": \"RU\",\n    \"beneficiary.idDoc.typeCode\": \"21\",\n    \"beneficiary.idDoc.typeName\": \"Паспорт РФ\",\n    \"beneficiary.idDoc.series\": \"4518\",\n    \"beneficiary.idDoc.number\": \"917951\",\n    \"beneficiary.idDoc.issueDate\": \"2018-10-16\",\n    \"beneficiary.idDoc.issuer\": \"ГУ МВД РОССИИ ПО Г. МОСКВЕ\",\n    \"beneficiary.idDoc.issuerCode\": \"770-002\",\n    \"beneficiary.idDoc.isForeignIdDoc\": false,\n    \"beneficiary.tax.usTaxResident\": false,\n    \"beneficiary.tax.usResident\": false,\n    \"beneficiary.tax.foreignTaxResident\": true,\n    \"beneficiary.contacts.email\": \"pa.test.03@example.com\",\n    \"beneficiary.tax.foreignResidencies0.countryCode\": \"DE\",\n    \"beneficiary.tax.foreignResidencies0.tin\": \"DE123456789\",\n    \"beneficiary.tax.foreignResidencies0.address\": \"USA, New York\"\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1806,12 +1806,12 @@
                 "validate"
               ]
             },
-            "description": "Сценарий: FV-NEG-13\nГруппа: Full validation / негатив\nPipeline: entrypoints.b.fl_resident.full_validation\nExcel row: 21\nКейс: Индивидуальный предприниматель Меркулов Олег Геннадьевич\nИсточник: Источник + мутация\nРучное обогащение: Использован позитивный шаблон и намеренно изменено одно поле при заполненном foreign-блоке\nОжидание: Ожидаемый код: BEN.TAX.FOREIGN_ADDRESS.NOT_US\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
+            "description": "Сценарий: FV-NEG-13\nГруппа: Full validation / негатив\nPipeline: entrypoints.fl_resident.full_validation\nExcel row: 21\nКейс: Индивидуальный предприниматель Меркулов Олег Геннадьевич\nИсточник: Источник + мутация\nРучное обогащение: Использован позитивный шаблон и намеренно изменено одно поле при заполненном foreign-блоке\nОжидание: Ожидаемый код: BEN.TAX.FOREIGN_ADDRESS.NOT_US\n\nВстроенные Tests читают ожидания из collectionVariables, поэтому одинаково работают в Postman UI и Newman CLI."
           },
           "response": []
         }
       ],
-      "description": "Негативные сценарии для entrypoints.b.fl_resident.full_validation"
+      "description": "Негативные сценарии для entrypoints.fl_resident.full_validation"
     }
   ],
   "event": [
@@ -1845,7 +1845,7 @@
     },
     {
       "key": "PC-POS-01.expectedPipelineId",
-      "value": "entrypoints.c.fl_resident.precheck_min"
+      "value": "entrypoints.fl_resident.full_validation"
     },
     {
       "key": "PC-POS-01.expectedStatus",
@@ -1861,7 +1861,7 @@
     },
     {
       "key": "PC-POS-02.expectedPipelineId",
-      "value": "entrypoints.c.fl_resident.precheck_min"
+      "value": "entrypoints.fl_resident.full_validation"
     },
     {
       "key": "PC-POS-02.expectedStatus",
@@ -1877,7 +1877,7 @@
     },
     {
       "key": "PC-POS-03.expectedPipelineId",
-      "value": "entrypoints.c.fl_resident.precheck_min"
+      "value": "entrypoints.fl_resident.full_validation"
     },
     {
       "key": "PC-POS-03.expectedStatus",
@@ -1893,7 +1893,7 @@
     },
     {
       "key": "FV-POS-01.expectedPipelineId",
-      "value": "entrypoints.b.fl_resident.full_validation"
+      "value": "entrypoints.fl_resident.full_validation"
     },
     {
       "key": "FV-POS-01.expectedStatus",
@@ -1909,7 +1909,7 @@
     },
     {
       "key": "FV-POS-02.expectedPipelineId",
-      "value": "entrypoints.b.fl_resident.full_validation"
+      "value": "entrypoints.fl_resident.full_validation"
     },
     {
       "key": "FV-POS-02.expectedStatus",
@@ -1925,7 +1925,7 @@
     },
     {
       "key": "FV-POS-03.expectedPipelineId",
-      "value": "entrypoints.b.fl_resident.full_validation"
+      "value": "entrypoints.fl_resident.full_validation"
     },
     {
       "key": "FV-POS-03.expectedStatus",
@@ -1941,7 +1941,7 @@
     },
     {
       "key": "FV-NEG-01.expectedPipelineId",
-      "value": "entrypoints.b.fl_resident.full_validation"
+      "value": "entrypoints.fl_resident.full_validation"
     },
     {
       "key": "FV-NEG-01.expectedStatus",
@@ -1957,7 +1957,7 @@
     },
     {
       "key": "FV-NEG-02.expectedPipelineId",
-      "value": "entrypoints.b.fl_resident.full_validation"
+      "value": "entrypoints.fl_resident.full_validation"
     },
     {
       "key": "FV-NEG-02.expectedStatus",
@@ -1973,7 +1973,7 @@
     },
     {
       "key": "FV-NEG-03.expectedPipelineId",
-      "value": "entrypoints.b.fl_resident.full_validation"
+      "value": "entrypoints.fl_resident.full_validation"
     },
     {
       "key": "FV-NEG-03.expectedStatus",
@@ -1989,7 +1989,7 @@
     },
     {
       "key": "FV-NEG-04.expectedPipelineId",
-      "value": "entrypoints.b.fl_resident.full_validation"
+      "value": "entrypoints.fl_resident.full_validation"
     },
     {
       "key": "FV-NEG-04.expectedStatus",
@@ -2005,7 +2005,7 @@
     },
     {
       "key": "FV-NEG-05.expectedPipelineId",
-      "value": "entrypoints.b.fl_resident.full_validation"
+      "value": "entrypoints.fl_resident.full_validation"
     },
     {
       "key": "FV-NEG-05.expectedStatus",
@@ -2021,7 +2021,7 @@
     },
     {
       "key": "FV-NEG-06.expectedPipelineId",
-      "value": "entrypoints.b.fl_resident.full_validation"
+      "value": "entrypoints.fl_resident.full_validation"
     },
     {
       "key": "FV-NEG-06.expectedStatus",
@@ -2037,7 +2037,7 @@
     },
     {
       "key": "FV-NEG-07.expectedPipelineId",
-      "value": "entrypoints.b.fl_resident.full_validation"
+      "value": "entrypoints.fl_resident.full_validation"
     },
     {
       "key": "FV-NEG-07.expectedStatus",
@@ -2053,7 +2053,7 @@
     },
     {
       "key": "FV-NEG-08.expectedPipelineId",
-      "value": "entrypoints.b.fl_resident.full_validation"
+      "value": "entrypoints.fl_resident.full_validation"
     },
     {
       "key": "FV-NEG-08.expectedStatus",
@@ -2069,7 +2069,7 @@
     },
     {
       "key": "FV-NEG-09.expectedPipelineId",
-      "value": "entrypoints.b.fl_resident.full_validation"
+      "value": "entrypoints.fl_resident.full_validation"
     },
     {
       "key": "FV-NEG-09.expectedStatus",
@@ -2085,7 +2085,7 @@
     },
     {
       "key": "FV-NEG-10.expectedPipelineId",
-      "value": "entrypoints.b.fl_resident.full_validation"
+      "value": "entrypoints.fl_resident.full_validation"
     },
     {
       "key": "FV-NEG-10.expectedStatus",
@@ -2101,7 +2101,7 @@
     },
     {
       "key": "FV-NEG-11.expectedPipelineId",
-      "value": "entrypoints.b.fl_resident.full_validation"
+      "value": "entrypoints.fl_resident.full_validation"
     },
     {
       "key": "FV-NEG-11.expectedStatus",
@@ -2117,7 +2117,7 @@
     },
     {
       "key": "FV-NEG-12.expectedPipelineId",
-      "value": "entrypoints.b.fl_resident.full_validation"
+      "value": "entrypoints.fl_resident.full_validation"
     },
     {
       "key": "FV-NEG-12.expectedStatus",
@@ -2133,7 +2133,7 @@
     },
     {
       "key": "FV-NEG-13.expectedPipelineId",
-      "value": "entrypoints.b.fl_resident.full_validation"
+      "value": "entrypoints.fl_resident.full_validation"
     },
     {
       "key": "FV-NEG-13.expectedStatus",

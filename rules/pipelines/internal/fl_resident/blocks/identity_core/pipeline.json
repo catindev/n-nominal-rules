@@ -1,0 +1,48 @@
+{
+  "id": "internal.fl_resident.blocks.identity_core",
+  "type": "pipeline",
+  "description": "Основные персональные данные",
+  "strict": false,
+  "flow": [
+    {
+      "rule": "library.fl.inn_required"
+    },
+    {
+      "condition": "library.fl.cond_inn_if_present"
+    },
+    {
+      "rule": "library.fl.last_name_required"
+    },
+    {
+      "condition": "library.fl.cond_last_name_if_present"
+    },
+    {
+      "rule": "library.fl.first_name_required"
+    },
+    {
+      "condition": "library.fl.cond_first_name_if_present"
+    },
+    {
+      "condition": "library.fl.cond_middle_name_if_present"
+    },
+    {
+      "rule": "library.fl.birth_date_required"
+    },
+    {
+      "condition": "library.fl.cond_birth_date_if_present"
+    },
+    {
+      "rule": "library.fl.birth_place_required"
+    },
+    {
+      "condition": "birth_place_if_present"
+    },
+    {
+      "rule": "library.fl.citizenship_required"
+    },
+    {
+      "condition": "citizenship_if_present"
+    }
+  ],
+  "entrypoint": false
+}

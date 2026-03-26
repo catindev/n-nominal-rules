@@ -1,13 +1,19 @@
 {
   "id": "library.address.cond_postal_address_if_present",
   "type": "condition",
-  "description": "Если почтовый адрес указан, проверяем запрет США",
+  "description": "Если почтовый адрес указан, проверяем запрет США и код страны почтового адреса",
   "when": {
     "all": [
       "library.address.pred_postal_address_present"
     ]
   },
   "steps": [
+    {
+      "rule": "library.address.postal_address_country_required"
+    },
+    {
+      "condition": "library.address.cond_postal_address_country_if_present"
+    },
     {
       "rule": "library.address.postal_address_not_us"
     }

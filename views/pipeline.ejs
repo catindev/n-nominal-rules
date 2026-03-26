@@ -23,6 +23,6 @@
   <a class="tab-btn tab-btn--link" href="/pipelines/<%= encodeURIComponent(pipeline.id) %>/playground">Проверить</a>
 </div>
 
-<%- include('_flow', { steps: steps, compiled: compiled, icons: icons, nested: false }) %>
+<%- include('_flow', { steps: steps, compiled: compiled, icons: icons, nested: false, whenTools: whenTools }) %>
 
 <%- include('_footer') %>

@@ -1,0 +1,12 @@
+{
+  "id": "internal.fl_resident.blocks.address.registration_country_not_us",
+  "type": "rule",
+  "description": "Страна адреса регистрации не должна быть US",
+  "role": "check",
+  "operator": "not_equals",
+  "level": "EXCEPTION",
+  "code": "BEN.ADDRESS.COUNTRY.NOT_US",
+  "message": "Адрес США не допускается для FL_RESIDENT",
+  "field": "beneficiary.address.registration.countryCode",
+  "value": "US"
+}

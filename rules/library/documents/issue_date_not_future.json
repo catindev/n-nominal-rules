@@ -1,0 +1,12 @@
+{
+  "id": "library.documents.issue_date_not_future",
+  "type": "rule",
+  "description": "Дата выдачи документа не должна быть больше текущей даты",
+  "role": "check",
+  "operator": "field_less_or_equal_than_field",
+  "level": "ERROR",
+  "code": "BEN.IDDOC.ISSUE_DATE.NOT_FUTURE",
+  "message": "Дата выдачи документа не должна быть больше текущей даты",
+  "field": "beneficiary.idDoc.issueDate",
+  "value_field": "$context.currentDate"
+}

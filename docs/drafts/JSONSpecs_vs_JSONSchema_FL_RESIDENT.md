@@ -98,7 +98,7 @@
 
 ### 3.1 Условная логика
 
-**Сценарий FL_RESIDENT:** если `foreignTaxResident = true` ИЛИ `isForeignIdDoc = true` → обязательны `foreignResidencies[0].countryCode`, `foreignResidencies[0].tin` или `tinAbsenceReason`, `foreignResidencies[0].address`.
+**Сценарий FL_RESIDENT:** если `isForeignIdDoc = true`, либо `registration.countryCode != RU`, либо `postalAddressCountryCode != RU` → обязательны `foreignResidencies[0].countryCode`, `foreignResidencies[0].tin` или `tinAbsenceReason`, а также должен быть указан либо `foreignResidencies[0].address`, либо `postalAddress`.
 
 **JSONSpecs:**
 

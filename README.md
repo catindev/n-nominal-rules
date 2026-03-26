@@ -137,7 +137,7 @@ NODE_ENV=production SNAPSHOT_PATH=./snapshot.json DOCS_ENABLED=true node server.
 
 ## Артефакты
 
-Подробнее пртефакты описаны в отдельных документах:
+Подробнее артефакты описаны в отдельных документах:
 
 - [Инструкция по написанию правил](./docs/how_to_rule.md).
 - [Полная тех. спецификация по артефактам](./docs/artifact_schema.md)
@@ -179,13 +179,13 @@ NODE_ENV=production SNAPSHOT_PATH=./snapshot.json DOCS_ENABLED=true node server.
 }
 ```
 
-`when` поддерживает: одиночный предикат, `{ "all": [...] }`, `{ "any": [...] }`.
+`when` поддерживает: одиночный предикат, `{ "all": [...] }`, `{ "any": [...] }`, а также вложенные комбинации `all/any`.
 
 ### Pipeline
 
 Последовательность шагов. Шаги: `{ "rule" }`, `{ "condition" }`, `{ "pipeline" }`.
 
-`strict: true` если внутри появилась хотя бы одна ERROR/EXCEPTION, движок добавляет итоговый EXCEPTION и останавливает выполнение. Используется для логических границ: блок документов, FATCA, риск-проверки.
+`strict: true` если внутри появилась хотя бы одна ERROR/EXCEPTION, движок добавляет итоговый EXCEPTION и останавливает выполнение. Используется для логических границ: блок документов, налоговые проверки, риск-проверки.
 
 ### Dictionary
 
@@ -332,3 +332,12 @@ const result = engine.runPipeline(compiled, "checkout_main", {
 | [docs/flat_payload_spec.md](./docs/flat_payload_spec.md) | Форматы входных данных: JSON и flat-map                 |
 | [docs/wildcard.md](./docs/wildcard.md)                   | Wildcard `[*]`, вложенные массивы, режимы агрегации     |
 | [docs/todo.md](./docs/todo.md)                           | План развития                                           |
+
+
+## required_context
+
+Для pipeline можно объявить `required_context` как массив обязательных ключей runtime-контекста.
+Если хотя бы один ключ не передан в `__context`, движок завершает выполнение технической ошибкой уровня EXCEPTION до исполнения шагов pipeline.
+
+
+Операторы сравнения между полями поддерживают `field_less_or_equal_than_field` и `field_greater_or_equal_than_field`, что позволяет декларативно проверять правила вида `issueDate <= $context.currentDate`.

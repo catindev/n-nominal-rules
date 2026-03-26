@@ -1,0 +1,8 @@
+{
+  "id": "library.tax.pred_foreign_address_present",
+  "type": "rule",
+  "description": "Адрес в иностранном государстве заполнен",
+  "role": "predicate",
+  "operator": "not_empty",
+  "field": "beneficiary.tax.foreignResidencies0.address"
+}

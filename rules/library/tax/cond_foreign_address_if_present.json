@@ -1,0 +1,15 @@
+{
+  "id": "library.tax.cond_foreign_address_if_present",
+  "type": "condition",
+  "description": "Если адрес в иностранном государстве указан, проверяем запрет США",
+  "when": {
+    "all": [
+      "library.tax.pred_foreign_address_present"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "library.tax.foreign_address_not_us"
+    }
+  ]
+}

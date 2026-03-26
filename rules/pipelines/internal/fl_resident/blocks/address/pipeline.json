@@ -1,0 +1,48 @@
+{
+  "id": "internal.fl_resident.blocks.address",
+  "type": "pipeline",
+  "description": "Проверки адреса регистрации и почтового адреса",
+  "strict": false,
+  "flow": [
+    {
+      "rule": "library.address.registration_address_required"
+    },
+    {
+      "condition": "registration_country_if_present"
+    },
+    {
+      "condition": "library.address.cond_postal_address_if_present"
+    },
+    {
+      "condition": "library.address.cond_postal_if_present"
+    },
+    {
+      "condition": "library.address.cond_region_code_if_present"
+    },
+    {
+      "condition": "library.address.cond_region_name_if_present"
+    },
+    {
+      "condition": "library.address.cond_city_if_present"
+    },
+    {
+      "condition": "library.address.cond_locality_if_present"
+    },
+    {
+      "condition": "library.address.cond_street_if_present"
+    },
+    {
+      "condition": "library.address.cond_house_if_present"
+    },
+    {
+      "condition": "library.address.cond_building_if_present"
+    },
+    {
+      "condition": "library.address.cond_apartment_if_present"
+    },
+    {
+      "condition": "library.address.cond_address_line_if_present"
+    }
+  ],
+  "entrypoint": false
+}

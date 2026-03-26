@@ -1,0 +1,15 @@
+{
+  "id": "library.address.cond_postal_address_country_if_present",
+  "type": "condition",
+  "description": "Если код страны почтового адреса заполнен, проверяем формат",
+  "when": {
+    "all": [
+      "library.address.pred_postal_address_country_present"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "library.address.postal_address_country_format"
+    }
+  ]
+}

@@ -1,8 +1,0 @@
-{
-  "id": "library.common.pred_phone_foreign_present",
-  "type": "rule",
-  "description": "Иностранный телефон указан",
-  "role": "predicate",
-  "operator": "not_empty",
-  "field": "beneficiary.contacts.phoneForeign"
-}

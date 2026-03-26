@@ -1,0 +1,12 @@
+{
+  "id": "library.documents.type_code_not_35",
+  "type": "rule",
+  "description": "Код типа документа не должен быть равен 35",
+  "role": "check",
+  "operator": "not_equals",
+  "level": "EXCEPTION",
+  "code": "BEN.IDDOC.TYPE_CODE.NOT_35",
+  "message": "Код типа документа 35 не допускается для регистрации бенефициара",
+  "field": "beneficiary.idDoc.typeCode",
+  "value": "35"
+}

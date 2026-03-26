@@ -1,0 +1,12 @@
+{
+  "id": "entrypoints.fl_resident.full_validation.type_is_fl_resident",
+  "type": "rule",
+  "description": "Тип бенефициара должен быть FL_RESIDENT",
+  "role": "check",
+  "operator": "equals",
+  "level": "EXCEPTION",
+  "code": "FL.TYPE.MISMATCH",
+  "message": "Бенефициар должен быть физическим лицом, резидентом РФ (FL_RESIDENT)",
+  "field": "beneficiary.type",
+  "value": "FL_RESIDENT"
+}

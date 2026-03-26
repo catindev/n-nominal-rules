@@ -1,20 +1,18 @@
 {
   "id": "library.common.contacts_any",
   "type": "rule",
-  "description": "Должен быть указан хотя бы один контакт: телефон РФ, email или иностранный телефон",
+  "description": "Должен быть указан хотя бы один контакт: телефон РФ или email",
   "role": "check",
   "operator": "any_filled",
   "level": "ERROR",
   "code": "BEN.CONTACTS.MIN_ONE",
-  "message": "Необходимо заполнить хотя бы один контакт: телефон РФ, email или иностранный телефон",
+  "message": "Необходимо заполнить хотя бы один контакт: телефон РФ или email",
   "fields": [
     "beneficiary.contacts.phone",
-    "beneficiary.contacts.email",
-    "beneficiary.contacts.phoneForeign"
+    "beneficiary.contacts.email"
   ],
   "paths": [
     "beneficiary.contacts.phone",
-    "beneficiary.contacts.email",
-    "beneficiary.contacts.phoneForeign"
+    "beneficiary.contacts.email"
   ]
 }

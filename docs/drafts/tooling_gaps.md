@@ -208,7 +208,7 @@ app.get("/metrics", (_req, res) => {
 ```bash
 # Прогнать один payload через пайплайн
 node bin/checker.js \
-  --pipeline entrypoints.c.fl_resident.full_validation \
+  --pipeline entrypoints.fl_resident.full_validation \
   --payload payloads/fc-pos-01.json
 
 # Прогнать весь тест-сюит

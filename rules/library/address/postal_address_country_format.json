@@ -1,0 +1,12 @@
+{
+  "id": "library.address.postal_address_country_format",
+  "type": "rule",
+  "description": "Код страны почтового адреса должен быть в формате ISO 3166-1 alpha-2",
+  "role": "check",
+  "operator": "matches_regex",
+  "level": "ERROR",
+  "code": "BEN.CONTACTS.POSTAL_COUNTRY.FORMAT",
+  "message": "Код страны почтового адреса должен быть в формате ISO 3166-1 alpha-2",
+  "field": "beneficiary.contacts.postalAddressCountryCode",
+  "value": "^[A-Z]{2}$"
+}

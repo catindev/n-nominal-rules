@@ -72,7 +72,7 @@ rules/dictionaries/currencies.json
 | Форма ссылки                                 | Поведение                                                             | Пример                                     |
 | -------------------------------------------- | --------------------------------------------------------------------- | ------------------------------------------ |
 | `library.*` (начинается с `library.`)        | абсолютная ссылка, берётся как есть                                   | `"library.common.email_format"`            |
-| содержит `.` (но не начинается с `library.`) | абсолютная ссылка, берётся как есть                                   | `"internal.blocks.fl.identity_document"`   |
+| содержит `.` (но не начинается с `library.`) | абсолютная ссылка, берётся как есть                                   | `"internal.fl_resident.blocks.identity_document"`   |
 | не содержит `.`                              | scoped ref: автоматически разворачивается в `{scopePipelineId}.{ref}` | `"rule_amount"` → `"checkout.rule_amount"` |
 
 Scope для pipeline — его собственный `id`. Scope для condition — `id` пайплайна, из которого выведен scope (prefix до последней точки в `id` condition).
@@ -110,15 +110,15 @@ Scope для pipeline — его собственный `id`. Scope для condi
 
 ```json
 {
-  "id": "library.fl.citizenship_required",
+  "id": "library.customer.country_required",
   "type": "rule",
-  "description": "Гражданство обязательно для ФЛ",
+  "description": "Страна клиента обязательна",
   "role": "check",
   "operator": "not_empty",
-  "field": "beneficiary.fl.citizenshipCode",
+  "field": "customer.countryCode",
   "level": "EXCEPTION",
-  "code": "BEN.FL.CITIZENSHIP.REQUIRED",
-  "message": "Укажите гражданство"
+  "code": "CUSTOMER.COUNTRY.REQUIRED",
+  "message": "Укажите страну клиента"
 }
 ```
 
@@ -132,12 +132,12 @@ Scope для pipeline — его собственный `id`. Scope для condi
 
 ```json
 {
-  "id": "library.tax.pred_foreign_tax_true",
+  "id": "library.order.pred_is_international",
   "type": "rule",
-  "description": "Признак иностранного налогового резидентства установлен",
+  "description": "Заказ отмечен как международный",
   "role": "predicate",
   "operator": "equals",
-  "field": "beneficiary.tax.foreignTaxResident",
+  "field": "order.flags.isInternational",
   "value": true
 }
 ```
@@ -188,8 +188,8 @@ Scope для pipeline — его собственный `id`. Scope для condi
 **Синтаксис:** любое количество `[*]` в одном `field`:
 
 ```
-"beneficiary.accounts[*].balance"
-"beneficiary.accounts[*].transactions[*].amount"
+"accounts[*].balance"
+"accounts[*].transactions[*].amount"
 ```
 
 **Поле `aggregate`:**
@@ -262,7 +262,7 @@ Scope для pipeline — его собственный `id`. Scope для condi
 Три допустимые формы:
 
 ```json
-"when": "pred_is_foreign_tax"
+"when": "pred_is_international"
 ```
 
 ```json
@@ -286,7 +286,7 @@ Scope для pipeline — его собственный `id`. Scope для condi
 Компилятор определяет `scopePipelineId` condition как префикс `id` до последней точки:
 
 ```
-"library.tax.cond_foreign_tax_trigger_block"  →  scope: "library.tax"
+"library.order.cond_international_block"  →  scope: "library.order"
 "checkout.cond_amount_check"              →  scope: "checkout"
 ```
 
@@ -296,12 +296,12 @@ Scope для pipeline — его собственный `id`. Scope для condi
 
 ```json
 {
-  "id": "library.tax.cond_foreign_tax_trigger_block",
+  "id": "library.order.cond_international_block",
   "type": "condition",
   "description": "Если есть foreign-tax trigger, проверяем foreign-tax блок",
   "when": {
     "any": [
-      "library.tax.pred_foreign_tax_true",
+      "library.order.pred_is_international",
       "library.tax.pred_is_foreign_id_doc_true"
     ]
   },
@@ -353,18 +353,18 @@ Pipeline cycle detected: pipeline_A -> pipeline_B -> pipeline_A
 
 ```json
 {
-  "id": "entrypoints.c.fl_resident.full_validation",
+  "id": "entrypoints.fl_resident.full_validation",
   "type": "pipeline",
-  "description": "Сценарий C/FL_RESIDENT/полная проверка",
+  "description": "Сценарий полной проверки международного заказа",
   "entrypoint": true,
   "strict": false,
-  "flow": [{ "pipeline": "internal.full_validation.fl_resident" }]
+  "flow": [{ "pipeline": "internal.fl_resident.full_validation" }]
 }
 ```
 
 ```json
 {
-  "id": "internal.blocks.fl.tax_flags",
+  "id": "internal.fl_resident.blocks.tax_flags",
   "type": "pipeline",
   "description": "Строгая проверка налоговых флагов",
   "entrypoint": false,
@@ -374,7 +374,7 @@ Pipeline cycle detected: pipeline_A -> pipeline_B -> pipeline_A
   "flow": [
     { "rule": "library.tax.us_tax_resident_bool" },
     { "rule": "library.tax.us_tax_resident_not_true" },
-    { "condition": "library.tax.cond_foreign_tax_trigger_block" }
+    { "condition": "library.order.cond_international_block" }
   ]
 }
 ```
@@ -473,10 +473,10 @@ Pipeline cycle detected: pipeline_A -> pipeline_B -> pipeline_A
 Значение `field` это путь до ключа во flat-map проверяемого payload в dot-notation:
 
 ```
-"beneficiary.inn"
-"beneficiary.fl.birthDate"
-"beneficiary.accounts[0].balance"
-"beneficiary.accounts[*].balance"   ← wildcard
+"customer.inn"
+"customer.birthDate"
+"accounts[0].balance"
+"accounts[*].balance"   ← wildcard
 ```
 
 Движок принимает как структурированный JSON, так и сразу flat payload (функция `flattenPayload` идемпотентна).
@@ -559,3 +559,37 @@ Pipeline cycle detected: pipeline_A -> pipeline_B -> pipeline_A
 | `EXCEPTION` | да              | **да**, немедленно    | `EXCEPTION`                     |
 
 После остановки по `EXCEPTION` оставшиеся шаги pipeline не выполняются. Уже накопленные issues сохраняются в ответе.
+
+
+## required_context
+
+Для pipeline можно объявить `required_context` как массив обязательных ключей runtime-контекста.
+Если хотя бы один ключ не передан в `__context`, движок завершает выполнение технической ошибкой уровня EXCEPTION до исполнения шагов pipeline.
+
+
+Операторы сравнения между полями поддерживают `field_less_or_equal_than_field` и `field_greater_or_equal_than_field`, что позволяет декларативно проверять правила вида `issueDate <= $context.currentDate`.
+
+
+## Вложенные when-выражения
+
+`condition.when` поддерживает не только одиночный predicate и плоские списки `all`/`any`, но и рекурсивные комбинации.
+
+Пример:
+
+```json
+{
+  "when": {
+    "all": [
+      "library.tax.pred_phone_missing",
+      {
+        "any": [
+          "library.order.pred_is_international",
+          "library.tax.pred_is_foreign_id_doc_true"
+        ]
+      }
+    ]
+  }
+}
+```
+
+Это означает: первое условие истинно **и одновременно** истинно хотя бы одно из вложенных условий.

@@ -98,7 +98,19 @@
   const STORAGE_RESULT_KEY = 'pg_result_' + PIPELINE_ID;
   const RULE_REGISTRY = <%- traceRegistry %>;
   const saved = (() => { try { return localStorage.getItem(STORAGE_KEY); } catch(e) { return null; } })();
-  editor.setValue(saved || DEFAULT_PAYLOAD);
+  function withVisiblePipelineId(raw) {
+    try {
+      const parsed = raw ? JSON.parse(raw) : {};
+      if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return DEFAULT_PAYLOAD;
+      if (!parsed.context || typeof parsed.context !== 'object' || Array.isArray(parsed.context)) parsed.context = {};
+      if (!parsed.context.pipelineId) parsed.context.pipelineId = PIPELINE_ID;
+      if (!Object.prototype.hasOwnProperty.call(parsed, 'payload')) parsed.payload = {};
+      return JSON.stringify(parsed, null, 2);
+    } catch(e) {
+      return raw || DEFAULT_PAYLOAD;
+    }
+  }
+  editor.setValue(withVisiblePipelineId(saved || DEFAULT_PAYLOAD));
 
   // Восстанавливаем последний результат если есть
   (function() {
@@ -137,12 +149,14 @@
         var field = data.field || (RULE_REGISTRY[rid] && RULE_REGISTRY[rid].field) || '';
         var op    = data.operator || (RULE_REGISTRY[rid] && RULE_REGISTRY[rid].operator) || '';
         var val   = data.value !== undefined ? data.value : '';
+        var actual = data.actual !== undefined ? data.actual : '';
         icon  = '▸'; cls = 'tev tev--rule';
         label = (role === 'predicate' ? 'Предикат ' : 'Правило ')
               + '<a class="tev-link" href="/rules/' + encodeURIComponent(rid) + '">' + esc(rdesc) + '</a>';
         if (field) details.push(kv('поле', field));
         if (op)    details.push(kv('оператор', op));
-        if (val)   details.push(kv('значение для оператора', val));
+        if (val !== '')   details.push(kv('ожидаемое значение', val));
+        if (actual !== '') details.push(kv('фактическое значение', actual));
 
       } else if (msg === 'exec pipeline step') {
         var pid   = data.pipelineId || '';
@@ -333,11 +347,21 @@
 
     let html = '';
 
-    // Issues
+    // Issues / runtime status
     const issues = result.issues || [];
-    if (issues.length === 0) {
+    const hasRuntimeError = !!(result.error || result.runtimeError || status === 'ABORT');
+    const isSuccess = status === 'OK' && !hasRuntimeError && issues.length === 0;
+    if (isSuccess) {
       html += '<div class="pg-section"><div class="pg-no-issues">✓ Ошибок и исключений не найдено. Данные успешно прошли проверку по сценарию проверок.</div></div>';
-    } else {
+    } else if (hasRuntimeError) {
+      const errMsg = result.message || (result.error && (result.error.message || result.error)) || result.runtimeError || 'Неизвестная ошибка выполнения';
+      html += '<div class="pg-section"><div class="pg-issue pg-issue--exception">'
+        + '<span class="pg-issue-level">ABORT</span>'
+        + '<span class="pg-issue-code">RUNTIME_ERROR</span>'
+        + '<span class="pg-issue-msg">' + esc(String(errMsg)) + '</span>'
+        + '</div></div>';
+    }
+    if (issues.length > 0) {
       html += '<div class="pg-section"><div class="pg-section-title">Проблемы (' + issues.length + ')</div><ul class="pg-issues">';
       issues.forEach(function(iss) {
         html += '<li class="pg-issue pg-issue--' + esc((iss.level||'error').toLowerCase()) + '">'
