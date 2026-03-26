@@ -83,6 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var btn = e.target.closest('.tab-btn');
     if (!btn) return;
     var tab = btn.dataset.tab;
+    if (!tab) return;  // ссылочные табы (nav-ссылки без data-tab) — не трогаем
     var container = btn.closest('.main');
 
     container.querySelectorAll('.tab-btn').forEach(function (b) {

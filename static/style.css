@@ -184,7 +184,7 @@ a {
   display: flex;
   flex-direction: column;
   gap: 0;
-  padding-left: 5rem;
+  padding-left: 0;
 }
 
 .flow.flow--nested {
@@ -739,6 +739,27 @@ a {
 .tab-btn--link:hover { color: var(--text); }
 .tab-btn--link.tab-btn--active { color: var(--text); border-bottom-color: var(--teal); font-weight: 600; }
 
+/* ── Редактор: панель над CodeMirror ────────────────────────────────────── */
+.pg-editor-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-subtle);
+  border-radius: 10px 10px 0 0;
+  gap: 8px;
+}
+.pg-editor-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.pg-editor-toolbar-right {
+  flex-shrink: 0;
+}
+
 /* ── Playground ──────────────────────────────────────────────────────────── */
 .pg-toolbar {
   display: flex;
@@ -832,3 +853,406 @@ a {
   max-height: 500px; overflow-y: auto; color: var(--text); white-space: pre; margin: 0;
 }
 
+
+/* ── Stats page ──────────────────────────────────────────────────────────── */
+.stats-warnings {
+  background: #fff8e1;
+  border: 1px solid #f0a500;
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+}
+.stats-warnings-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #b07a00;
+  margin-bottom: 8px;
+}
+.stats-warnings-list {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.875rem;
+  color: #7a5500;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.stats-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 24px;
+}
+.stats-card--wide { grid-column: 1 / -1; }
+.stats-card-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.stats-rows { display: flex; flex-direction: column; gap: 10px; }
+.stats-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.stats-row:last-child { border-bottom: none; padding-bottom: 0; }
+.stats-label { font-size: 0.9rem; color: var(--text-muted); }
+.stats-value {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.stats-value--main { font-size: 1.25rem; color: var(--teal); }
+.stats-value--warn { color: #c0392b; }
+.stats-value--ok   { color: var(--teal); }
+
+/* Progress bar */
+.stats-bar-wrap { display: flex; flex-direction: column; gap: 10px; }
+.stats-bar {
+  display: flex;
+  height: 12px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--border);
+}
+.stats-bar-fill { height: 100%; transition: width .3s; }
+.stats-bar-fill--lib   { background: var(--teal); }
+.stats-bar-fill--local { background: #d0d0d0; }
+.stats-bar-legend {
+  display: flex;
+  align-items: center;
+  font-size: 0.83rem;
+  color: var(--text-muted);
+}
+.stats-bar-dot {
+  display: inline-block;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  margin-right: 4px;
+}
+.stats-bar-dot--lib   { background: var(--teal); }
+.stats-bar-dot--local { background: #d0d0d0; }
+
+/* Duplicates */
+.stats-dupes { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+.stats-dupe {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: #fde8e8;
+  border-left: 3px solid #c0392b;
+}
+.stats-dupe-id {
+  font-family: var(--font-mono);
+  font-size: 0.83rem;
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.stats-dupe-count {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #c0392b;
+}
+.stats-ok { color: var(--teal); font-weight: 600; }
+
+/* ── CodeMirror кастомная тема jsonspecs ─────────────────────────────────
+   Светлая тема в цветах дизайн-системы:
+   - фон = основной фон страницы
+   - ключи JSON = teal (#116964)
+   - строковые значения = purple (#9c4e78)
+   - числа/булевы/null = text-muted
+   - скобки/пунктуация = border
+──────────────────────────────────────────────────────────────────────── */
+
+.cm-s-jsonspecs.CodeMirror {
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  line-height: 1.6;
+}
+
+/* Gutter (номера строк) */
+.cm-s-jsonspecs .CodeMirror-gutters {
+  background: var(--bg-subtle);
+  border-right: 1px solid var(--border);
+}
+.cm-s-jsonspecs .CodeMirror-linenumber {
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
+/* Курсор */
+.cm-s-jsonspecs .CodeMirror-cursor {
+  border-left: 2px solid var(--teal);
+}
+
+/* Выделение */
+.cm-s-jsonspecs .CodeMirror-selected,
+.cm-s-jsonspecs .CodeMirror-selectedtext {
+  background: var(--teal-light);
+}
+.cm-s-jsonspecs.CodeMirror-focused .CodeMirror-selected {
+  background: var(--teal-mid);
+}
+
+/* Активная строка */
+.cm-s-jsonspecs .CodeMirror-activeline-background {
+  background: var(--bg-subtle);
+}
+
+/* JSON токены
+   CodeMirror 5 JSON mode классы:
+   - ключи объекта: cm-string cm-string-2 (property context)
+   - строковые значения: cm-string (без cm-string-2)
+   - числа: cm-number
+   - true/false/null: cm-atom
+*/
+
+/* Строковые значения — purple */
+.cm-s-jsonspecs .cm-string {
+  color: var(--purple);
+}
+
+/* Ключи объекта — teal (cm-property в JSON-режиме CodeMirror 5) */
+.cm-s-jsonspecs .cm-property {
+  color: var(--teal) !important;
+  font-weight: 500;
+}
+
+/* Числа — text приглушённый */
+.cm-s-jsonspecs .cm-number {
+  color: #c0763a;
+}
+
+/* Булевы значения и null — отдельный акцент */
+.cm-s-jsonspecs .cm-atom {
+  color: #7a5c9e;
+}
+
+/* Скобки, двоеточия, запятые */
+.cm-s-jsonspecs .cm-punctuation,
+.cm-s-jsonspecs .cm-bracket {
+  color: var(--text-muted);
+}
+
+/* Ошибки lint */
+.cm-s-jsonspecs .cm-error {
+  color: #c0392b;
+  background: #fde8e8;
+}
+
+/* Lint маркер в гаттере */
+.cm-s-jsonspecs .CodeMirror-lint-mark-error {
+  border-bottom: 2px solid #c0392b;
+}
+
+/* Скроллбар */
+.cm-s-jsonspecs .CodeMirror-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+/* ── Trace log ───────────────────────────────────────────────────────────── */
+.pg-trace-log {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  font-size: 0.82rem;
+  font-family: var(--font-sans);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  max-height: 480px;
+  overflow-y: auto;
+}
+
+.tev {
+  display: grid;
+  grid-template-columns: 4px 1fr auto;
+  align-items: baseline;
+  gap: 0 10px;
+  padding: 5px 12px 5px 0;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  line-height: 1.5;
+}
+.tev:last-child { border-bottom: none; }
+
+/* Варианты по типу */
+.tev--pipeline { background: #f0faf9; }
+.tev--condition { background: #faf8ff; }
+.tev--stop { background: #fde8e8; }
+.tev--ok .tev-icon  { color: var(--teal); }
+.tev--fail .tev-icon { color: #c0392b; }
+.tev--meta { opacity: 0.7; }
+
+/* Цветная полоска слева вместо иконок */
+.tev::before {
+  content: '';
+  display: block;
+  width: 4px;
+  border-radius: 2px;
+  background: var(--border);
+  align-self: stretch;
+  min-height: 16px;
+}
+.tev--rule::before     { background: var(--teal); }
+.tev--pipeline::before { background: var(--teal); opacity: 0.5; }
+.tev--condition::before { background: var(--purple); opacity: 0.6; }
+.tev--stop::before     { background: #c0392b; }
+.tev--cond-result.tev--ok::before   { background: var(--teal); }
+.tev--cond-result.tev--fail::before { background: #c0392b; }
+
+/* Результат условия — приглушённый как rule-result */
+.tev--cond-result {
+  background: var(--bg-subtle);
+  font-size: 0.8rem;
+}
+.tev--cond-ok::before   { background: var(--teal); opacity: 0.3; }
+.tev--cond-fail::before { background: var(--border); }
+
+.tev-cond-ok   { color: var(--teal); font-weight: 500; opacity: 0.75; }
+.tev-cond-fail { color: var(--text-muted); font-weight: 400; }
+
+.tev-body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+}
+
+.tev-label {
+  color: var(--text);
+  font-weight: 500;
+  word-break: break-all;
+}
+
+.tev-detail {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 400;
+}
+
+.tev-ts {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  opacity: 0.5;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.tev-link {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--teal);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  word-break: break-all;
+}
+.tev-link--pipeline { color: var(--teal); opacity: 0.8; }
+.tev-link--condition { color: var(--purple); }
+
+.tev-ok   { color: var(--teal); font-weight: 600; }
+.tev-fail { color: #c0392b; font-weight: 600; }
+
+/* Результат проверки правила */
+.tev--rule-result {
+  background: var(--bg-subtle);
+  font-size: 0.8rem;
+}
+.tev--rule-result.tev--ok::before  { background: var(--teal); opacity: 0.3; }
+.tev--rule-result.tev--fail::before { background: #c0392b; opacity: 0.5; }
+
+.tev-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 2px;
+  width: 100%;
+}
+.tev-kv {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 0.75rem;
+}
+.tev-k {
+  color: var(--text-muted);
+}
+.tev-v {
+  font-family: var(--font-mono);
+  color: var(--text);
+  font-size: 0.75rem;
+}
+
+/* ── Trace header с метриками ────────────────────────────────────────────── */
+.pg-trace-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.pg-trace-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--text-muted);
+}
+.pg-trace-meta {
+  display: flex;
+  gap: 12px;
+}
+.pg-trace-metric {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.78rem;
+}
+.pg-trace-metric-label {
+  color: var(--text-muted);
+}
+.pg-trace-metric-val {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--teal);
+}
+
+/* Дельта времени между событиями */
+.tev-delta {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  opacity: 0.6;
+}

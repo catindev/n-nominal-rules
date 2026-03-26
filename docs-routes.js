@@ -96,6 +96,102 @@ function render(res, view, locals, manifest) {
   );
 }
 
+
+// ── Анализ метрик пайплайна ───────────────────────────────────────────────
+function analyzePipeline(rootPipelineId, compiled) {
+  const stats = {
+    totalSteps:      0,   // все шаги во всём дереве
+    rules:           0,   // шагов-правил
+    conditions:      0,   // шагов-условий
+    pipelines:       0,   // шагов-пайплайнов
+    maxDepth:        0,   // максимальная глубина вложенности
+    librarySteps:    0,   // шаги из library.*
+    localSteps:      0,   // локальные шаги
+    ruleIds:         [],  // все ruleId в дереве (с повторами)
+    warnings:        [],  // предупреждения
+  };
+
+  const DEPTH_WARN  = 5;
+  const STEPS_WARN  = 60;
+  const LIBRARY_LOW = 50; // % — ниже которого предупреждаем
+
+  // Рекурсивный обход
+  function walk(steps, depth, visited) {
+    if (!steps || !steps.length) return;
+    if (depth > stats.maxDepth) stats.maxDepth = depth;
+
+    for (const step of steps) {
+      stats.totalSteps++;
+
+      if (step.kind === 'rule') {
+        stats.rules++;
+        stats.ruleIds.push(step.ruleId);
+        if (step.ruleId && step.ruleId.startsWith('library.')) stats.librarySteps++;
+        else stats.localSteps++;
+
+      } else if (step.kind === 'condition') {
+        stats.conditions++;
+        const isLib = step.conditionId && step.conditionId.startsWith('library.');
+        if (isLib) stats.librarySteps++; else stats.localSteps++;
+
+        // Обходим шаги внутри condition
+        const cmp = compiled.conditions && compiled.conditions.get(step.conditionId);
+        if (cmp && !visited.has(step.conditionId)) {
+          visited.add(step.conditionId);
+          walk(cmp.steps, depth + 1, visited);
+        }
+
+      } else if (step.kind === 'pipeline') {
+        stats.pipelines++;
+        const isLib = step.pipelineId && step.pipelineId.startsWith('library.');
+        if (isLib) stats.librarySteps++; else stats.localSteps++;
+
+        const cmp = compiled.pipelines && compiled.pipelines.get(step.pipelineId);
+        if (cmp && !visited.has(step.pipelineId)) {
+          visited.add(step.pipelineId);
+          walk(cmp.steps, depth + 1, visited);
+        }
+      }
+    }
+  }
+
+  const root = compiled.pipelines && compiled.pipelines.get(rootPipelineId);
+  if (!root) return null;
+
+  walk(root.steps, 1, new Set([rootPipelineId]));
+
+  // Дубли правил
+  const ruleCount = {};
+  for (const id of stats.ruleIds) ruleCount[id] = (ruleCount[id] || 0) + 1;
+  const duplicates = Object.entries(ruleCount)
+    .filter(([, n]) => n > 1)
+    .sort((a, b) => b[1] - a[1]);
+
+  // Предупреждения
+  if (stats.maxDepth >= DEPTH_WARN)
+    stats.warnings.push(`Глубина вложенности ${stats.maxDepth} — рекомендуется не более ${DEPTH_WARN - 1}`);
+  if (stats.totalSteps >= STEPS_WARN)
+    stats.warnings.push(`Всего шагов ${stats.totalSteps} — сценарий может быть сложным для сопровождения`);
+  const libPct = stats.totalSteps > 0 ? Math.round(stats.librarySteps / stats.totalSteps * 100) : 0;
+  if (libPct < LIBRARY_LOW && stats.totalSteps > 5)
+    stats.warnings.push(`Только ${libPct}% шагов из библиотеки — возможно стоит вынести правила в library`);
+  for (const [id, n] of duplicates)
+    stats.warnings.push(`Правило ${id} встречается ${n} раза в дереве — возможен дубль`);
+
+  return {
+    totalSteps:   stats.totalSteps,
+    rules:        stats.rules,
+    conditions:   stats.conditions,
+    pipelines:    stats.pipelines,
+    maxDepth:     stats.maxDepth,
+    librarySteps: stats.librarySteps,
+    localSteps:   stats.localSteps,
+    libraryPct:   libPct,
+    duplicates:   duplicates.slice(0, 10),
+    warnings:     stats.warnings,
+  };
+}
+
 module.exports = function mountDocs(app, ctx) {
   // Путь к rules/ — берём из ctx если есть, иначе рядом с docs-routes.js
   const rulesDir = ctx.rulesDir || path.join(__dirname, "rules");
@@ -139,6 +235,16 @@ module.exports = function mountDocs(app, ctx) {
     );
   });
 
+  // Статистика пайплайна
+  app.get("/pipelines/:id/stats", (req, res) => {
+    const a = ctx.compiled.registry.get(req.params.id);
+    if (!a || a.type !== "pipeline")
+      return res.status(404).send("Pipeline not found: " + req.params.id);
+    const result = analyzePipeline(a.id, ctx.compiled);
+    if (!result) return res.status(500).send("Failed to analyze pipeline");
+    render(res, "stats", { pipeline: a, stats: result }, manifest);
+  });
+
   // Playground — тест пайплайна
   app.get("/pipelines/:id/playground", (req, res) => {
     const a = ctx.compiled.registry.get(req.params.id);
@@ -157,7 +263,20 @@ module.exports = function mountDocs(app, ctx) {
         } catch(e) { /* skip */ }
       }
     }
-    render(res, "playground", { pipeline: a, examples }, manifest);
+    // Собираем краткий registry для трейса: ruleId -> {field, operator, role, description}
+    const traceRegistry = {};
+    for (const [id, art] of ctx.compiled.registry) {
+      if (art.type === 'rule') {
+        traceRegistry[id] = {
+          description: art.description || '',
+          role: art.role || '',
+          field: art.field || '',
+          operator: art.operator || '',
+          value: art.value !== undefined ? JSON.stringify(art.value) : '',
+        };
+      }
+    }
+    render(res, "playground", { pipeline: a, examples, traceRegistry: JSON.stringify(traceRegistry) }, manifest);
   });
 
     // Правило
