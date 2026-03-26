@@ -1,0 +1,197 @@
+<%- include('_header', { title: (pipeline.description || pipeline.id) + ' — Тест', isLibrary: pipeline.id.startsWith('library.'), icons }) %>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.17/codemirror.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.17/theme/nord.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.17/addon/lint/lint.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.17/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.17/mode/javascript/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.17/addon/edit/matchbrackets.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.17/addon/edit/closebrackets.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.17/addon/lint/lint.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.17/addon/lint/json-lint.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsonlint/1.6.0/jsonlint.min.js"></script>
+
+<a class="back-link" href="/pipelines/<%= encodeURIComponent(pipeline.id) %>">
+  <svg viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <%= pipeline.description || pipeline.id %>
+</a>
+
+<div class="hero">
+  <span class="hero-icon"><%- pipeline.id.startsWith('library.') ? icons['big-pipline-library'] : icons['big-pipline'] %></span>
+  <div class="hero-body">
+    <h1 class="hero-title"><%= pipeline.description || pipeline.id %></h1>
+    <div class="hero-sub"><strong>Сценарий:</strong> <%= pipeline.id %></div>
+  </div>
+</div>
+
+<div class="tabs">
+  <a class="tab-btn tab-btn--link" href="/pipelines/<%= encodeURIComponent(pipeline.id) %>">Просмотр</a>
+  <button class="tab-btn tab-btn--active">Тест</button>
+</div>
+
+<!-- Тулбар — всегда виден -->
+<div class="pg-toolbar">
+  <!-- Режим редактора -->
+  <div id="pg-editor-actions" class="pg-toolbar-group">
+    <% if (examples && examples.length) { %>
+    <div class="playground-examples">
+      <span class="playground-label">Примеры:</span>
+      <% examples.forEach(function(ex) { %>
+      <button class="pg-example-btn" data-body="<%= encodeURIComponent(ex.body) %>"><%= ex.name %></button>
+      <% }) %>
+    </div>
+    <% } %>
+    <button class="pg-btn pg-btn--secondary" id="pg-beautify">Причесать</button>
+    <button class="pg-btn pg-btn--primary" id="pg-run">
+      <svg viewBox="0 0 16 16" fill="none" width="14" height="14"><path d="M5 3l8 5-8 5V3z" fill="currentColor"/></svg>
+      Прогнать
+    </button>
+  </div>
+
+  <!-- Режим результата -->
+  <div id="pg-result-actions" class="pg-toolbar-group" style="display:none">
+    <span id="pg-status-badge" class="pg-status-badge pg-status-badge--idle">—</span>
+    <button class="pg-btn pg-btn--secondary" id="pg-back">
+      <svg viewBox="0 0 16 16" fill="none" width="14" height="14"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Изменить данные
+    </button>
+  </div>
+</div>
+
+<!-- Редактор -->
+<div id="pg-editor-wrap" class="pg-panel">
+  <textarea id="pg-editor"></textarea>
+</div>
+
+<!-- Результат -->
+<div id="pg-result-wrap" class="pg-panel" style="display:none">
+  <div id="pg-result-body" class="pg-result-body"></div>
+</div>
+
+<script>
+(function() {
+  const PIPELINE_ID = '<%= pipeline.id %>';
+
+  const DEFAULT_PAYLOAD = JSON.stringify({
+    context: { pipelineId: PIPELINE_ID },
+    payload: {}
+  }, null, 2);
+
+  // CodeMirror
+  const editor = CodeMirror.fromTextArea(document.getElementById('pg-editor'), {
+    mode: { name: 'javascript', json: true },
+    theme: 'nord',
+    lineNumbers: true,
+    matchBrackets: true,
+    autoCloseBrackets: true,
+    gutters: ['CodeMirror-lint-markers'],
+    lint: true,
+    tabSize: 2,
+    indentWithTabs: false,
+    lineWrapping: false,
+  });
+  editor.setValue(DEFAULT_PAYLOAD);
+
+  // Примеры
+  document.querySelectorAll('.pg-example-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      editor.setValue(decodeURIComponent(btn.dataset.body));
+      editor.focus();
+      document.querySelectorAll('.pg-example-btn').forEach(function(b) { b.classList.remove('pg-example-btn--active'); });
+      btn.classList.add('pg-example-btn--active');
+    });
+  });
+
+  // Причесать
+  document.getElementById('pg-beautify').addEventListener('click', function() {
+    try { editor.setValue(JSON.stringify(JSON.parse(editor.getValue()), null, 2)); }
+    catch(e) {}
+  });
+
+  // Прогнать
+  document.getElementById('pg-run').addEventListener('click', run);
+
+  // Изменить данные — вернуться к редактору
+  document.getElementById('pg-back').addEventListener('click', showEditor);
+
+  function showEditor() {
+    document.getElementById('pg-editor-wrap').style.display = '';
+    document.getElementById('pg-result-wrap').style.display = 'none';
+    document.getElementById('pg-editor-actions').style.display = '';
+    document.getElementById('pg-result-actions').style.display = 'none';
+    editor.refresh();
+  }
+
+  function showResult() {
+    document.getElementById('pg-editor-wrap').style.display = 'none';
+    document.getElementById('pg-result-wrap').style.display = '';
+    document.getElementById('pg-editor-actions').style.display = 'none';
+    document.getElementById('pg-result-actions').style.display = '';
+  }
+
+  async function run() {
+    let body;
+    try { body = JSON.parse(editor.getValue()); }
+    catch(e) { alert('Невалидный JSON: ' + e.message); return; }
+
+    const btn = document.getElementById('pg-run');
+    btn.disabled = true;
+    btn.textContent = 'Запрос...';
+
+    try {
+      const resp = await fetch('/v1/debug', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      const result = await resp.json();
+      renderResult(result);
+      showResult();
+    } catch(e) {
+      alert('Ошибка запроса: ' + e.message);
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = '<svg viewBox="0 0 16 16" fill="none" width="14" height="14"><path d="M5 3l8 5-8 5V3z" fill="currentColor"/></svg> Прогнать';
+    }
+  }
+
+  function renderResult(result) {
+    const status = result.status || (result.error ? 'ERROR' : '?');
+    const badge = document.getElementById('pg-status-badge');
+    badge.className = 'pg-status-badge pg-status-badge--' + (status === 'OK' ? 'ok' : status === 'EXCEPTION' ? 'exception' : 'error');
+    badge.textContent = status;
+
+    let html = '';
+
+    // Issues
+    const issues = result.issues || [];
+    if (issues.length === 0) {
+      html += '<div class="pg-section"><div class="pg-no-issues">✓ Проблем не найдено</div></div>';
+    } else {
+      html += '<div class="pg-section"><div class="pg-section-title">Проблемы (' + issues.length + ')</div><ul class="pg-issues">';
+      issues.forEach(function(iss) {
+        html += '<li class="pg-issue pg-issue--' + esc((iss.level||'error').toLowerCase()) + '">'
+          + '<span class="pg-issue-level">' + esc(iss.level||'') + '</span>'
+          + '<span class="pg-issue-code">'  + esc(iss.code||'')  + '</span>'
+          + '<span class="pg-issue-msg">'   + esc(iss.message||'') + '</span>'
+          + '</li>';
+      });
+      html += '</ul></div>';
+    }
+
+    // Trace
+    if (result.trace && result.trace.length) {
+      html += '<div class="pg-section"><div class="pg-section-title">Trace (' + result.trace.length + ' событий)</div>'
+        + '<pre class="pg-trace-pre">' + esc(JSON.stringify(result.trace, null, 2)) + '</pre></div>';
+    }
+
+    document.getElementById('pg-result-body').innerHTML = html;
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+})();
+</script>
+
+<%- include('_footer') %>

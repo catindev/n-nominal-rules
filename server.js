@@ -253,6 +253,32 @@ app.get("/sandbox/fl_resident", (_req, res) => {
 // UI для автодокументации (dev-mode only)
 // в dev всегда, в prod  толкьо если DOCS_ENABLED=true
 const DOCS_ENABLED = IS_DEV || process.env.DOCS_ENABLED === "true";
+/**
+ * POST /v1/debug
+ *
+ * Аналог /v1/validate, но всегда возвращает полный trace.
+ * Доступен только при DOCS_ENABLED=true.
+ * Используется playground-ом в веб-интерфейсе.
+ */
+if (DOCS_ENABLED) {
+  app.post("/v1/debug", (req, res) => {
+    const body = req.body ?? {};
+    if (!body.context || typeof body.context !== "object")
+      return res.status(400).json({ error: true, message: 'Request body must contain "context" object' });
+    const context = body.context;
+    const pipelineId = context.pipelineId;
+    if (!pipelineId || typeof pipelineId !== "string")
+      return res.status(400).json({ error: true, message: "context.pipelineId is required (string)" });
+    const payload = body.payload ?? {};
+    const enrichedPayload = Object.assign({}, payload, { __context: context });
+    try {
+      const result = engine.runPipeline(ctx.compiled, pipelineId, enrichedPayload);
+      return res.json(Object.assign({ context }, result));
+    } catch (err) {
+      return res.status(500).json({ error: true, message: err?.message || String(err), pipelineId });
+    }
+  });
+}
 if (DOCS_ENABLED) mountDocs(app, ctx);
 
 const server = app.listen(PORT, () => {
