@@ -2,11 +2,7 @@
   "id": "library.documents.cond_issuer_if_present",
   "type": "condition",
   "description": "Если орган выдачи указан, выполняем мягкие проверки качества заполнения",
-  "when": {
-    "all": [
-      "library.documents.pred_issuer_present"
-    ]
-  },
+  "when": "library.documents.pred_issuer_present",
   "steps": [
     {
       "rule": "library.documents.issuer_no_extra_spaces"

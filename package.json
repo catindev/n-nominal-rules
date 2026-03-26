@@ -6,7 +6,8 @@
   "license": "UNLICENSED",
   "scripts": {
     "demo": "node ./scripts/run-demo.js",
-    "test:nested": "node ./scripts/test-nested-when.js"
+    "test:nested": "node ./scripts/test-nested-when.js",
+    "test": "node scripts/test-nested-when.js"
   },
   "bin": {
     "checker": "bin/checker.js"

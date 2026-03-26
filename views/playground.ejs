@@ -75,8 +75,10 @@
 (function() {
   const PIPELINE_ID = '<%= pipeline.id %>';
 
+  // currentDate обязателен для сценариев с датовыми проверками
+  const today = new Date().toISOString().slice(0, 10);
   const DEFAULT_PAYLOAD = JSON.stringify({
-    context: { pipelineId: PIPELINE_ID },
+    context: { pipelineId: PIPELINE_ID, currentDate: today },
     payload: {}
   }, null, 2);
 
@@ -104,6 +106,7 @@
       if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return DEFAULT_PAYLOAD;
       if (!parsed.context || typeof parsed.context !== 'object' || Array.isArray(parsed.context)) parsed.context = {};
       if (!parsed.context.pipelineId) parsed.context.pipelineId = PIPELINE_ID;
+      if (!parsed.context.currentDate) parsed.context.currentDate = today;
       if (!Object.prototype.hasOwnProperty.call(parsed, 'payload')) parsed.payload = {};
       return JSON.stringify(parsed, null, 2);
     } catch(e) {

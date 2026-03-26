@@ -1470,60 +1470,142 @@
       const { useState, useRef, useCallback } = React;
 
       /* ── constants ── */
+      const TODAY_YMD = new Date().toISOString().slice(0, 10);
+
+      /* ── demo presets ── */
       const PRESET_LABELS = {
-        // "PC-POS-01": "Предпроверка: минимальный набор полей, всё корректно",
-        // "PC-POS-02": "Предпроверка: ФИО без отчества, всё корректно",
-        // "PC-POS-03": "Предпроверка: с иностранным паспортом, всё корректно",
-        "FV-POS-01": "Полная проверка: российский клиент (данные без ошибок)",
-        "FV-POS-02": "Полная проверка: без отчества и ИНН (данные без ошибок)",
-        "FV-POS-03":
-          "Полная проверка: иностранный паспорт + налоговый резидент (без ошибок)",
-        "FV-NEG-01": "Ошибка: Идентификатор участия не заполнен",
-        "FV-NEG-02":
-          "Ошибка: код подразделения документа пустой и неверного формата",
-        "FV-NEG-03":
-          "Ошибка: ИНН некорректен (неверная длина и контрольная сумма)",
-        "FV-NEG-04": "Стоп: гражданство US (резиденты США запрещены)",
-        "FV-NEG-05": "Стоп: место рождения содержит указание на США",
+        "FV-POS-01": "Полная проверка: российский клиент, корректный базовый набор",
+        "FV-POS-02": "Полная проверка: без отчества, только email как контакт",
+        "FV-POS-03": "Полная проверка: foreign-trigger через почтовый адрес, данные без ошибок",
+        "FV-NEG-01": "Ошибка: не заполнен идентификатор основания участия",
+        "FV-NEG-02": "Ошибка: для паспорта РФ не указан код подразделения",
+        "FV-NEG-03": "Ошибка: ИНН некорректен по длине",
+        "FV-NEG-04": "Стоп: гражданство US",
+        "FV-NEG-05": "Стоп: место рождения указывает на США",
         "FV-NEG-06": "Ошибка: серия паспорта РФ не соответствует формату",
-        "FV-NEG-07":
-          "Стоп: иностранный документ без признака налогового резидентства",
-        "FV-NEG-08":
-          "Стоп: флаг иностранного резидента без страны резидентства",
+        "FV-NEG-07": "Ошибка: иностранный документ без foreign-блока",
+        "FV-NEG-08": "Ошибка: foreign-trigger без ИНН и причины его отсутствия",
         "FV-NEG-09": "Стоп: почтовый адрес указывает на США",
-        "FV-NEG-10": "Ошибка: не указан ни один контакт (телефон или email)",
-        "FV-NEG-11": "Стоп: признак налогового резидента США равен true",
-        "FV-NEG-12": "Стоп: адрес регистрации в стране США",
-        "FV-NEG-13": "Стоп: иностранный адрес указывает на США",
+        "FV-NEG-10": "Ошибка: не указан ни один контакт",
+        "FV-NEG-11": "Стоп: признак налогового резидентства США равен true",
+        "FV-NEG-12": "Стоп: страна адреса регистрации = US",
+        "FV-NEG-13": "Стоп: адрес в иностранном государстве указывает на США",
+        "FV-NEG-14": "Ошибка: почтовый адрес заполнен без кода страны",
+        "FV-NEG-15": "Ошибка: дата выдачи документа больше текущей даты",
+        "FV-NEG-16": "Предупреждение: issuer содержит мусорные символы",
       };
 
       const PA_PRESETS = {
-        "FV-NEG-01": {
-          context: {
-            pipelineId: "entrypoints.fl_resident.full_validation",
-          },
+        "FV-POS-01": {
+          context: { pipelineId: "entrypoints.fl_resident.full_validation", currentDate: TODAY_YMD },
           payload: {
             "beneficiary.type": "FL_RESIDENT",
             "beneficiary.inn": "744404355804",
-            "beneficiary.contacts.phone": "9801611004",
+            "beneficiary.participationId": "TEST-536779508951",
+            "beneficiary.contacts.phone": "+79801611004",
+            "beneficiary.contacts.email": "pa.test.01@example.com",
             "beneficiary.status.startDate": "2024-01-26",
             "beneficiary.fl.lastName": "Петров",
             "beneficiary.fl.firstName": "Алексей",
             "beneficiary.fl.middleName": "Анатольевич",
             "beneficiary.fl.birthDate": "1979-12-01",
-            "beneficiary.fl.birthPlace":
-              "гор. МАГНИТОГОРСК ЧЕЛЯБИНСКОЙ ОБЛАСТИ",
+            "beneficiary.fl.birthPlace": "гор. Магнитогорск Челябинской области",
             "beneficiary.fl.citizenshipCode": "RU",
-            "beneficiary.address.registration.addressLine":
-              "350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20",
+            "beneficiary.address.registration.addressLine": "350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20",
             "beneficiary.address.registration.countryCode": "RU",
             "beneficiary.idDoc.typeCode": "21",
             "beneficiary.idDoc.typeName": "Паспорт РФ",
             "beneficiary.idDoc.series": "4507",
             "beneficiary.idDoc.number": "360952",
             "beneficiary.idDoc.issueDate": "2004-03-29",
-            "beneficiary.idDoc.issuer":
-              'ОВД РАЙОНА "БОГОРОДСКОЕ" ГОРОДА МОСКВЫ',
+            "beneficiary.idDoc.issuer": "ГУ МВД РОССИИ ПО Г. МОСКВЕ",
+            "beneficiary.idDoc.issuerCode": "770-001",
+            "beneficiary.idDoc.isForeignIdDoc": false,
+            "beneficiary.tax.usTaxResident": false,
+            "beneficiary.tax.usResident": false,
+          },
+        },
+        "FV-POS-02": {
+          context: { pipelineId: "entrypoints.fl_resident.full_validation", currentDate: TODAY_YMD },
+          payload: {
+            "beneficiary.type": "FL_RESIDENT",
+            "beneficiary.inn": "511201186251",
+            "beneficiary.participationId": "TEST-552976161977",
+            "beneficiary.contacts.email": "pa.test.02@example.com",
+            "beneficiary.status.startDate": "2023-05-29",
+            "beneficiary.fl.lastName": "Стаценко",
+            "beneficiary.fl.firstName": "Анастасия",
+            "beneficiary.fl.birthDate": "1999-11-12",
+            "beneficiary.fl.birthPlace": "г. Мурманск",
+            "beneficiary.fl.citizenshipCode": "RU",
+            "beneficiary.address.registration.addressLine": "Мурманская обл, г Снежногорск, ул Мира, д 12, кв 187",
+            "beneficiary.address.registration.countryCode": "RU",
+            "beneficiary.idDoc.typeCode": "21",
+            "beneficiary.idDoc.typeName": "Паспорт РФ",
+            "beneficiary.idDoc.series": "4719",
+            "beneficiary.idDoc.number": "671983",
+            "beneficiary.idDoc.issueDate": "2019-11-13",
+            "beneficiary.idDoc.issuer": "УМВД РОССИИ ПО МУРМАНСКОЙ ОБЛАСТИ",
+            "beneficiary.idDoc.issuerCode": "510-001",
+            "beneficiary.idDoc.isForeignIdDoc": false,
+            "beneficiary.tax.usTaxResident": false,
+            "beneficiary.tax.usResident": false,
+          },
+        },
+        "FV-POS-03": {
+          context: { pipelineId: "entrypoints.fl_resident.full_validation", currentDate: TODAY_YMD },
+          payload: {
+            "beneficiary.type": "FL_RESIDENT",
+            "beneficiary.inn": "366110509430",
+            "beneficiary.participationId": "TEST-553678199916",
+            "beneficiary.contacts.email": "pa.test.03@example.com",
+            "beneficiary.contacts.postalAddress": "Berlin, Alexanderplatz 1",
+            "beneficiary.contacts.postalAddressCountryCode": "DE",
+            "beneficiary.contacts.phoneForeign": "+49301234567",
+            "beneficiary.status.startDate": "2024-02-21",
+            "beneficiary.fl.lastName": "Меркулов",
+            "beneficiary.fl.firstName": "Олег",
+            "beneficiary.fl.middleName": "Геннадьевич",
+            "beneficiary.fl.birthDate": "1988-04-16",
+            "beneficiary.fl.birthPlace": "г. Воронеж",
+            "beneficiary.fl.citizenshipCode": "RU",
+            "beneficiary.address.registration.addressLine": "г Москва, ул Молдавская, д 2 к 1, кв 11",
+            "beneficiary.address.registration.countryCode": "RU",
+            "beneficiary.idDoc.typeCode": "21",
+            "beneficiary.idDoc.typeName": "Паспорт РФ",
+            "beneficiary.idDoc.series": "4518",
+            "beneficiary.idDoc.number": "917951",
+            "beneficiary.idDoc.issueDate": "2018-10-16",
+            "beneficiary.idDoc.issuer": "ГУ МВД РОССИИ ПО Г. МОСКВЕ",
+            "beneficiary.idDoc.issuerCode": "770-002",
+            "beneficiary.idDoc.isForeignIdDoc": false,
+            "beneficiary.tax.usTaxResident": false,
+            "beneficiary.tax.usResident": false,
+            "beneficiary.tax.foreignResidencies0.countryCode": "DE",
+            "beneficiary.tax.foreignResidencies0.tin": "DE123456789",
+          },
+        },
+        "FV-NEG-01": {
+          context: { pipelineId: "entrypoints.fl_resident.full_validation", currentDate: TODAY_YMD },
+          payload: {
+            "beneficiary.type": "FL_RESIDENT",
+            "beneficiary.inn": "744404355804",
+            "beneficiary.contacts.phone": "+79801611004",
+            "beneficiary.status.startDate": "2024-01-26",
+            "beneficiary.fl.lastName": "Петров",
+            "beneficiary.fl.firstName": "Алексей",
+            "beneficiary.fl.middleName": "Анатольевич",
+            "beneficiary.fl.birthDate": "1979-12-01",
+            "beneficiary.fl.birthPlace": "гор. Магнитогорск Челябинской области",
+            "beneficiary.fl.citizenshipCode": "RU",
+            "beneficiary.address.registration.addressLine": "350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20",
+            "beneficiary.address.registration.countryCode": "RU",
+            "beneficiary.idDoc.typeCode": "21",
+            "beneficiary.idDoc.typeName": "Паспорт РФ",
+            "beneficiary.idDoc.series": "4507",
+            "beneficiary.idDoc.number": "360952",
+            "beneficiary.idDoc.issueDate": "2004-03-29",
+            "beneficiary.idDoc.issuer": "ГУ МВД РОССИИ ПО Г. МОСКВЕ",
             "beneficiary.idDoc.issuerCode": "770-001",
             "beneficiary.idDoc.isForeignIdDoc": false,
             "beneficiary.tax.usTaxResident": false,
@@ -1532,32 +1614,27 @@
           },
         },
         "FV-NEG-02": {
-          context: {
-            pipelineId: "entrypoints.fl_resident.full_validation",
-          },
+          context: { pipelineId: "entrypoints.fl_resident.full_validation", currentDate: TODAY_YMD },
           payload: {
             "beneficiary.type": "FL_RESIDENT",
             "beneficiary.inn": "744404355804",
             "beneficiary.participationId": "TEST-536779508951",
-            "beneficiary.contacts.phone": "9801611004",
+            "beneficiary.contacts.phone": "+79801611004",
             "beneficiary.status.startDate": "2024-01-26",
             "beneficiary.fl.lastName": "Петров",
             "beneficiary.fl.firstName": "Алексей",
             "beneficiary.fl.middleName": "Анатольевич",
             "beneficiary.fl.birthDate": "1979-12-01",
-            "beneficiary.fl.birthPlace":
-              "гор. МАГНИТОГОРСК ЧЕЛЯБИНСКОЙ ОБЛАСТИ",
+            "beneficiary.fl.birthPlace": "гор. Магнитогорск Челябинской области",
             "beneficiary.fl.citizenshipCode": "RU",
-            "beneficiary.address.registration.addressLine":
-              "350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20",
+            "beneficiary.address.registration.addressLine": "350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20",
             "beneficiary.address.registration.countryCode": "RU",
             "beneficiary.idDoc.typeCode": "21",
             "beneficiary.idDoc.typeName": "Паспорт РФ",
             "beneficiary.idDoc.series": "4507",
             "beneficiary.idDoc.number": "360952",
             "beneficiary.idDoc.issueDate": "2004-03-29",
-            "beneficiary.idDoc.issuer":
-              'ОВД РАЙОНА "БОГОРОДСКОЕ" ГОРОДА МОСКВЫ',
+            "beneficiary.idDoc.issuer": "ГУ МВД РОССИИ ПО Г. МОСКВЕ",
             "beneficiary.idDoc.isForeignIdDoc": false,
             "beneficiary.tax.usTaxResident": false,
             "beneficiary.tax.usResident": false,
@@ -1565,23 +1642,20 @@
           },
         },
         "FV-NEG-03": {
-          context: {
-            pipelineId: "entrypoints.fl_resident.full_validation",
-          },
+          context: { pipelineId: "entrypoints.fl_resident.full_validation", currentDate: TODAY_YMD },
           payload: {
             "beneficiary.type": "FL_RESIDENT",
             "beneficiary.inn": "51120118625",
             "beneficiary.participationId": "TEST-552976161977",
-            "beneficiary.contacts.phone": "9632449030",
+            "beneficiary.contacts.phone": "+79632449030",
             "beneficiary.status.startDate": "2023-05-29",
             "beneficiary.fl.lastName": "Стаценко",
             "beneficiary.fl.firstName": "Анастасия",
             "beneficiary.fl.middleName": "Владимировна",
             "beneficiary.fl.birthDate": "1999-11-12",
-            "beneficiary.fl.birthPlace": "Г. МУРМАНСК",
+            "beneficiary.fl.birthPlace": "г. Мурманск",
             "beneficiary.fl.citizenshipCode": "RU",
-            "beneficiary.address.registration.addressLine":
-              "Мурманская обл, г Снежногорск, ул Мира, д 12, кв 187",
+            "beneficiary.address.registration.addressLine": "Мурманская обл, г Снежногорск, ул Мира, д 12, кв 187",
             "beneficiary.address.registration.countryCode": "RU",
             "beneficiary.idDoc.typeCode": "21",
             "beneficiary.idDoc.typeName": "Паспорт РФ",
@@ -1597,23 +1671,20 @@
           },
         },
         "FV-NEG-04": {
-          context: {
-            pipelineId: "entrypoints.fl_resident.full_validation",
-          },
+          context: { pipelineId: "entrypoints.fl_resident.full_validation", currentDate: TODAY_YMD },
           payload: {
             "beneficiary.type": "FL_RESIDENT",
             "beneficiary.inn": "511201186251",
             "beneficiary.participationId": "TEST-552976161977",
-            "beneficiary.contacts.phone": "9632449030",
+            "beneficiary.contacts.phone": "+79632449030",
             "beneficiary.status.startDate": "2023-05-29",
             "beneficiary.fl.lastName": "Стаценко",
             "beneficiary.fl.firstName": "Анастасия",
             "beneficiary.fl.middleName": "Владимировна",
             "beneficiary.fl.birthDate": "1999-11-12",
-            "beneficiary.fl.birthPlace": "Г. МУРМАНСК",
+            "beneficiary.fl.birthPlace": "г. Мурманск",
             "beneficiary.fl.citizenshipCode": "US",
-            "beneficiary.address.registration.addressLine":
-              "Мурманская обл, г Снежногорск, ул Мира, д 12, кв 187",
+            "beneficiary.address.registration.addressLine": "Мурманская обл, г Снежногорск, ул Мира, д 12, кв 187",
             "beneficiary.address.registration.countryCode": "RU",
             "beneficiary.idDoc.typeCode": "21",
             "beneficiary.idDoc.typeName": "Паспорт РФ",
@@ -1629,14 +1700,12 @@
           },
         },
         "FV-NEG-05": {
-          context: {
-            pipelineId: "entrypoints.fl_resident.full_validation",
-          },
+          context: { pipelineId: "entrypoints.fl_resident.full_validation", currentDate: TODAY_YMD },
           payload: {
             "beneficiary.type": "FL_RESIDENT",
             "beneficiary.inn": "366110509430",
             "beneficiary.participationId": "TEST-553678199916",
-            "beneficiary.contacts.phone": "9257578736",
+            "beneficiary.contacts.phone": "+79257578736",
             "beneficiary.status.startDate": "2024-02-21",
             "beneficiary.fl.lastName": "Меркулов",
             "beneficiary.fl.firstName": "Олег",
@@ -1644,8 +1713,7 @@
             "beneficiary.fl.birthDate": "1988-04-16",
             "beneficiary.fl.birthPlace": "USA, New York",
             "beneficiary.fl.citizenshipCode": "RU",
-            "beneficiary.address.registration.addressLine":
-              "г Москва, ул Молдавская, д 2 к 1, кв 11",
+            "beneficiary.address.registration.addressLine": "г Москва, ул Молдавская, д 2 к 1, кв 11",
             "beneficiary.address.registration.countryCode": "RU",
             "beneficiary.idDoc.typeCode": "21",
             "beneficiary.idDoc.typeName": "Паспорт РФ",
@@ -1661,14 +1729,12 @@
           },
         },
         "FV-NEG-06": {
-          context: {
-            pipelineId: "entrypoints.fl_resident.full_validation",
-          },
+          context: { pipelineId: "entrypoints.fl_resident.full_validation", currentDate: TODAY_YMD },
           payload: {
             "beneficiary.type": "FL_RESIDENT",
             "beneficiary.inn": "366110509430",
             "beneficiary.participationId": "TEST-553678199916",
-            "beneficiary.contacts.phone": "9257578736",
+            "beneficiary.contacts.phone": "+79257578736",
             "beneficiary.status.startDate": "2024-02-21",
             "beneficiary.fl.lastName": "Меркулов",
             "beneficiary.fl.firstName": "Олег",
@@ -1676,8 +1742,7 @@
             "beneficiary.fl.birthDate": "1988-04-16",
             "beneficiary.fl.birthPlace": "г. Воронеж",
             "beneficiary.fl.citizenshipCode": "RU",
-            "beneficiary.address.registration.addressLine":
-              "г Москва, ул Молдавская, д 2 к 1, кв 11",
+            "beneficiary.address.registration.addressLine": "г Москва, ул Молдавская, д 2 к 1, кв 11",
             "beneficiary.address.registration.countryCode": "RU",
             "beneficiary.idDoc.typeCode": "21",
             "beneficiary.idDoc.typeName": "Паспорт РФ",
@@ -1693,33 +1758,26 @@
           },
         },
         "FV-NEG-07": {
-          context: {
-            pipelineId: "entrypoints.fl_resident.full_validation",
-          },
+          context: { pipelineId: "entrypoints.fl_resident.full_validation", currentDate: TODAY_YMD },
           payload: {
             "beneficiary.type": "FL_RESIDENT",
             "beneficiary.inn": "744404355804",
             "beneficiary.participationId": "TEST-536779508951",
-            "beneficiary.contacts.phone": "9801611004",
+            "beneficiary.contacts.phone": "+79801611004",
             "beneficiary.status.startDate": "2024-01-26",
             "beneficiary.fl.lastName": "Петров",
             "beneficiary.fl.firstName": "Алексей",
             "beneficiary.fl.middleName": "Анатольевич",
             "beneficiary.fl.birthDate": "1979-12-01",
-            "beneficiary.fl.birthPlace":
-              "гор. МАГНИТОГОРСК ЧЕЛЯБИНСКОЙ ОБЛАСТИ",
+            "beneficiary.fl.birthPlace": "гор. Магнитогорск Челябинской области",
             "beneficiary.fl.citizenshipCode": "RU",
-            "beneficiary.address.registration.addressLine":
-              "350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20",
+            "beneficiary.address.registration.addressLine": "350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20",
             "beneficiary.address.registration.countryCode": "RU",
-            "beneficiary.idDoc.typeCode": "21",
-            "beneficiary.idDoc.typeName": "Паспорт РФ",
-            "beneficiary.idDoc.series": "4507",
-            "beneficiary.idDoc.number": "360952",
-            "beneficiary.idDoc.issueDate": "2004-03-29",
-            "beneficiary.idDoc.issuer":
-              'ОВД РАЙОНА "БОГОРОДСКОЕ" ГОРОДА МОСКВЫ',
-            "beneficiary.idDoc.issuerCode": "770-001",
+            "beneficiary.idDoc.typeCode": "31",
+            "beneficiary.idDoc.typeName": "Паспорт иностранного гражданина",
+            "beneficiary.idDoc.number": "AA1234567",
+            "beneficiary.idDoc.issueDate": "2014-03-29",
+            "beneficiary.idDoc.issuer": "MIGRATION SERVICE",
             "beneficiary.idDoc.isForeignIdDoc": true,
             "beneficiary.tax.usTaxResident": false,
             "beneficiary.tax.usResident": false,
@@ -1727,57 +1785,55 @@
           },
         },
         "FV-NEG-08": {
-          context: {
-            pipelineId: "entrypoints.fl_resident.full_validation",
-          },
+          context: { pipelineId: "entrypoints.fl_resident.full_validation", currentDate: TODAY_YMD },
           payload: {
             "beneficiary.type": "FL_RESIDENT",
             "beneficiary.inn": "744404355804",
             "beneficiary.participationId": "TEST-536779508951",
-            "beneficiary.contacts.phone": "9801611004",
+            "beneficiary.contacts.email": "pa.test.01@example.com",
+            "beneficiary.contacts.postalAddress": "Berlin, Friedrichstrasse 10",
+            "beneficiary.contacts.postalAddressCountryCode": "DE",
+            "beneficiary.contacts.phoneForeign": "+49305557777",
             "beneficiary.status.startDate": "2024-01-26",
             "beneficiary.fl.lastName": "Петров",
             "beneficiary.fl.firstName": "Алексей",
             "beneficiary.fl.middleName": "Анатольевич",
             "beneficiary.fl.birthDate": "1979-12-01",
-            "beneficiary.fl.birthPlace":
-              "гор. МАГНИТОГОРСК ЧЕЛЯБИНСКОЙ ОБЛАСТИ",
+            "beneficiary.fl.birthPlace": "гор. Магнитогорск Челябинской области",
             "beneficiary.fl.citizenshipCode": "RU",
-            "beneficiary.address.registration.addressLine":
-              "350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20",
+            "beneficiary.address.registration.addressLine": "350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20",
             "beneficiary.address.registration.countryCode": "RU",
             "beneficiary.idDoc.typeCode": "21",
             "beneficiary.idDoc.typeName": "Паспорт РФ",
             "beneficiary.idDoc.series": "4507",
             "beneficiary.idDoc.number": "360952",
             "beneficiary.idDoc.issueDate": "2004-03-29",
-            "beneficiary.idDoc.issuer":
-              'ОВД РАЙОНА "БОГОРОДСКОЕ" ГОРОДА МОСКВЫ',
+            "beneficiary.idDoc.issuer": "ГУ МВД РОССИИ ПО Г. МОСКВЕ",
             "beneficiary.idDoc.issuerCode": "770-001",
             "beneficiary.idDoc.isForeignIdDoc": false,
             "beneficiary.tax.usTaxResident": false,
             "beneficiary.tax.usResident": false,
-            "beneficiary.contacts.email": "pa.test.01@example.com",
+            "beneficiary.tax.foreignResidencies0.countryCode": "DE",
           },
         },
         "FV-NEG-09": {
-          context: {
-            pipelineId: "entrypoints.fl_resident.full_validation",
-          },
+          context: { pipelineId: "entrypoints.fl_resident.full_validation", currentDate: TODAY_YMD },
           payload: {
             "beneficiary.type": "FL_RESIDENT",
             "beneficiary.inn": "511201186251",
             "beneficiary.participationId": "TEST-552976161977",
-            "beneficiary.contacts.phone": "9632449030",
+            "beneficiary.contacts.phone": "+79632449030",
+            "beneficiary.contacts.email": "pa.test.02@example.com",
+            "beneficiary.contacts.postalAddress": "USA, New York",
+            "beneficiary.contacts.postalAddressCountryCode": "US",
             "beneficiary.status.startDate": "2023-05-29",
             "beneficiary.fl.lastName": "Стаценко",
             "beneficiary.fl.firstName": "Анастасия",
             "beneficiary.fl.middleName": "Владимировна",
             "beneficiary.fl.birthDate": "1999-11-12",
-            "beneficiary.fl.birthPlace": "Г. МУРМАНСК",
+            "beneficiary.fl.birthPlace": "г. Мурманск",
             "beneficiary.fl.citizenshipCode": "RU",
-            "beneficiary.address.registration.addressLine":
-              "Мурманская обл, г Снежногорск, ул Мира, д 12, кв 187",
+            "beneficiary.address.registration.addressLine": "Мурманская обл, г Снежногорск, ул Мира, д 12, кв 187",
             "beneficiary.address.registration.countryCode": "RU",
             "beneficiary.idDoc.typeCode": "21",
             "beneficiary.idDoc.typeName": "Паспорт РФ",
@@ -1789,14 +1845,10 @@
             "beneficiary.idDoc.isForeignIdDoc": false,
             "beneficiary.tax.usTaxResident": false,
             "beneficiary.tax.usResident": false,
-            "beneficiary.contacts.email": "pa.test.02@example.com",
-            "beneficiary.contacts.postalAddress": "USA, New York",
           },
         },
         "FV-NEG-10": {
-          context: {
-            pipelineId: "entrypoints.fl_resident.full_validation",
-          },
+          context: { pipelineId: "entrypoints.fl_resident.full_validation", currentDate: TODAY_YMD },
           payload: {
             "beneficiary.type": "FL_RESIDENT",
             "beneficiary.inn": "366110509430",
@@ -1808,8 +1860,7 @@
             "beneficiary.fl.birthDate": "1988-04-16",
             "beneficiary.fl.birthPlace": "г. Воронеж",
             "beneficiary.fl.citizenshipCode": "RU",
-            "beneficiary.address.registration.addressLine":
-              "г Москва, ул Молдавская, д 2 к 1, кв 11",
+            "beneficiary.address.registration.addressLine": "г Москва, ул Молдавская, д 2 к 1, кв 11",
             "beneficiary.address.registration.countryCode": "RU",
             "beneficiary.idDoc.typeCode": "21",
             "beneficiary.idDoc.typeName": "Паспорт РФ",
@@ -1824,32 +1875,27 @@
           },
         },
         "FV-NEG-11": {
-          context: {
-            pipelineId: "entrypoints.fl_resident.full_validation",
-          },
+          context: { pipelineId: "entrypoints.fl_resident.full_validation", currentDate: TODAY_YMD },
           payload: {
             "beneficiary.type": "FL_RESIDENT",
             "beneficiary.inn": "744404355804",
             "beneficiary.participationId": "TEST-536779508951",
-            "beneficiary.contacts.phone": "9801611004",
+            "beneficiary.contacts.phone": "+79801611004",
             "beneficiary.status.startDate": "2024-01-26",
             "beneficiary.fl.lastName": "Петров",
             "beneficiary.fl.firstName": "Алексей",
             "beneficiary.fl.middleName": "Анатольевич",
             "beneficiary.fl.birthDate": "1979-12-01",
-            "beneficiary.fl.birthPlace":
-              "гор. МАГНИТОГОРСК ЧЕЛЯБИНСКОЙ ОБЛАСТИ",
+            "beneficiary.fl.birthPlace": "гор. Магнитогорск Челябинской области",
             "beneficiary.fl.citizenshipCode": "RU",
-            "beneficiary.address.registration.addressLine":
-              "350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20",
+            "beneficiary.address.registration.addressLine": "350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20",
             "beneficiary.address.registration.countryCode": "RU",
             "beneficiary.idDoc.typeCode": "21",
             "beneficiary.idDoc.typeName": "Паспорт РФ",
             "beneficiary.idDoc.series": "4507",
             "beneficiary.idDoc.number": "360952",
             "beneficiary.idDoc.issueDate": "2004-03-29",
-            "beneficiary.idDoc.issuer":
-              'ОВД РАЙОНА "БОГОРОДСКОЕ" ГОРОДА МОСКВЫ',
+            "beneficiary.idDoc.issuer": "ГУ МВД РОССИИ ПО Г. МОСКВЕ",
             "beneficiary.idDoc.issuerCode": "770-001",
             "beneficiary.idDoc.isForeignIdDoc": false,
             "beneficiary.tax.usTaxResident": true,
@@ -1858,23 +1904,20 @@
           },
         },
         "FV-NEG-12": {
-          context: {
-            pipelineId: "entrypoints.fl_resident.full_validation",
-          },
+          context: { pipelineId: "entrypoints.fl_resident.full_validation", currentDate: TODAY_YMD },
           payload: {
             "beneficiary.type": "FL_RESIDENT",
             "beneficiary.inn": "511201186251",
             "beneficiary.participationId": "TEST-552976161977",
-            "beneficiary.contacts.phone": "9632449030",
+            "beneficiary.contacts.phone": "+79632449030",
             "beneficiary.status.startDate": "2023-05-29",
             "beneficiary.fl.lastName": "Стаценко",
             "beneficiary.fl.firstName": "Анастасия",
             "beneficiary.fl.middleName": "Владимировна",
             "beneficiary.fl.birthDate": "1999-11-12",
-            "beneficiary.fl.birthPlace": "Г. МУРМАНСК",
+            "beneficiary.fl.birthPlace": "г. Мурманск",
             "beneficiary.fl.citizenshipCode": "RU",
-            "beneficiary.address.registration.addressLine":
-              "Мурманская обл, г Снежногорск, ул Мира, д 12, кв 187",
+            "beneficiary.address.registration.addressLine": "Мурманская обл, г Снежногорск, ул Мира, д 12, кв 187",
             "beneficiary.address.registration.countryCode": "US",
             "beneficiary.idDoc.typeCode": "21",
             "beneficiary.idDoc.typeName": "Паспорт РФ",
@@ -1890,14 +1933,15 @@
           },
         },
         "FV-NEG-13": {
-          context: {
-            pipelineId: "entrypoints.fl_resident.full_validation",
-          },
+          context: { pipelineId: "entrypoints.fl_resident.full_validation", currentDate: TODAY_YMD },
           payload: {
             "beneficiary.type": "FL_RESIDENT",
             "beneficiary.inn": "366110509430",
             "beneficiary.participationId": "TEST-553678199916",
-            "beneficiary.contacts.phone": "9257578736",
+            "beneficiary.contacts.email": "pa.test.03@example.com",
+            "beneficiary.contacts.postalAddress": "Berlin, Alexanderplatz 1",
+            "beneficiary.contacts.postalAddressCountryCode": "DE",
+            "beneficiary.contacts.phoneForeign": "+49301234567",
             "beneficiary.status.startDate": "2024-02-21",
             "beneficiary.fl.lastName": "Меркулов",
             "beneficiary.fl.firstName": "Олег",
@@ -1905,8 +1949,7 @@
             "beneficiary.fl.birthDate": "1988-04-16",
             "beneficiary.fl.birthPlace": "г. Воронеж",
             "beneficiary.fl.citizenshipCode": "RU",
-            "beneficiary.address.registration.addressLine":
-              "г Москва, ул Молдавская, д 2 к 1, кв 11",
+            "beneficiary.address.registration.addressLine": "г Москва, ул Молдавская, д 2 к 1, кв 11",
             "beneficiary.address.registration.countryCode": "RU",
             "beneficiary.idDoc.typeCode": "21",
             "beneficiary.idDoc.typeName": "Паспорт РФ",
@@ -1918,39 +1961,65 @@
             "beneficiary.idDoc.isForeignIdDoc": false,
             "beneficiary.tax.usTaxResident": false,
             "beneficiary.tax.usResident": false,
-            "beneficiary.contacts.email": "pa.test.03@example.com",
             "beneficiary.tax.foreignResidencies0.countryCode": "DE",
             "beneficiary.tax.foreignResidencies0.tin": "DE123456789",
             "beneficiary.tax.foreignResidencies0.address": "USA, New York",
           },
         },
-        "FV-POS-01": {
-          context: {
-            pipelineId: "entrypoints.fl_resident.full_validation",
+        "FV-NEG-14": {
+          context: { pipelineId: "entrypoints.fl_resident.full_validation", currentDate: TODAY_YMD },
+          payload: {
+            "beneficiary.type": "FL_RESIDENT",
+            "beneficiary.inn": "366110509430",
+            "beneficiary.participationId": "TEST-553678199916",
+            "beneficiary.contacts.email": "pa.test.03@example.com",
+            "beneficiary.contacts.postalAddress": "Berlin, Alexanderplatz 1",
+            "beneficiary.contacts.phoneForeign": "+49301234567",
+            "beneficiary.status.startDate": "2024-02-21",
+            "beneficiary.fl.lastName": "Меркулов",
+            "beneficiary.fl.firstName": "Олег",
+            "beneficiary.fl.middleName": "Геннадьевич",
+            "beneficiary.fl.birthDate": "1988-04-16",
+            "beneficiary.fl.birthPlace": "г. Воронеж",
+            "beneficiary.fl.citizenshipCode": "RU",
+            "beneficiary.address.registration.addressLine": "г Москва, ул Молдавская, д 2 к 1, кв 11",
+            "beneficiary.address.registration.countryCode": "RU",
+            "beneficiary.idDoc.typeCode": "21",
+            "beneficiary.idDoc.typeName": "Паспорт РФ",
+            "beneficiary.idDoc.series": "4518",
+            "beneficiary.idDoc.number": "917951",
+            "beneficiary.idDoc.issueDate": "2018-10-16",
+            "beneficiary.idDoc.issuer": "ГУ МВД РОССИИ ПО Г. МОСКВЕ",
+            "beneficiary.idDoc.issuerCode": "770-002",
+            "beneficiary.idDoc.isForeignIdDoc": false,
+            "beneficiary.tax.usTaxResident": false,
+            "beneficiary.tax.usResident": false,
+            "beneficiary.tax.foreignResidencies0.countryCode": "DE",
+            "beneficiary.tax.foreignResidencies0.tin": "DE123456789",
           },
+        },
+        "FV-NEG-15": {
+          context: { pipelineId: "entrypoints.fl_resident.full_validation", currentDate: "2026-03-26" },
           payload: {
             "beneficiary.type": "FL_RESIDENT",
             "beneficiary.inn": "744404355804",
             "beneficiary.participationId": "TEST-536779508951",
-            "beneficiary.contacts.phone": "9801611004",
+            "beneficiary.contacts.phone": "+79801611004",
             "beneficiary.status.startDate": "2024-01-26",
             "beneficiary.fl.lastName": "Петров",
             "beneficiary.fl.firstName": "Алексей",
             "beneficiary.fl.middleName": "Анатольевич",
             "beneficiary.fl.birthDate": "1979-12-01",
-            "beneficiary.fl.birthPlace":
-              "гор. МАГНИТОГОРСК ЧЕЛЯБИНСКОЙ ОБЛАСТИ",
+            "beneficiary.fl.birthPlace": "гор. Магнитогорск Челябинской области",
             "beneficiary.fl.citizenshipCode": "RU",
-            "beneficiary.address.registration.addressLine":
-              "350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20",
+            "beneficiary.address.registration.addressLine": "350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20",
             "beneficiary.address.registration.countryCode": "RU",
             "beneficiary.idDoc.typeCode": "21",
             "beneficiary.idDoc.typeName": "Паспорт РФ",
             "beneficiary.idDoc.series": "4507",
             "beneficiary.idDoc.number": "360952",
-            "beneficiary.idDoc.issueDate": "2004-03-29",
-            "beneficiary.idDoc.issuer":
-              'ОВД РАЙОНА "БОГОРОДСКОЕ" ГОРОДА МОСКВЫ',
+            "beneficiary.idDoc.issueDate": "2027-03-29",
+            "beneficiary.idDoc.issuer": "ГУ МВД РОССИИ ПО Г. МОСКВЕ",
             "beneficiary.idDoc.issuerCode": "770-001",
             "beneficiary.idDoc.isForeignIdDoc": false,
             "beneficiary.tax.usTaxResident": false,
@@ -1958,120 +2027,48 @@
             "beneficiary.contacts.email": "pa.test.01@example.com",
           },
         },
-        "FV-POS-02": {
-          context: {
-            pipelineId: "entrypoints.fl_resident.full_validation",
-          },
+        "FV-NEG-16": {
+          context: { pipelineId: "entrypoints.fl_resident.full_validation", currentDate: TODAY_YMD },
           payload: {
             "beneficiary.type": "FL_RESIDENT",
-            "beneficiary.inn": "511201186251",
-            "beneficiary.participationId": "TEST-552976161977",
-            "beneficiary.contacts.phone": "9632449030",
-            "beneficiary.status.startDate": "2023-05-29",
-            "beneficiary.fl.lastName": "Стаценко",
-            "beneficiary.fl.firstName": "Анастасия",
-            "beneficiary.fl.middleName": "Владимировна",
-            "beneficiary.fl.birthDate": "1999-11-12",
-            "beneficiary.fl.birthPlace": "Г. МУРМАНСК",
+            "beneficiary.inn": "744404355804",
+            "beneficiary.participationId": "TEST-536779508951",
+            "beneficiary.contacts.phone": "+79801611004",
+            "beneficiary.status.startDate": "2024-01-26",
+            "beneficiary.fl.lastName": "Петров",
+            "beneficiary.fl.firstName": "Алексей",
+            "beneficiary.fl.middleName": "Анатольевич",
+            "beneficiary.fl.birthDate": "1979-12-01",
+            "beneficiary.fl.birthPlace": "гор. Магнитогорск Челябинской области",
             "beneficiary.fl.citizenshipCode": "RU",
-            "beneficiary.address.registration.addressLine":
-              "Мурманская обл, г Снежногорск, ул Мира, д 12, кв 187",
+            "beneficiary.address.registration.addressLine": "350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20",
             "beneficiary.address.registration.countryCode": "RU",
             "beneficiary.idDoc.typeCode": "21",
             "beneficiary.idDoc.typeName": "Паспорт РФ",
-            "beneficiary.idDoc.series": "4719",
-            "beneficiary.idDoc.number": "671983",
-            "beneficiary.idDoc.issueDate": "2019-11-13",
-            "beneficiary.idDoc.issuer": "УМВД РОССИИ ПО МУРМАНСКОЙ ОБЛАСТИ",
-            "beneficiary.idDoc.issuerCode": "510-001",
+            "beneficiary.idDoc.series": "4507",
+            "beneficiary.idDoc.number": "360952",
+            "beneficiary.idDoc.issueDate": "2004-03-29",
+            "beneficiary.idDoc.issuer": "ГУ МВД РОССИИ (Г. МОСКВА)",
+            "beneficiary.idDoc.issuerCode": "770-001",
             "beneficiary.idDoc.isForeignIdDoc": false,
             "beneficiary.tax.usTaxResident": false,
             "beneficiary.tax.usResident": false,
-            "beneficiary.contacts.email": "pa.test.02@example.com",
+            "beneficiary.contacts.email": "pa.test.01@example.com",
           },
         },
-        "FV-POS-03": {
-          context: {
-            pipelineId: "entrypoints.fl_resident.full_validation",
-          },
-          payload: {
-            "beneficiary.type": "FL_RESIDENT",
-            "beneficiary.inn": "366110509430",
-            "beneficiary.participationId": "TEST-553678199916",
-            "beneficiary.contacts.phone": "9257578736",
-            "beneficiary.status.startDate": "2024-02-21",
-            "beneficiary.fl.lastName": "Меркулов",
-            "beneficiary.fl.firstName": "Олег",
-            "beneficiary.fl.middleName": "Геннадьевич",
-            "beneficiary.fl.birthDate": "1988-04-16",
-            "beneficiary.fl.birthPlace": "г. Воронеж",
-            "beneficiary.fl.citizenshipCode": "RU",
-            "beneficiary.address.registration.addressLine":
-              "г Москва, ул Молдавская, д 2 к 1, кв 11",
-            "beneficiary.address.registration.countryCode": "RU",
-            "beneficiary.idDoc.typeCode": "21",
-            "beneficiary.idDoc.typeName": "Паспорт РФ",
-            "beneficiary.idDoc.series": "4518",
-            "beneficiary.idDoc.number": "917951",
-            "beneficiary.idDoc.issueDate": "2018-10-16",
-            "beneficiary.idDoc.issuer": "ГУ МВД РОССИИ ПО Г. МОСКВЕ",
-            "beneficiary.idDoc.issuerCode": "770-002",
-            "beneficiary.idDoc.isForeignIdDoc": false,
-            "beneficiary.tax.usTaxResident": false,
-            "beneficiary.tax.usResident": false,
-            "beneficiary.contacts.email": "pa.test.03@example.com",
-          },
-        },
-        // "PC-POS-01": {
-        //   context: {
-        //     pipelineId: "entrypoints.fl_resident.full_validation",
-        //   },
-        //   payload: {
-        //     "beneficiary.type": "FL_RESIDENT",
-        //     "beneficiary.inn": "744404355804",
-        //     "beneficiary.fl.lastName": "Петров",
-        //     "beneficiary.fl.firstName": "Алексей",
-        //   },
-        // },
-        // "PC-POS-02": {
-        //   context: {
-        //     pipelineId: "entrypoints.fl_resident.full_validation",
-        //   },
-        //   payload: {
-        //     "beneficiary.type": "FL_RESIDENT",
-        //     "beneficiary.inn": "511201186251",
-        //     "beneficiary.fl.lastName": "Стаценко",
-        //     "beneficiary.fl.firstName": "Анастасия",
-        //   },
-        // },
-        // "PC-POS-03": {
-        //   context: {
-        //     pipelineId: "entrypoints.fl_resident.full_validation",
-        //   },
-        //   payload: {
-        //     "beneficiary.type": "FL_RESIDENT",
-        //     "beneficiary.inn": "366110509430",
-        //     "beneficiary.fl.lastName": "Меркулов",
-        //     "beneficiary.fl.firstName": "Олег",
-        //   },
-        // },
       };
 
       const PIPELINES = [
         {
           id: "entrypoints.fl_resident.full_validation",
-          label: "Полная проверка · канал B",
+          label: "Полная проверка заявки",
           mode: "full",
         },
-        // {
-        //   id: "entrypoints.fl_resident.full_validation",
-        //   label: "Предпроверка · канал C",
-        //   mode: "pre",
-        // },
       ];
 
       const EMPTY = {
         pipelineId: PIPELINES[0].id,
+        currentDate: TODAY_YMD,
         inn: "",
         participationId: "",
         lastName: "",
@@ -2173,11 +2170,17 @@
         add("beneficiary.contacts.postalAddress", f.postalAddress);
         add("beneficiary.contacts.postalAddressCountryCode", (f.postalAddressCountryCode || "").toUpperCase());
 
-        return { context: { pipelineId: f.pipelineId }, payload: p };
+        return {
+          context: {
+            pipelineId: f.pipelineId,
+            currentDate: nd(f.currentDate) || TODAY_YMD,
+          },
+          payload: p,
+        };
       }
 
       /* ── payload → form ── */
-      function p2f(p, ctxId) {
+      function p2f(p, ctx = {}) {
         const g = (keys, d = "") => {
           const list = Array.isArray(keys) ? keys : [keys];
           for (const k of list) if (k in p) return p[k];
@@ -2189,11 +2192,12 @@
           return d;
         };
         const pid =
-          ctxId && PIPELINES.find((x) => x.id === ctxId)
-            ? ctxId
+          ctx && ctx.pipelineId && PIPELINES.find((x) => x.id === ctx.pipelineId)
+            ? ctx.pipelineId
             : PIPELINES[0].id;
         return {
           pipelineId: pid,
+          currentDate: (ctx && ctx.currentDate) || TODAY_YMD,
           inn: g("beneficiary.inn"),
           participationId: g("beneficiary.participationId"),
           lastName: g(["beneficiary.lastName", "beneficiary.fl.lastName"]),
@@ -2435,7 +2439,10 @@
 
                             if (msg === "exec rule step") {
                               chips.push(["rule", shorten(d.ruleId)]);
-                              if (d.operator) chips.push(["op", d.operator]);
+                              if (d.field) chips.push(["field", d.field]);
+                              if (d.operator) chips.push(["operator", d.operator]);
+                              if (d.value !== undefined && d.value !== "") chips.push(["expected", d.value]);
+                              if (d.actual !== undefined && d.actual !== "") chips.push(["actual", d.actual]);
                               if (d.role) chips.push(["role", d.role]);
                             } else if (msg === "exec pipeline step") {
                               chips.push(["pipeline", shorten(d.pipelineId)]);
@@ -2443,13 +2450,19 @@
                               chips.push(["condition", shorten(d.conditionId)]);
                             } else if (msg === "exec predicate step") {
                               chips.push(["pred", shorten(d.ruleId)]);
-                              if (d.operator) chips.push(["op", d.operator]);
+                              if (d.field) chips.push(["field", d.field]);
+                              if (d.operator) chips.push(["operator", d.operator]);
                             } else if (msg === "condition evaluated") {
                               chips.push(["mode", d.whenMode]);
                               chips.push([
                                 "→",
                                 d.result ? "✓ TRUE" : "✗ FALSE",
                               ]);
+                            } else if (msg === "rule result") {
+                              chips.push(["rule", shorten(d.ruleId)]);
+                              if (d.status) chips.push(["result", d.status]);
+                              if (d.level) chips.push(["level", d.level]);
+                              if (d.code) chips.push(["code", d.code]);
                             } else if (msg === "STOP by EXCEPTION-level rule") {
                               chips.push(["rule", shorten(d.ruleId)]);
                               chips.push(["code", d.code]);
@@ -2688,12 +2701,16 @@
                                 <code className="imv">{iss.Поле}</code>
                               </span>
                             )}
+                            {iss.expected != null && (
+                              <span className="im">
+                                <span className="imk">Ожидаемое</span>
+                                <code className="imv">{String(iss.expected)}</code>
+                              </span>
+                            )}
                             {iss.actual != null && (
                               <span className="im">
-                                <span className="imk">Факт</span>
-                                <code className="imv">
-                                  {String(iss.actual)}
-                                </code>
+                                <span className="imk">Фактическое</span>
+                                <code className="imv">{String(iss.actual)}</code>
                               </span>
                             )}
                             {iss.ПравилоId && (
@@ -2781,7 +2798,7 @@
             try {
               const parsed = JSON.parse(ev.target.result);
               const raw = parsed.payload ?? parsed;
-              setForm(p2f(raw, parsed.context?.pipelineId));
+              setForm(p2f(raw, parsed.context || {}));
               setSelectedPreset("");
               setResult(null);
               setNetErr(null);
@@ -2798,7 +2815,7 @@
           const parsed = PA_PRESETS[id];
           const raw = parsed.payload ?? parsed;
           setSelectedPreset(id);
-          setForm(p2f(raw, parsed.context?.pipelineId));
+          setForm(p2f(raw, parsed.context || {}));
           setResult(null);
           setNetErr(null);
           setJsonErr(null);
@@ -3181,7 +3198,7 @@
                       {((form.isForeignIdDoc || (((form.regCountryCode || "").toUpperCase()) && ((form.regCountryCode || "").toUpperCase() !== "RU")) || (((form.postalAddressCountryCode || "").toUpperCase()) && ((form.postalAddressCountryCode || "").toUpperCase() !== "RU"))) && (
                         <div className="foreign-block">
                           <div className="foreign-lbl">
-                            ▸ Данные иностранного налогового резидентства
+                            ▸ Данные foreign-trigger / иностранного налогового резидентства
                           </div>
                           <div className="row2">
                             <F
@@ -3211,7 +3228,7 @@
                               onChange={(v) =>
                                 set("foreignTinAbsenceReason", v)
                               }
-                              placeholder="TIN отсутствует по законодательству страны"
+                              placeholder="Код причины из справочника или согласованное значение"
                             />
                           </F>
                           <F label="Адрес в иностранном государстве" wide>
@@ -3222,7 +3239,7 @@
                             />
                           </F>
                         </div>
-                      )}
+                      ))}
                     </Block>
 
                     <Block id="06" title="Контакты">
@@ -3252,13 +3269,24 @@
                           />
                         </F>
                       </div>
-                      <F label="Почтовый адрес" wide>
-                        <Inp
-                          value={form.postalAddress}
-                          onChange={(v) => set("postalAddress", v)}
-                          placeholder="107023, Москва, Красносельская, д.1"
-                        />
-                      </F>
+                      <div className="row2">
+                        <F label="Почтовый адрес" wide>
+                          <Inp
+                            value={form.postalAddress}
+                            onChange={(v) => set("postalAddress", v)}
+                            placeholder="107023, Москва, Красносельская, д.1"
+                          />
+                        </F>
+                        <F label="Код страны почтового адреса" hint="ISO alpha-2">
+                          <Inp
+                            mono
+                            value={form.postalAddressCountryCode}
+                            onChange={(v) => set("postalAddressCountryCode", v)}
+                            placeholder="RU"
+                            maxLength={2}
+                          />
+                        </F>
+                      </div>
                     </Block>
                   </>
                 )}

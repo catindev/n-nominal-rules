@@ -10,9 +10,5 @@
   "fields": [
     "beneficiary.tax.foreignResidencies0.address",
     "beneficiary.contacts.postalAddress"
-  ],
-  "paths": [
-    "beneficiary.tax.foreignResidencies0.address",
-    "beneficiary.contacts.postalAddress"
   ]
 }

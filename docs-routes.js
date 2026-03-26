@@ -502,7 +502,6 @@ function generatePipelineDoc(rootPipelineId, compiled, manifest, fmt) {
             const pred = registry.get(predId);
             return pred ? applyTemplate(pred, "predicate") : predId;
           },
-          [],
         );
 
         // Условный блок  не увеличивает счётчик, но создаёт заголовок если есть description

@@ -12,6 +12,9 @@
       "rule": "library.documents.issue_date_format"
     },
     {
+      "rule": "library.documents.issue_date_not_future"
+    },
+    {
       "condition": "library.documents.cond_issue_date_gt_birth_if_format_ok"
     }
   ]
