@@ -1,6 +1,6 @@
 {
   "name": "jsonspecs",
-  "version": "0.8.5",
+  "version": "0.9.0",
   "type": "commonjs",
   "main": "lib/index.js",
   "license": "UNLICENSED",

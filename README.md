@@ -1,4 +1,4 @@
-# JSONSpecs 0.8.5
+# JSONSpecs 0.9.0
 
 Движок декларативной валидации JSON-пэйлоадов через набор JSON-артефактов.
 
@@ -333,11 +333,9 @@ const result = engine.runPipeline(compiled, "checkout_main", {
 | [docs/wildcard.md](./docs/wildcard.md)                   | Wildcard `[*]`, вложенные массивы, режимы агрегации     |
 | [docs/todo.md](./docs/todo.md)                           | План развития                                           |
 
-
 ## required_context
 
 Для pipeline можно объявить `required_context` как массив обязательных ключей runtime-контекста.
 Если хотя бы один ключ не передан в `__context`, движок завершает выполнение технической ошибкой уровня EXCEPTION до исполнения шагов pipeline.
-
 
 Операторы сравнения между полями поддерживают `field_less_or_equal_than_field` и `field_greater_or_equal_than_field`, что позволяет декларативно проверять правила вида `issueDate <= $context.currentDate`.
