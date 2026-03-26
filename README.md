@@ -70,9 +70,9 @@ NODE_ENV=production SNAPSHOT_PATH=./snapshot.json DOCS_ENABLED=true node server.
 }
 ```
 
-- `context.pipelineId` — обязателен, определяет какой пайплайн запускается
+- `context.pipelineId` обязателен, определяет какой пайплайн запускается
 - остальные поля `context` произвольные, доступны в правилах через `$context.<key>`
-- `payload` — вложенный JSON или flat-map, движок принимает оба формата
+- `payload` вложенный JSON или flat-map, движок принимает оба формата
 
 **Ответ:**
 
@@ -121,7 +121,7 @@ NODE_ENV=production SNAPSHOT_PATH=./snapshot.json DOCS_ENABLED=true node server.
 
 ## Wildcard и агрегации
 
-В поле правила можно использовать `[*]` для применения проверки ко всем элементам массива. Поддерживается **любое количество `[*]`** — в том числе вложенные массивы:
+В поле правила можно использовать `[*]` для применения проверки ко всем элементам массива. Поддерживается **любое количество `[*]`** в том числе вложенные массивы:
 
 ```json
 {
@@ -206,8 +206,8 @@ NODE_ENV=production SNAPSHOT_PATH=./snapshot.json DOCS_ENABLED=true node server.
 
 | Оператор                                                                                               | Параметры                | Описание                                               |
 | ------------------------------------------------------------------------------------------------------ | ------------------------ | ------------------------------------------------------ |
-| `not_empty`                                                                                            | —                        | поле заполнено                                         |
-| `is_empty`                                                                                             | —                        | поле пустое                                            |
+| `not_empty`                                                                                            |                          | поле заполнено                                         |
+| `is_empty`                                                                                             |                          | поле пустое                                            |
 | `equals` / `not_equals`                                                                                | `value`                  | строгое равенство                                      |
 | `contains`                                                                                             | `value`                  | строка содержит подстроку                              |
 | `matches_regex`                                                                                        | `value`                  | соответствует regex                                    |
@@ -216,8 +216,8 @@ NODE_ENV=production SNAPSHOT_PATH=./snapshot.json DOCS_ENABLED=true node server.
 | `length_equals` / `length_max`                                                                         | `value`                  | длина строки                                           |
 | `in_dictionary`                                                                                        | `dictionary: {type, id}` | значение есть в справочнике                            |
 | `any_filled`                                                                                           | `fields[]`               | хотя бы одно из полей заполнено                        |
-| `valid_inn`                                                                                            | —                        | контрольный разряд ИНН (10 или 12 цифр)                |
-| `valid_ogrn`                                                                                           | —                        | контрольный разряд ОГРН (13 цифр) или ОГРНИП (15 цифр) |
+| `valid_inn`                                                                                            |                          | контрольный разряд ИНН (10 или 12 цифр)                |
+| `valid_ogrn`                                                                                           |                          | контрольный разряд ОГРН (13 цифр) или ОГРНИП (15 цифр) |
 
 ### predicate
 
@@ -257,7 +257,7 @@ node tools/build-snapshot.js \
 Если правила содержат ошибки, то снэпшот не создаётся, выводится полный список всех проблем найденных в артефактах снэпшота:
 
 ```
-[build-snapshot] COMPILATION ERROR — snapshot NOT saved
+[build-snapshot] COMPILATION ERROR  snapshot NOT saved
 [build-snapshot] 2 error(s) found:
 
   1. Check rule checkout_main.rule_amount (...): level must be WARNING|ERROR|EXCEPTION
@@ -268,10 +268,10 @@ node tools/build-snapshot.js \
 
 Режим определяется через `NODE_ENV`:
 
-| NODE_ENV                | Источник правил | Поведение при старте                         |
-| ----------------------- | --------------- | -------------------------------------------- |
-| `development` (default) | `./rules` (fs)  | сканирует папку, запускает hot-reload        |
-| `production` / `test`   | `SNAPSHOT_PATH` | грузит снэпшот, без `SNAPSHOT_PATH` — падает |
+| NODE_ENV                | Источник правил | Поведение при старте                       |
+| ----------------------- | --------------- | ------------------------------------------ |
+| `development` (default) | `./rules` (fs)  | сканирует папку, запускает hot-reload      |
+| `production` / `test`   | `SNAPSHOT_PATH` | грузит снэпшот, без `SNAPSHOT_PATH` падает |
 
 ```bash
 # development
@@ -286,19 +286,19 @@ NODE_ENV=test SNAPSHOT_PATH=./snapshots/v2.json PORT=3001 node server.js
 
 ### Hot-reload (dev-режим)
 
-В dev-режиме сервер следит за изменениями `*.json` в `RULES_DIR`. При сохранении файла — пересобирает правила без перезапуска:
+В dev-режиме сервер следит за изменениями `*.json` в `RULES_DIR`. При сохранении файла пересобирает правила без перезапуска:
 
 ```
 [hot-reload] changed: pipelines/checkout_main/base_validate/rule_amount.json
 [hot-reload] recompiling...
-[hot-reload] OK — 52 artifacts loaded
+[hot-reload] OK  52 artifacts loaded
 ```
 
-Если новые правила не компилируются — сервер продолжает работать со старой версией и выводит все ошибки в консоль.
+Если новые правила не компилируются сервер продолжает работать со старой версией и выводит все ошибки в консоль.
 
 ### Canary и версионирование
 
-Движок stateless — каждый инстанс несёт один снэпшот. Для canary достаточно поднять отдельный инстанс с новым снэпшотом и переключить на него часть трафика на уровне роутера. Rollback — вернуть предыдущий снэпшот.
+Движок stateless каждый инстанс несёт один снэпшот. Для canary достаточно поднять отдельный инстанс с новым снэпшотом и переключить на него часть трафика на уровне роутера. Rollback вернуть предыдущий снэпшот.
 
 ```
 клиент ──┬── 90% ──→ instance-v1 (stable)

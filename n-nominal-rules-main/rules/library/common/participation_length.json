@@ -1,0 +1,12 @@
+{
+  "id": "library.common.participation_length",
+  "type": "rule",
+  "description": "Идентификатор основания участия не должен быть длиннее 64 символов",
+  "role": "check",
+  "operator": "length_max",
+  "level": "ERROR",
+  "code": "BEN.PARTICIPATION.LENGTH",
+  "message": "Идентификатор основания участия превышает 64 символа",
+  "field": "beneficiary.participationId",
+  "value": 64
+}

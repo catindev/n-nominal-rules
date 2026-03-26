@@ -1,0 +1,15 @@
+{
+  "id": "library.fl.cond_middle_name_if_present",
+  "type": "condition",
+  "description": "Если отчество указано, проверяем его длину",
+  "when": {
+    "all": [
+      "library.fl.pred_middle_name_present"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "library.fl.middle_name_length"
+    }
+  ]
+}

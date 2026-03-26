@@ -1,0 +1,15 @@
+{
+  "id": "library.tax.foreign_tax_resident_bool",
+  "type": "rule",
+  "description": "Признак иностранного налогового резидентства должен быть булевым (true/false)",
+  "role": "check",
+  "operator": "in_dictionary",
+  "level": "EXCEPTION",
+  "code": "BEN.TAX.FOREIGN_TAX_RESIDENT.BOOL",
+  "message": "Признак иностранного налогового резидентства должен иметь значение true или false",
+  "field": "beneficiary.tax.foreignTaxResident",
+  "dictionary": {
+    "type": "static",
+    "id": "true_false"
+  }
+}

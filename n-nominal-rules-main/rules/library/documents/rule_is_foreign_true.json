@@ -1,0 +1,12 @@
+{
+  "id": "library.documents.rule_is_foreign_true",
+  "type": "rule",
+  "description": "Для кодов 31–37 и 99 признак иностранного документа должен быть true",
+  "role": "check",
+  "operator": "equals",
+  "level": "ERROR",
+  "code": "BEN.IDDOC.IS_FOREIGN.CONSISTENT",
+  "message": "Для кодов документов 31–37 и 99 признак beneficiary.idDoc.isForeignIdDoc должен быть true",
+  "field": "beneficiary.idDoc.isForeignIdDoc",
+  "value": true
+}

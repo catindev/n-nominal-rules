@@ -1,0 +1,12 @@
+{
+  "id": "library.fl.inn_length_12",
+  "type": "rule",
+  "description": "ИНН ФЛ должен содержать ровно 12 цифр",
+  "role": "check",
+  "operator": "matches_regex",
+  "level": "ERROR",
+  "code": "FL.INN.LENGTH_12",
+  "message": "ИНН ФЛ должен содержать ровно 12 цифр",
+  "field": "beneficiary.inn",
+  "value": "^\\d{12}$"
+}

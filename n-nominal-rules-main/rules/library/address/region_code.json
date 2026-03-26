@@ -1,0 +1,12 @@
+{
+  "id": "library.address.region_code",
+  "type": "rule",
+  "description": "Проверка кода региона адреса регистрации на длину",
+  "role": "check",
+  "operator": "length_max",
+  "level": "ERROR",
+  "code": "BEN.ADDR.REG.REGION_CODE.LENGTH",
+  "message": "Код региона адреса регистрации слишком длинный",
+  "field": "beneficiary.address.registration.regionCode",
+  "value": 32
+}

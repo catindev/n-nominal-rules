@@ -1,0 +1,3343 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>FL_RESIDENT · Ручная форма проверки заявки на регистрацию</title>
+    <style>
+      /* ═══════════════════════════════════════════
+        NORD PALETTE
+        nord0-3  Polar Night  → фоны
+        nord4-6  Snow Storm   → текст
+        nord7-10 Frost        → акценты
+        nord11-15 Aurora      → статусы
+      ═══════════════════════════════════════════ */
+      :root {
+        --n0: #2e3440;
+        --n1: #3b4252;
+        --n2: #434c5e;
+        --n3: #4c566a;
+        --n4: #d8dee9;
+        --n5: #e5e9f0;
+        --n6: #eceff4;
+        --n7: #8fbcbb;
+        --n8: #88c0d0;
+        --n9: #81a1c1;
+        --n10: #5e81ac;
+        --n11: #bf616a;
+        --n12: #d08770;
+        --n13: #ebcb8b;
+        --n14: #a3be8c;
+        --n15: #b48ead;
+
+        /* ── Dark (Polar Night) — default ── */
+        --bg: var(--n0);
+        --surf: var(--n1);
+        --elev: var(--n2);
+        --active: var(--n3);
+        --bdr: var(--n2);
+        --bdr2: var(--n3);
+        --tx: var(--n5);
+        --tx-hi: var(--n6);
+        --tx-lo: var(--n4);
+        --tx-dim: var(--n3);
+        --acc: var(--n8);
+        --acc2: var(--n10);
+        --teal: var(--n7);
+        --blue: var(--n9);
+
+        --ok: var(--n14);
+        --ok-bg: rgba(163, 190, 140, 0.1);
+        --ok-bd: rgba(163, 190, 140, 0.3);
+        --exc: var(--n11);
+        --exc-bg: rgba(191, 97, 106, 0.12);
+        --exc-bd: rgba(191, 97, 106, 0.35);
+        --err: var(--n12);
+        --err-bg: rgba(208, 135, 112, 0.1);
+        --err-bd: rgba(208, 135, 112, 0.3);
+        --wrn: var(--n13);
+        --wrn-bg: rgba(235, 203, 139, 0.1);
+        --wrn-bd: rgba(235, 203, 139, 0.3);
+
+        --sans: "Inter", system-ui, -apple-system, sans-serif;
+        --mono: "JetBrains Mono", "Fira Mono", "Cascadia Code", monospace;
+        --r: 5px;
+        --r2: 7px;
+      }
+
+      /* ── Light (Snow Storm) ── */
+      [data-theme="light"] {
+        --bg: #eceff4;
+        --surf: #e5e9f0;
+        --elev: #d8dee9;
+        --active: #c8d0dc;
+        --bdr: #b8c4d0;
+        --bdr2: #9aaabb;
+        --tx: #2e3440;
+        --tx-hi: #2e3440;
+        --tx-lo: #3b4252;
+        --tx-dim: #6b7a8d;
+        --acc: #5e81ac;
+        --acc2: #81a1c1;
+        --teal: #6aabaa;
+        --blue: #81a1c1;
+
+        --ok: #3d6b2a;
+        --ok-bg: rgba(77, 140, 58, 0.1);
+        --ok-bd: rgba(77, 140, 58, 0.35);
+        --exc: #b5292f;
+        --exc-bg: rgba(181, 41, 47, 0.08);
+        --exc-bd: rgba(181, 41, 47, 0.3);
+        --err: #8a3a1a;
+        --err-bg: rgba(208, 135, 112, 0.1);
+        --err-bd: rgba(208, 135, 112, 0.35);
+        --wrn: #7a6000;
+        --wrn-bg: rgba(235, 203, 139, 0.18);
+        --wrn-bd: rgba(235, 203, 139, 0.55);
+      }
+
+      /* ── Light: overrides for hardcoded dark colours ── */
+
+      /* Лейблы полей (были #9fd4e0 — светло-голубой) */
+      [data-theme="light"] .Поле-lbl {
+        color: #3d6f8e;
+      }
+
+      /* Заголовки блоков формы (были var(--n5) = светлый серый) */
+      [data-theme="light"] .block-title {
+        color: var(--tx);
+      }
+      [data-theme="light"] .block-num {
+        color: var(--acc2);
+      }
+      [data-theme="light"] .block-head:hover {
+        background: rgba(180, 195, 210, 0.35);
+      }
+
+      /* Инпуты: фон surf, текст tx, фокус — белый фон тёмный текст */
+      [data-theme="light"] .inp {
+        background: #fff;
+        border-color: var(--bdr);
+        color: var(--tx);
+      }
+      [data-theme="light"] .inp.mono {
+        color: #3b4252;
+      }
+      [data-theme="light"] .inp:focus {
+        border-color: var(--acc);
+        box-shadow: 0 0 0 2px rgba(94, 129, 172, 0.18);
+        background: #fff;
+        color: var(--tx);
+      }
+      [data-theme="light"] .inp.mono:focus {
+        color: var(--tx);
+      }
+      [data-theme="light"] .inp::placeholder {
+        color: #9aaabb;
+        opacity: 1;
+      }
+
+      /* Тогглы */
+      [data-theme="light"] .tog-lbl {
+        color: var(--tx);
+      }
+      [data-theme="light"] .tog-track {
+        background: #c8d0dc;
+        border-color: var(--bdr2);
+      }
+      [data-theme="light"] .tog-track.on {
+        background: rgba(94, 129, 172, 0.55);
+        border-color: var(--acc);
+      }
+      [data-theme="light"] .tog-thumb {
+        background: #fff;
+      }
+      [data-theme="light"] .tog-track.on .tog-thumb {
+        background: #e8f4ff;
+      }
+
+      /* URL-инпут в хедере */
+      [data-theme="light"] .url-inp {
+        background: #fff;
+        color: var(--acc);
+        border-color: var(--bdr);
+      }
+      [data-theme="light"] .url-inp:focus {
+        border-color: var(--acc2);
+      }
+
+      /* Pipe-tabs */
+      [data-theme="light"] .pipe-tab {
+        color: var(--tx-lo);
+      }
+      [data-theme="light"] .pipe-tab:hover {
+        background: var(--elev);
+        color: var(--tx);
+        border-color: var(--bdr);
+      }
+      [data-theme="light"] .pipe-tab.on {
+        background: rgba(94, 129, 172, 0.15);
+        border-color: rgba(94, 129, 172, 0.45);
+        color: var(--acc);
+      }
+
+      /* Ghost-кнопки */
+      [data-theme="light"] .btn-ghost {
+        color: var(--tx-lo);
+        border-color: var(--bdr);
+      }
+      [data-theme="light"] .btn-ghost:hover {
+        background: var(--elev);
+        color: var(--tx);
+      }
+
+      /* Foreign-block */
+      [data-theme="light"] .foreign-block {
+        background: rgba(94, 129, 172, 0.06);
+        border-color: rgba(94, 129, 172, 0.25);
+      }
+
+      /* Тулбар лейблы */
+      [data-theme="light"] .tb-lbl {
+        color: var(--acc);
+      }
+      [data-theme="light"] .hdr-sub {
+        color: var(--acc);
+      }
+
+      /* Трейс */
+      [data-theme="light"] .tr-pipe-head {
+        background: var(--elev);
+      }
+      [data-theme="light"] .tr-pipe-head:hover {
+        background: var(--active);
+      }
+      [data-theme="light"] .tr-lane-head {
+        background: var(--elev);
+      }
+      [data-theme="light"] .tr-row:hover {
+        background: rgba(180, 195, 210, 0.35);
+      }
+      [data-theme="light"] .tr-row--skip .tr-evt {
+        color: #9aaabb;
+      }
+      [data-theme="light"] .tr-row--exec .tr-evt {
+        color: var(--tx-lo);
+      }
+      [data-theme="light"] .tr-pipe-cnt {
+        color: var(--tx-dim);
+      }
+      [data-theme="light"] .tr-lane-id {
+        color: var(--tx-dim);
+      }
+      [data-theme="light"] .tr-num {
+        color: #9aaabb;
+      }
+      [data-theme="light"] .tr-ts {
+        color: #9aaabb;
+      }
+      [data-theme="light"] .tr-v {
+        background: #fff;
+        border-color: var(--bdr);
+        color: var(--tx);
+      }
+
+      /* JSON-блок */
+      [data-theme="light"] .json-block {
+        background: #fff;
+        color: var(--tx-lo);
+      }
+
+      /* Скроллбар */
+      [data-theme="light"] ::-webkit-scrollbar-thumb {
+        background: var(--active);
+      }
+
+      /* rs-ctrl */
+      [data-theme="light"] .rs-ctrl {
+        color: var(--tx-lo);
+      }
+
+      /* ok-msg */
+      [data-theme="light"] .ok-msg {
+        background: var(--ok-bg);
+      }
+
+      /* iss-card */
+      [data-theme="light"] .iss-card {
+        background: #fff;
+      }
+      [data-theme="light"] .imv {
+        background: var(--elev);
+        border-color: var(--bdr);
+        color: var(--tx);
+      }
+
+      /* res-tabs */
+      [data-theme="light"] .rtab {
+        color: var(--tx-lo);
+      }
+      [data-theme="light"] .rtab:hover {
+        color: var(--tx);
+      }
+      [data-theme="light"] .rtab.on {
+        color: var(--acc);
+        border-bottom-color: var(--acc);
+      }
+      [data-theme="light"] .rtab-cnt {
+        background: var(--elev);
+        color: var(--tx-dim);
+      }
+      [data-theme="light"] .rtab.on .rtab-cnt {
+        background: rgba(94, 129, 172, 0.18);
+        color: var(--acc);
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        height: 100%;
+        background: var(--bg);
+        color: var(--tx);
+        font-family: var(--sans);
+        font-size: 13px;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+      }
+      #root {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* ── header ── */
+      .hdr {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 24px;
+        height: 58px;
+        background: var(--surf);
+        border-bottom: 1px solid var(--bdr);
+        gap: 20px;
+        flex-shrink: 0;
+      }
+      .hdr-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .hdr-logo {
+        width: 30px;
+        height: 30px;
+        color: var(--acc);
+        flex-shrink: 0;
+        filter: drop-shadow(0 0 8px rgba(136, 192, 208, 0.4));
+      }
+      .hdr-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--tx-hi);
+      }
+      .hdr-sub {
+        font-size: 11px;
+        color: var(--n8);
+        font-family: var(--mono);
+        margin-top: 1px;
+        font-weight: 500;
+      }
+
+      .hdr-right {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .url-lbl {
+        font-size: 11px;
+        color: var(--n9);
+        font-family: var(--mono);
+        white-space: nowrap;
+        font-weight: 500;
+      }
+      .url-inp {
+        background: var(--bg);
+        border: 1px solid var(--bdr);
+        border-radius: var(--r);
+        color: var(--teal);
+        font-family: var(--mono);
+        font-size: 12px;
+        padding: 6px 10px;
+        width: 240px;
+        outline: none;
+        transition:
+          border-color 0.15s,
+          box-shadow 0.15s;
+      }
+      .url-inp:focus {
+        border-color: var(--n9);
+        box-shadow: 0 0 0 2px rgba(129, 161, 193, 0.15);
+      }
+
+      /* ── toolbar ── */
+      .toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 24px;
+        height: 50px;
+        background: var(--surf);
+        border-bottom: 1px solid var(--bdr);
+        gap: 16px;
+        flex-shrink: 0;
+        flex-wrap: wrap;
+      }
+      .tb-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .tb-lbl {
+        font-size: 11px;
+        color: var(--n8);
+        font-family: var(--mono);
+        white-space: nowrap;
+        font-weight: 600;
+      }
+      .pipe-tabs {
+        display: flex;
+        gap: 3px;
+      }
+      .pipe-tab {
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: var(--r);
+        color: var(--n5);
+        font-family: var(--mono);
+        font-size: 11px;
+        padding: 5px 11px;
+        cursor: pointer;
+        transition: all 0.15s;
+        white-space: nowrap;
+      }
+      .pipe-tab:hover {
+        background: var(--elev);
+        color: var(--tx-hi);
+        border-color: var(--bdr);
+      }
+      .pipe-tab.on {
+        background: rgba(136, 192, 208, 0.18);
+        border-color: rgba(136, 192, 208, 0.48);
+        color: var(--n8);
+        box-shadow: inset 0 0 0 1px rgba(136, 192, 208, 0.08);
+      }
+      .tb-right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border-radius: var(--r);
+        font-family: var(--sans);
+        font-size: 12px;
+        font-weight: 500;
+        padding: 6px 14px;
+        cursor: pointer;
+        transition: all 0.15s;
+        white-space: nowrap;
+      }
+      .btn-ghost {
+        background: transparent;
+        border: 1px solid var(--bdr);
+        color: var(--tx-lo);
+      }
+      .btn-ghost:hover {
+        background: var(--elev);
+        border-color: var(--bdr2);
+        color: var(--tx-hi);
+      }
+      .btn-run {
+        background: var(--n10);
+        border: 1px solid var(--n10);
+        color: var(--n6);
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        box-shadow: 0 2px 8px rgba(94, 129, 172, 0.3);
+      }
+      .btn-run:hover:not(:disabled) {
+        background: var(--n9);
+        border-color: var(--n9);
+        box-shadow: 0 2px 12px rgba(129, 161, 193, 0.4);
+      }
+      .btn-run:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+        box-shadow: none;
+      }
+
+      /* ── alerts ── */
+      .alert {
+        padding: 9px 24px;
+        font-size: 12px;
+        font-family: var(--mono);
+        border-bottom: 1px solid;
+      }
+      .alert-warn {
+        background: var(--wrn-bg);
+        color: var(--wrn);
+        border-color: var(--wrn-bd);
+      }
+      .alert-err {
+        background: var(--exc-bg);
+        color: var(--exc);
+        border-color: var(--exc-bd);
+      }
+
+      /* ── main layout ── */
+      .main {
+        display: grid;
+        grid-template-columns: 1fr 460px;
+        flex: 1;
+        min-height: 0;
+      }
+      @media (max-width: 1024px) {
+        .main {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ── form col ── */
+      .form-col {
+        overflow-y: auto;
+        border-right: 1px solid var(--bdr);
+        background: var(--bg);
+      }
+
+      /* ── blocks ── */
+      .block {
+        border-bottom: 1px solid var(--bdr);
+      }
+      .block-head {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        background: transparent;
+        border: none;
+        padding: 11px 20px;
+        cursor: pointer;
+        text-align: left;
+        transition: background 0.12s;
+      }
+      .block-head:hover {
+        background: rgba(59, 66, 82, 0.4);
+      }
+      .block-num {
+        font-family: var(--mono);
+        font-size: 10px;
+        color: var(--n10);
+        font-weight: 600;
+        min-width: 20px;
+        letter-spacing: 0.08em;
+      }
+      .block-title {
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--n5);
+        flex: 1;
+        letter-spacing: 0.02em;
+      }
+      .block-arrow {
+        font-size: 11px;
+        color: var(--tx-dim);
+        transition: transform 0.2s;
+        display: inline-block;
+      }
+      .block-arrow.open {
+        transform: rotate(90deg);
+      }
+      .block-body {
+        padding: 14px 20px 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        border-top: 1px solid var(--bdr);
+      }
+
+      /* ── Полеs ── */
+      .Поле {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .Поле.wide {
+        grid-column: 1/-1;
+      }
+      .Поле-lbl {
+        font-size: 11px;
+        color: #9fd4e0;
+        font-family: var(--mono);
+        font-weight: 600;
+        letter-spacing: 0.03em;
+      }
+      .Поле-hint {
+        color: var(--n9);
+        opacity: 0.85;
+      }
+      .inp {
+        background: var(--surf);
+        border: 1px solid var(--bdr);
+        border-radius: var(--r);
+        color: var(--tx);
+        font-family: var(--sans);
+        font-size: 13px;
+        padding: 7px 10px;
+        outline: none;
+        width: 100%;
+        transition:
+          border-color 0.15s,
+          box-shadow 0.15s,
+          background 0.15s,
+          color 0.15s;
+      }
+      .inp.mono {
+        font-family: var(--mono);
+        font-size: 12px;
+        color: var(--n4);
+      }
+      .inp:focus {
+        border-color: var(--n8);
+        box-shadow: 0 0 0 2px rgba(136, 192, 208, 0.2);
+        background: var(--n6);
+        color: var(--n0);
+      }
+      .inp.mono:focus {
+        color: var(--n1);
+      }
+      .inp::placeholder {
+        color: var(--n3);
+        opacity: 0.9;
+      }
+      input[type="date"].inp {
+        color-scheme: dark;
+      }
+      .row2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .row3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 10px;
+      }
+      @media (max-width: 700px) {
+        .row2,
+        .row3 {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ── toggles ── */
+      .tog {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        user-select: none;
+        padding: 2px 0;
+        background: transparent;
+        border: none;
+      }
+      .tog:focus-visible {
+        outline: 2px solid rgba(136, 192, 208, 0.35);
+        outline-offset: 2px;
+        border-radius: var(--r);
+      }
+      .tog-track {
+        position: relative;
+        width: 36px;
+        height: 20px;
+        border-radius: 10px;
+        background: var(--active);
+        border: 1px solid var(--bdr2);
+        flex-shrink: 0;
+        transition:
+          background 0.2s,
+          border-color 0.2s;
+      }
+      .tog-track.on {
+        background: rgba(94, 129, 172, 0.65);
+        border-color: var(--n8);
+      }
+      .tog-thumb {
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: var(--n6);
+        transition:
+          transform 0.2s,
+          background 0.2s;
+      }
+      .tog-track.on .tog-thumb {
+        transform: translateX(16px);
+        background: #d8f3ff;
+      }
+      .tog-lbl {
+        font-size: 12px;
+        color: var(--n6);
+        font-family: var(--mono);
+      }
+      .tog-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .tog-wrap {
+        padding-top: 6px;
+      }
+      .foreign-block {
+        margin-top: 4px;
+        border: 1px solid rgba(136, 192, 208, 0.2);
+        border-radius: var(--r2);
+        padding: 12px 14px;
+        background: rgba(136, 192, 208, 0.04);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .foreign-lbl {
+        font-size: 11px;
+        color: var(--teal);
+        font-family: var(--mono);
+      }
+
+      /* ── result col ── */
+      .result-col {
+        background: var(--surf);
+        overflow-y: auto;
+      }
+
+      /* ── placeholder ── */
+      .placeholder {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        padding: 64px 32px;
+        min-height: 400px;
+        text-align: center;
+      }
+      .ph-icon {
+        width: 52px;
+        height: 52px;
+        color: var(--n3);
+        opacity: 0.7;
+      }
+      .ph-text {
+        font-size: 13px;
+        color: var(--tx-lo);
+        line-height: 1.7;
+      }
+      .ph-hint {
+        font-size: 11px;
+        color: var(--tx-dim);
+        line-height: 1.6;
+        max-width: 260px;
+        font-family: var(--mono);
+      }
+
+      /* ── spinner ── */
+      .spin {
+        display: inline-block;
+        width: 15px;
+        height: 15px;
+        border: 2px solid rgba(136, 192, 208, 0.2);
+        border-top-color: var(--acc);
+        border-radius: 50%;
+        animation: rot 0.65s linear infinite;
+      }
+      .spin.lg {
+        width: 34px;
+        height: 34px;
+        border-width: 3px;
+      }
+      @keyframes rot {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* ── result panel ── */
+      .result-wrap {
+        display: flex;
+        flex-direction: column;
+      }
+      .result-status {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 20px;
+        border-bottom: 1px solid var(--bdr);
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .stat-ok {
+        background: var(--ok-bg);
+        border-left: 3px solid var(--ok);
+      }
+      .stat-exc {
+        background: var(--exc-bg);
+        border-left: 3px solid var(--exc);
+      }
+      .stat-abort {
+        background: var(--err-bg);
+        border-left: 3px solid var(--err);
+      }
+      .rs-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .rs-icon {
+        font-size: 17px;
+        line-height: 1;
+      }
+      .stat-ok .rs-icon {
+        color: var(--ok);
+      }
+      .stat-exc .rs-icon {
+        color: var(--exc);
+      }
+      .stat-abort .rs-icon {
+        color: var(--err);
+      }
+      .rs-text {
+        font-size: 13px;
+        font-weight: 600;
+        font-family: var(--mono);
+        letter-spacing: 0.06em;
+      }
+      .stat-ok .rs-text {
+        color: var(--ok);
+      }
+      .stat-exc .rs-text {
+        color: var(--exc);
+      }
+      .stat-abort .rs-text {
+        color: var(--err);
+      }
+      .rs-ctrl {
+        font-size: 11px;
+        color: var(--n6);
+        font-family: var(--mono);
+        font-weight: 600;
+      }
+      .rs-counts {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .rc {
+        font-size: 10px;
+        font-weight: 600;
+        font-family: var(--mono);
+        padding: 2px 8px;
+        border-radius: var(--r);
+        letter-spacing: 0.04em;
+        border: 1px solid;
+      }
+      .lv-exc {
+        background: var(--exc-bg);
+        color: var(--exc);
+        border-color: var(--exc-bd);
+      }
+      .lv-err {
+        background: var(--err-bg);
+        color: var(--err);
+        border-color: var(--err-bd);
+      }
+      .lv-wrn {
+        background: var(--wrn-bg);
+        color: var(--wrn);
+        border-color: var(--wrn-bd);
+      }
+      .ok-msg {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 13px 20px;
+        color: var(--ok);
+        font-size: 13px;
+        font-family: var(--mono);
+        border-bottom: 1px solid var(--bdr);
+        background: var(--ok-bg);
+      }
+
+      /* ── tabs ── */
+      .res-tabs {
+        display: flex;
+        background: var(--surf);
+        border-bottom: 1px solid var(--bdr);
+      }
+      .rtab {
+        background: transparent;
+        border: none;
+        border-bottom: 2px solid transparent;
+        color: var(--n5);
+        font-family: var(--mono);
+        font-size: 11px;
+        padding: 10px 16px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: color 0.13s;
+      }
+      .rtab:hover {
+        color: var(--tx-hi);
+      }
+      .rtab.on {
+        color: var(--acc);
+        border-bottom-color: var(--acc);
+      }
+      .rtab-cnt {
+        background: var(--elev);
+        color: var(--tx-dim);
+        font-size: 10px;
+        padding: 1px 5px;
+        border-radius: 8px;
+      }
+      .rtab.on .rtab-cnt {
+        background: rgba(136, 192, 208, 0.2);
+        color: var(--acc);
+      }
+
+      /* ── issues ── */
+      .issues {
+        padding: 12px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .iss-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      .iss-group-head {
+        font-size: 10px;
+        font-weight: 600;
+        font-family: var(--mono);
+        letter-spacing: 0.1em;
+        padding: 4px 10px;
+        border-radius: var(--r);
+        border: 1px solid;
+      }
+      .iss-card {
+        border-radius: var(--r2);
+        border: 1px solid;
+        padding: 10px 13px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        animation: fup 0.18s ease both;
+        background: var(--bg);
+      }
+      @keyframes fup {
+        from {
+          opacity: 0;
+          transform: translateY(5px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      .iss-card.lv-exc {
+        border-color: var(--exc-bd);
+      }
+      .iss-card.lv-err {
+        border-color: var(--err-bd);
+      }
+      .iss-card.lv-wrn {
+        border-color: var(--wrn-bd);
+      }
+      .iss-top {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .iss-code {
+        font-family: var(--mono);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+      }
+      .lv-exc .iss-code {
+        color: var(--exc);
+      }
+      .lv-err .iss-code {
+        color: var(--err);
+      }
+      .lv-wrn .iss-code {
+        color: var(--wrn);
+      }
+      .iss-msg {
+        font-size: 12px;
+        color: var(--tx);
+        line-height: 1.5;
+      }
+      .iss-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 2px;
+      }
+      .im {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .imk {
+        font-size: 10px;
+        color: var(--n8);
+        font-family: var(--mono);
+        font-weight: 600;
+      }
+      .imv {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--n6);
+        background: var(--elev);
+        padding: 1px 6px;
+        border-radius: 3px;
+        border: 1px solid var(--bdr);
+      }
+
+      /* ── json ── */
+      .json-block {
+        font-family: var(--mono);
+        font-size: 11.5px;
+        color: var(--tx-lo);
+        padding: 16px 20px;
+        white-space: pre-wrap;
+        word-break: break-all;
+        line-height: 1.65;
+        background: var(--bg);
+        overflow-x: auto;
+      }
+
+      /* ── misc ── */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--n2);
+        border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--n3);
+      }
+      ::selection {
+        background: rgba(136, 192, 208, 0.25);
+        color: var(--tx-hi);
+      }
+
+      /* ════════════════════════════════════════════════════════
+   TRACE VIEWER
+════════════════════════════════════════════════════════ */
+      .trace-wrap {
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+      .trace-empty {
+        padding: 40px 24px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: center;
+      }
+      .trace-empty-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--tx-lo);
+      }
+      .trace-empty-text {
+        font-size: 11px;
+        color: var(--tx-dim);
+        font-family: var(--mono);
+        max-width: 320px;
+        line-height: 1.7;
+      }
+      .tr-pipe {
+        border-bottom: 1px solid var(--bdr);
+      }
+      .tr-pipe-head {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 8px 16px;
+        cursor: pointer;
+        user-select: none;
+        background: var(--n1);
+        border-bottom: 1px solid var(--bdr2);
+        transition: background 0.12s;
+      }
+      .tr-pipe-head:hover {
+        background: var(--n2);
+      }
+      .tr-pipe-badge {
+        font-size: 9px;
+        font-weight: 700;
+        font-family: var(--mono);
+        letter-spacing: 0.08em;
+        padding: 2px 7px;
+        border-radius: 3px;
+        background: rgba(94, 129, 172, 0.25);
+        color: var(--n9);
+        border: 1px solid rgba(94, 129, 172, 0.3);
+        flex-shrink: 0;
+      }
+      .tr-pipe-name {
+        font-size: 11px;
+        font-family: var(--mono);
+        color: var(--n8);
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .tr-pipe-cnt {
+        font-size: 10px;
+        color: var(--tx-dim);
+        font-family: var(--mono);
+        flex-shrink: 0;
+      }
+      .tr-pipe-chev {
+        font-size: 10px;
+        color: var(--tx-dim);
+        transition: transform 0.18s;
+        flex-shrink: 0;
+      }
+      .tr-pipe-chev.open {
+        transform: rotate(90deg);
+      }
+      .tr-pipe-body {
+        display: none;
+      }
+      .tr-pipe-body.open {
+        display: block;
+      }
+      .tr-lane {
+        border-left: 2px solid var(--bdr2);
+        margin: 6px 12px 6px 28px;
+        border-radius: 0 var(--r) var(--r) 0;
+      }
+      .tr-lane--cond {
+        border-left-color: var(--n9);
+      }
+      .tr-lane--pred {
+        border-left-color: var(--n7);
+      }
+      .tr-lane--check {
+        border-left-color: var(--n10);
+      }
+      .tr-lane--pipe {
+        border-left-color: var(--n3);
+      }
+      .tr-lane-head {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 5px 10px;
+        background: var(--n1);
+        border-radius: 0 var(--r) 0 0;
+      }
+      .tr-lane-kind {
+        font-size: 9px;
+        font-weight: 700;
+        font-family: var(--mono);
+        letter-spacing: 0.07em;
+        padding: 1px 6px;
+        border-radius: 3px;
+        flex-shrink: 0;
+      }
+      .tr-lane-kind--cond {
+        background: rgba(129, 161, 193, 0.18);
+        color: var(--n9);
+      }
+      .tr-lane-kind--pred {
+        background: rgba(143, 188, 187, 0.18);
+        color: var(--n7);
+      }
+      .tr-lane-kind--check {
+        background: rgba(94, 129, 172, 0.18);
+        color: var(--n10);
+      }
+      .tr-lane-kind--pipe {
+        background: rgba(76, 86, 106, 0.3);
+        color: var(--n4);
+      }
+      .tr-lane-id {
+        font-size: 10px;
+        font-family: var(--mono);
+        color: var(--tx-dim);
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .tr-row {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        padding: 5px 10px 5px 12px;
+        border-top: 1px solid rgba(76, 86, 106, 0.35);
+        transition: background 0.1s;
+      }
+      .tr-row:hover {
+        background: rgba(59, 66, 82, 0.5);
+      }
+      .tr-row--exec .tr-evt {
+        color: var(--tx-lo);
+      }
+      .tr-row--pass .tr-evt {
+        color: var(--n14);
+      }
+      .tr-row--skip .tr-evt {
+        color: var(--n3);
+        font-style: italic;
+      }
+      .tr-row--stop .tr-evt {
+        color: var(--n11);
+        font-weight: 600;
+      }
+      .tr-row--fail .tr-evt {
+        color: var(--n12);
+      }
+      .tr-row--wildcard .tr-evt {
+        color: var(--n15);
+      }
+      .tr-row--info .tr-evt {
+        color: var(--n8);
+      }
+      .tr-num {
+        font-size: 9px;
+        font-family: var(--mono);
+        color: var(--n3);
+        min-width: 26px;
+        text-align: right;
+        flex-shrink: 0;
+        padding-top: 1px;
+      }
+      .tr-evt {
+        font-size: 11px;
+        font-family: var(--mono);
+        flex: 1;
+        line-height: 1.5;
+      }
+      .tr-details {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        padding: 3px 10px 6px 46px;
+      }
+      .tr-kv {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+      }
+      .tr-k {
+        font-size: 9px;
+        color: var(--n8);
+        font-family: var(--mono);
+        font-weight: 600;
+      }
+      .tr-v {
+        font-family: var(--mono);
+        font-size: 10px;
+        color: var(--n6);
+        background: var(--elev);
+        padding: 1px 5px;
+        border-radius: 3px;
+        border: 1px solid var(--bdr);
+        max-width: 220px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .tr-ts {
+        font-size: 9px;
+        color: var(--n3);
+        font-family: var(--mono);
+        flex-shrink: 0;
+        white-space: nowrap;
+      }
+
+      /* ── preset control ── */
+      .preset-wrap {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .preset-lbl {
+        font-size: 11px;
+        color: var(--n8);
+        font-family: var(--mono);
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .preset-select {
+        appearance: none;
+        -webkit-appearance: none;
+        background: var(--elev)
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2388c0d0' stroke-width='1.5' stroke-linecap='round' fill='none'/%3E%3C/svg%3E")
+          no-repeat right 9px center;
+        border: 1px solid var(--bdr2);
+        border-radius: var(--r);
+        color: var(--acc);
+        font-family: var(--mono);
+        font-size: 11px;
+        font-weight: 600;
+        padding: 5px 28px 5px 10px;
+        cursor: pointer;
+        outline: none;
+        transition:
+          border-color 0.15s,
+          box-shadow 0.15s;
+        min-width: 148px;
+      }
+      .preset-select:hover {
+        border-color: var(--acc);
+        background-color: var(--active);
+      }
+      .preset-select:focus {
+        border-color: var(--acc);
+        box-shadow: 0 0 0 2px rgba(136, 192, 208, 0.2);
+      }
+      .preset-select option {
+        background: var(--n1);
+        color: var(--tx);
+      }
+      .preset-select optgroup {
+        color: var(--tx-dim);
+      }
+      [data-theme="light"] .preset-select {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%235e81ac' stroke-width='1.5' stroke-linecap='round' fill='none'/%3E%3C/svg%3E");
+      }
+      [data-theme="light"] .preset-select option {
+        background: var(--elev);
+      }
+
+      /* ── theme toggle button ── */
+      .theme-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        background: transparent;
+        border: 1px solid var(--bdr2);
+        border-radius: var(--r);
+        color: var(--tx-lo);
+        font-family: var(--mono);
+        font-size: 11px;
+        padding: 5px 10px;
+        cursor: pointer;
+        transition: all 0.15s;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      .theme-btn:hover {
+        background: var(--elev);
+        border-color: var(--acc);
+        color: var(--tx-hi);
+      }
+      .theme-btn-icon {
+        font-size: 13px;
+        line-height: 1;
+      }
+
+      /* ── input date color-scheme ── */
+      [data-theme="light"] input[type="date"].inp {
+        color-scheme: light;
+      }
+
+      /* ── Light: trace lane / pipe badges ── */
+      [data-theme="light"] .tr-pipe-badge {
+        background: rgba(94, 129, 172, 0.18);
+        color: #3d5c80;
+        border-color: rgba(94, 129, 172, 0.35);
+      }
+      [data-theme="light"] .tr-lane--cond {
+        border-left-color: #5e81ac;
+      }
+      [data-theme="light"] .tr-lane--pred {
+        border-left-color: #6aabaa;
+      }
+      [data-theme="light"] .tr-lane--check {
+        border-left-color: #81a1c1;
+      }
+      [data-theme="light"] .tr-lane--pipe {
+        border-left-color: #b0bac8;
+      }
+      [data-theme="light"] .tr-lane-kind--cond {
+        background: rgba(94, 129, 172, 0.14);
+        color: #3d5c80;
+      }
+      [data-theme="light"] .tr-lane-kind--pred {
+        background: rgba(106, 171, 170, 0.14);
+        color: #2d6b6a;
+      }
+      [data-theme="light"] .tr-lane-kind--check {
+        background: rgba(129, 161, 193, 0.14);
+        color: #3d5c80;
+      }
+      [data-theme="light"] .tr-lane-kind--pipe {
+        background: rgba(176, 186, 200, 0.3);
+        color: #4c566a;
+      }
+      [data-theme="light"] .tr-pipe-name {
+        color: #3d5c80;
+      }
+      [data-theme="light"] .tr-row {
+        border-top-color: rgba(180, 195, 210, 0.6);
+      }
+      [data-theme="light"] .tr-row--stop .tr-evt {
+        color: #b5292f;
+      }
+      [data-theme="light"] .tr-row--fail .tr-evt {
+        color: #8a3a1a;
+      }
+      [data-theme="light"] .tr-row--pass .tr-evt {
+        color: #3d6b2a;
+      }
+      [data-theme="light"] .tr-row--wildcard .tr-evt {
+        color: #6b4f8a;
+      }
+      [data-theme="light"] .tr-row--info .tr-evt {
+        color: #3d5c80;
+      }
+      [data-theme="light"] .tr-k {
+        color: #3d5c80;
+      }
+      .tr-v--result {
+        font-weight: 700;
+      }
+      .tr-row--pass .tr-v--result {
+        color: var(--n14);
+      }
+      .tr-row--stop .tr-v--result,
+      .tr-row--fail .tr-v--result {
+        color: var(--n11);
+      }
+      [data-theme="light"] .tr-row--pass .tr-v--result {
+        color: #3d6b2a;
+      }
+      [data-theme="light"] .tr-row--stop .tr-v--result,
+      [data-theme="light"] .tr-row--fail .tr-v--result {
+        color: #b5292f;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script src="../static/cdn/react.production.min.js"></script>
+    <script src="../static/cdn/react-dom.production.min.js"></script>
+    <script src="../static/cdn/babel.min.js"></script>
+
+    <script type="text/babel">
+      const { useState, useRef, useCallback } = React;
+
+      /* ── constants ── */
+      const PRESET_LABELS = {
+        // "PC-POS-01": "Предпроверка: минимальный набор полей, всё корректно",
+        // "PC-POS-02": "Предпроверка: ФИО без отчества, всё корректно",
+        // "PC-POS-03": "Предпроверка: с иностранным паспортом, всё корректно",
+        "FV-POS-01": "Полная проверка: российский клиент (данные без ошибок)",
+        "FV-POS-02": "Полная проверка: без отчества и ИНН (данные без ошибок)",
+        "FV-POS-03":
+          "Полная проверка: иностранный паспорт + налоговый резидент (без ошибок)",
+        "FV-NEG-01": "Ошибка: Идентификатор участия не заполнен",
+        "FV-NEG-02":
+          "Ошибка: код подразделения документа пустой и неверного формата",
+        "FV-NEG-03":
+          "Ошибка: ИНН некорректен (неверная длина и контрольная сумма)",
+        "FV-NEG-04": "Стоп: гражданство US (резиденты США запрещены)",
+        "FV-NEG-05": "Стоп: место рождения содержит указание на США",
+        "FV-NEG-06": "Ошибка: серия паспорта РФ не соответствует формату",
+        "FV-NEG-07":
+          "Стоп: иностранный документ без признака налогового резидентства",
+        "FV-NEG-08":
+          "Стоп: флаг иностранного резидента без страны резидентства",
+        "FV-NEG-09": "Стоп: почтовый адрес указывает на США",
+        "FV-NEG-10": "Ошибка: не указан ни один контакт (телефон или email)",
+        "FV-NEG-11": "Стоп: признак налогового резидента США равен true",
+        "FV-NEG-12": "Стоп: адрес регистрации в стране США",
+        "FV-NEG-13": "Стоп: иностранный адрес указывает на США",
+      };
+
+      const PA_PRESETS = {
+        "FV-NEG-01": {
+          context: {
+            pipelineId: "entrypoints.b.fl_resident.full_validation",
+          },
+          payload: {
+            "beneficiary.type": "FL_RESIDENT",
+            "beneficiary.inn": "744404355804",
+            "beneficiary.contacts.phone": "9801611004",
+            "beneficiary.status.startDate": "2024-01-26",
+            "beneficiary.fl.lastName": "Петров",
+            "beneficiary.fl.firstName": "Алексей",
+            "beneficiary.fl.middleName": "Анатольевич",
+            "beneficiary.fl.birthDate": "1979-12-01",
+            "beneficiary.fl.birthPlace":
+              "гор. МАГНИТОГОРСК ЧЕЛЯБИНСКОЙ ОБЛАСТИ",
+            "beneficiary.fl.citizenshipCode": "RU",
+            "beneficiary.address.registration.addressLine":
+              "350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20",
+            "beneficiary.address.registration.countryCode": "RU",
+            "beneficiary.idDoc.typeCode": "21",
+            "beneficiary.idDoc.typeName": "Паспорт РФ",
+            "beneficiary.idDoc.series": "4507",
+            "beneficiary.idDoc.number": "360952",
+            "beneficiary.idDoc.issueDate": "2004-03-29",
+            "beneficiary.idDoc.issuer":
+              'ОВД РАЙОНА "БОГОРОДСКОЕ" ГОРОДА МОСКВЫ',
+            "beneficiary.idDoc.issuerCode": "770-001",
+            "beneficiary.idDoc.isForeignIdDoc": false,
+            "beneficiary.tax.usTaxResident": false,
+            "beneficiary.tax.usResident": false,
+            "beneficiary.tax.foreignTaxResident": false,
+            "beneficiary.contacts.email": "pa.test.01@example.com",
+          },
+        },
+        "FV-NEG-02": {
+          context: {
+            pipelineId: "entrypoints.b.fl_resident.full_validation",
+          },
+          payload: {
+            "beneficiary.type": "FL_RESIDENT",
+            "beneficiary.inn": "744404355804",
+            "beneficiary.participationId": "TEST-536779508951",
+            "beneficiary.contacts.phone": "9801611004",
+            "beneficiary.status.startDate": "2024-01-26",
+            "beneficiary.fl.lastName": "Петров",
+            "beneficiary.fl.firstName": "Алексей",
+            "beneficiary.fl.middleName": "Анатольевич",
+            "beneficiary.fl.birthDate": "1979-12-01",
+            "beneficiary.fl.birthPlace":
+              "гор. МАГНИТОГОРСК ЧЕЛЯБИНСКОЙ ОБЛАСТИ",
+            "beneficiary.fl.citizenshipCode": "RU",
+            "beneficiary.address.registration.addressLine":
+              "350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20",
+            "beneficiary.address.registration.countryCode": "RU",
+            "beneficiary.idDoc.typeCode": "21",
+            "beneficiary.idDoc.typeName": "Паспорт РФ",
+            "beneficiary.idDoc.series": "4507",
+            "beneficiary.idDoc.number": "360952",
+            "beneficiary.idDoc.issueDate": "2004-03-29",
+            "beneficiary.idDoc.issuer":
+              'ОВД РАЙОНА "БОГОРОДСКОЕ" ГОРОДА МОСКВЫ',
+            "beneficiary.idDoc.isForeignIdDoc": false,
+            "beneficiary.tax.usTaxResident": false,
+            "beneficiary.tax.usResident": false,
+            "beneficiary.tax.foreignTaxResident": false,
+            "beneficiary.contacts.email": "pa.test.01@example.com",
+          },
+        },
+        "FV-NEG-03": {
+          context: {
+            pipelineId: "entrypoints.b.fl_resident.full_validation",
+          },
+          payload: {
+            "beneficiary.type": "FL_RESIDENT",
+            "beneficiary.inn": "51120118625",
+            "beneficiary.participationId": "TEST-552976161977",
+            "beneficiary.contacts.phone": "9632449030",
+            "beneficiary.status.startDate": "2023-05-29",
+            "beneficiary.fl.lastName": "Стаценко",
+            "beneficiary.fl.firstName": "Анастасия",
+            "beneficiary.fl.middleName": "Владимировна",
+            "beneficiary.fl.birthDate": "1999-11-12",
+            "beneficiary.fl.birthPlace": "Г. МУРМАНСК",
+            "beneficiary.fl.citizenshipCode": "RU",
+            "beneficiary.address.registration.addressLine":
+              "Мурманская обл, г Снежногорск, ул Мира, д 12, кв 187",
+            "beneficiary.address.registration.countryCode": "RU",
+            "beneficiary.idDoc.typeCode": "21",
+            "beneficiary.idDoc.typeName": "Паспорт РФ",
+            "beneficiary.idDoc.series": "4719",
+            "beneficiary.idDoc.number": "671983",
+            "beneficiary.idDoc.issueDate": "2019-11-13",
+            "beneficiary.idDoc.issuer": "УМВД РОССИИ ПО МУРМАНСКОЙ ОБЛАСТИ",
+            "beneficiary.idDoc.issuerCode": "510-001",
+            "beneficiary.idDoc.isForeignIdDoc": false,
+            "beneficiary.tax.usTaxResident": false,
+            "beneficiary.tax.usResident": false,
+            "beneficiary.tax.foreignTaxResident": false,
+            "beneficiary.contacts.email": "pa.test.02@example.com",
+          },
+        },
+        "FV-NEG-04": {
+          context: {
+            pipelineId: "entrypoints.b.fl_resident.full_validation",
+          },
+          payload: {
+            "beneficiary.type": "FL_RESIDENT",
+            "beneficiary.inn": "511201186251",
+            "beneficiary.participationId": "TEST-552976161977",
+            "beneficiary.contacts.phone": "9632449030",
+            "beneficiary.status.startDate": "2023-05-29",
+            "beneficiary.fl.lastName": "Стаценко",
+            "beneficiary.fl.firstName": "Анастасия",
+            "beneficiary.fl.middleName": "Владимировна",
+            "beneficiary.fl.birthDate": "1999-11-12",
+            "beneficiary.fl.birthPlace": "Г. МУРМАНСК",
+            "beneficiary.fl.citizenshipCode": "US",
+            "beneficiary.address.registration.addressLine":
+              "Мурманская обл, г Снежногорск, ул Мира, д 12, кв 187",
+            "beneficiary.address.registration.countryCode": "RU",
+            "beneficiary.idDoc.typeCode": "21",
+            "beneficiary.idDoc.typeName": "Паспорт РФ",
+            "beneficiary.idDoc.series": "4719",
+            "beneficiary.idDoc.number": "671983",
+            "beneficiary.idDoc.issueDate": "2019-11-13",
+            "beneficiary.idDoc.issuer": "УМВД РОССИИ ПО МУРМАНСКОЙ ОБЛАСТИ",
+            "beneficiary.idDoc.issuerCode": "510-001",
+            "beneficiary.idDoc.isForeignIdDoc": false,
+            "beneficiary.tax.usTaxResident": false,
+            "beneficiary.tax.usResident": false,
+            "beneficiary.tax.foreignTaxResident": false,
+            "beneficiary.contacts.email": "pa.test.02@example.com",
+          },
+        },
+        "FV-NEG-05": {
+          context: {
+            pipelineId: "entrypoints.b.fl_resident.full_validation",
+          },
+          payload: {
+            "beneficiary.type": "FL_RESIDENT",
+            "beneficiary.inn": "366110509430",
+            "beneficiary.participationId": "TEST-553678199916",
+            "beneficiary.contacts.phone": "9257578736",
+            "beneficiary.status.startDate": "2024-02-21",
+            "beneficiary.fl.lastName": "Меркулов",
+            "beneficiary.fl.firstName": "Олег",
+            "beneficiary.fl.middleName": "Геннадьевич",
+            "beneficiary.fl.birthDate": "1988-04-16",
+            "beneficiary.fl.birthPlace": "USA, New York",
+            "beneficiary.fl.citizenshipCode": "RU",
+            "beneficiary.address.registration.addressLine":
+              "г Москва, ул Молдавская, д 2 к 1, кв 11",
+            "beneficiary.address.registration.countryCode": "RU",
+            "beneficiary.idDoc.typeCode": "21",
+            "beneficiary.idDoc.typeName": "Паспорт РФ",
+            "beneficiary.idDoc.series": "4518",
+            "beneficiary.idDoc.number": "917951",
+            "beneficiary.idDoc.issueDate": "2018-10-16",
+            "beneficiary.idDoc.issuer": "ГУ МВД РОССИИ ПО Г. МОСКВЕ",
+            "beneficiary.idDoc.issuerCode": "770-002",
+            "beneficiary.idDoc.isForeignIdDoc": false,
+            "beneficiary.tax.usTaxResident": false,
+            "beneficiary.tax.usResident": false,
+            "beneficiary.tax.foreignTaxResident": false,
+            "beneficiary.contacts.email": "pa.test.03@example.com",
+          },
+        },
+        "FV-NEG-06": {
+          context: {
+            pipelineId: "entrypoints.b.fl_resident.full_validation",
+          },
+          payload: {
+            "beneficiary.type": "FL_RESIDENT",
+            "beneficiary.inn": "366110509430",
+            "beneficiary.participationId": "TEST-553678199916",
+            "beneficiary.contacts.phone": "9257578736",
+            "beneficiary.status.startDate": "2024-02-21",
+            "beneficiary.fl.lastName": "Меркулов",
+            "beneficiary.fl.firstName": "Олег",
+            "beneficiary.fl.middleName": "Геннадьевич",
+            "beneficiary.fl.birthDate": "1988-04-16",
+            "beneficiary.fl.birthPlace": "г. Воронеж",
+            "beneficiary.fl.citizenshipCode": "RU",
+            "beneficiary.address.registration.addressLine":
+              "г Москва, ул Молдавская, д 2 к 1, кв 11",
+            "beneficiary.address.registration.countryCode": "RU",
+            "beneficiary.idDoc.typeCode": "21",
+            "beneficiary.idDoc.typeName": "Паспорт РФ",
+            "beneficiary.idDoc.series": "0000",
+            "beneficiary.idDoc.number": "917951",
+            "beneficiary.idDoc.issueDate": "2018-10-16",
+            "beneficiary.idDoc.issuer": "ГУ МВД РОССИИ ПО Г. МОСКВЕ",
+            "beneficiary.idDoc.issuerCode": "770-002",
+            "beneficiary.idDoc.isForeignIdDoc": false,
+            "beneficiary.tax.usTaxResident": false,
+            "beneficiary.tax.usResident": false,
+            "beneficiary.tax.foreignTaxResident": false,
+            "beneficiary.contacts.email": "pa.test.03@example.com",
+          },
+        },
+        "FV-NEG-07": {
+          context: {
+            pipelineId: "entrypoints.b.fl_resident.full_validation",
+          },
+          payload: {
+            "beneficiary.type": "FL_RESIDENT",
+            "beneficiary.inn": "744404355804",
+            "beneficiary.participationId": "TEST-536779508951",
+            "beneficiary.contacts.phone": "9801611004",
+            "beneficiary.status.startDate": "2024-01-26",
+            "beneficiary.fl.lastName": "Петров",
+            "beneficiary.fl.firstName": "Алексей",
+            "beneficiary.fl.middleName": "Анатольевич",
+            "beneficiary.fl.birthDate": "1979-12-01",
+            "beneficiary.fl.birthPlace":
+              "гор. МАГНИТОГОРСК ЧЕЛЯБИНСКОЙ ОБЛАСТИ",
+            "beneficiary.fl.citizenshipCode": "RU",
+            "beneficiary.address.registration.addressLine":
+              "350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20",
+            "beneficiary.address.registration.countryCode": "RU",
+            "beneficiary.idDoc.typeCode": "21",
+            "beneficiary.idDoc.typeName": "Паспорт РФ",
+            "beneficiary.idDoc.series": "4507",
+            "beneficiary.idDoc.number": "360952",
+            "beneficiary.idDoc.issueDate": "2004-03-29",
+            "beneficiary.idDoc.issuer":
+              'ОВД РАЙОНА "БОГОРОДСКОЕ" ГОРОДА МОСКВЫ',
+            "beneficiary.idDoc.issuerCode": "770-001",
+            "beneficiary.idDoc.isForeignIdDoc": true,
+            "beneficiary.tax.usTaxResident": false,
+            "beneficiary.tax.usResident": false,
+            "beneficiary.tax.foreignTaxResident": false,
+            "beneficiary.contacts.email": "pa.test.01@example.com",
+          },
+        },
+        "FV-NEG-08": {
+          context: {
+            pipelineId: "entrypoints.b.fl_resident.full_validation",
+          },
+          payload: {
+            "beneficiary.type": "FL_RESIDENT",
+            "beneficiary.inn": "744404355804",
+            "beneficiary.participationId": "TEST-536779508951",
+            "beneficiary.contacts.phone": "9801611004",
+            "beneficiary.status.startDate": "2024-01-26",
+            "beneficiary.fl.lastName": "Петров",
+            "beneficiary.fl.firstName": "Алексей",
+            "beneficiary.fl.middleName": "Анатольевич",
+            "beneficiary.fl.birthDate": "1979-12-01",
+            "beneficiary.fl.birthPlace":
+              "гор. МАГНИТОГОРСК ЧЕЛЯБИНСКОЙ ОБЛАСТИ",
+            "beneficiary.fl.citizenshipCode": "RU",
+            "beneficiary.address.registration.addressLine":
+              "350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20",
+            "beneficiary.address.registration.countryCode": "RU",
+            "beneficiary.idDoc.typeCode": "21",
+            "beneficiary.idDoc.typeName": "Паспорт РФ",
+            "beneficiary.idDoc.series": "4507",
+            "beneficiary.idDoc.number": "360952",
+            "beneficiary.idDoc.issueDate": "2004-03-29",
+            "beneficiary.idDoc.issuer":
+              'ОВД РАЙОНА "БОГОРОДСКОЕ" ГОРОДА МОСКВЫ',
+            "beneficiary.idDoc.issuerCode": "770-001",
+            "beneficiary.idDoc.isForeignIdDoc": false,
+            "beneficiary.tax.usTaxResident": false,
+            "beneficiary.tax.usResident": false,
+            "beneficiary.tax.foreignTaxResident": true,
+            "beneficiary.contacts.email": "pa.test.01@example.com",
+          },
+        },
+        "FV-NEG-09": {
+          context: {
+            pipelineId: "entrypoints.b.fl_resident.full_validation",
+          },
+          payload: {
+            "beneficiary.type": "FL_RESIDENT",
+            "beneficiary.inn": "511201186251",
+            "beneficiary.participationId": "TEST-552976161977",
+            "beneficiary.contacts.phone": "9632449030",
+            "beneficiary.status.startDate": "2023-05-29",
+            "beneficiary.fl.lastName": "Стаценко",
+            "beneficiary.fl.firstName": "Анастасия",
+            "beneficiary.fl.middleName": "Владимировна",
+            "beneficiary.fl.birthDate": "1999-11-12",
+            "beneficiary.fl.birthPlace": "Г. МУРМАНСК",
+            "beneficiary.fl.citizenshipCode": "RU",
+            "beneficiary.address.registration.addressLine":
+              "Мурманская обл, г Снежногорск, ул Мира, д 12, кв 187",
+            "beneficiary.address.registration.countryCode": "RU",
+            "beneficiary.idDoc.typeCode": "21",
+            "beneficiary.idDoc.typeName": "Паспорт РФ",
+            "beneficiary.idDoc.series": "4719",
+            "beneficiary.idDoc.number": "671983",
+            "beneficiary.idDoc.issueDate": "2019-11-13",
+            "beneficiary.idDoc.issuer": "УМВД РОССИИ ПО МУРМАНСКОЙ ОБЛАСТИ",
+            "beneficiary.idDoc.issuerCode": "510-001",
+            "beneficiary.idDoc.isForeignIdDoc": false,
+            "beneficiary.tax.usTaxResident": false,
+            "beneficiary.tax.usResident": false,
+            "beneficiary.tax.foreignTaxResident": false,
+            "beneficiary.contacts.email": "pa.test.02@example.com",
+            "beneficiary.contacts.postalAddress": "USA, New York",
+          },
+        },
+        "FV-NEG-10": {
+          context: {
+            pipelineId: "entrypoints.b.fl_resident.full_validation",
+          },
+          payload: {
+            "beneficiary.type": "FL_RESIDENT",
+            "beneficiary.inn": "366110509430",
+            "beneficiary.participationId": "TEST-553678199916",
+            "beneficiary.status.startDate": "2024-02-21",
+            "beneficiary.fl.lastName": "Меркулов",
+            "beneficiary.fl.firstName": "Олег",
+            "beneficiary.fl.middleName": "Геннадьевич",
+            "beneficiary.fl.birthDate": "1988-04-16",
+            "beneficiary.fl.birthPlace": "г. Воронеж",
+            "beneficiary.fl.citizenshipCode": "RU",
+            "beneficiary.address.registration.addressLine":
+              "г Москва, ул Молдавская, д 2 к 1, кв 11",
+            "beneficiary.address.registration.countryCode": "RU",
+            "beneficiary.idDoc.typeCode": "21",
+            "beneficiary.idDoc.typeName": "Паспорт РФ",
+            "beneficiary.idDoc.series": "4518",
+            "beneficiary.idDoc.number": "917951",
+            "beneficiary.idDoc.issueDate": "2018-10-16",
+            "beneficiary.idDoc.issuer": "ГУ МВД РОССИИ ПО Г. МОСКВЕ",
+            "beneficiary.idDoc.issuerCode": "770-002",
+            "beneficiary.idDoc.isForeignIdDoc": false,
+            "beneficiary.tax.usTaxResident": false,
+            "beneficiary.tax.usResident": false,
+            "beneficiary.tax.foreignTaxResident": false,
+          },
+        },
+        "FV-NEG-11": {
+          context: {
+            pipelineId: "entrypoints.b.fl_resident.full_validation",
+          },
+          payload: {
+            "beneficiary.type": "FL_RESIDENT",
+            "beneficiary.inn": "744404355804",
+            "beneficiary.participationId": "TEST-536779508951",
+            "beneficiary.contacts.phone": "9801611004",
+            "beneficiary.status.startDate": "2024-01-26",
+            "beneficiary.fl.lastName": "Петров",
+            "beneficiary.fl.firstName": "Алексей",
+            "beneficiary.fl.middleName": "Анатольевич",
+            "beneficiary.fl.birthDate": "1979-12-01",
+            "beneficiary.fl.birthPlace":
+              "гор. МАГНИТОГОРСК ЧЕЛЯБИНСКОЙ ОБЛАСТИ",
+            "beneficiary.fl.citizenshipCode": "RU",
+            "beneficiary.address.registration.addressLine":
+              "350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20",
+            "beneficiary.address.registration.countryCode": "RU",
+            "beneficiary.idDoc.typeCode": "21",
+            "beneficiary.idDoc.typeName": "Паспорт РФ",
+            "beneficiary.idDoc.series": "4507",
+            "beneficiary.idDoc.number": "360952",
+            "beneficiary.idDoc.issueDate": "2004-03-29",
+            "beneficiary.idDoc.issuer":
+              'ОВД РАЙОНА "БОГОРОДСКОЕ" ГОРОДА МОСКВЫ',
+            "beneficiary.idDoc.issuerCode": "770-001",
+            "beneficiary.idDoc.isForeignIdDoc": false,
+            "beneficiary.tax.usTaxResident": true,
+            "beneficiary.tax.usResident": false,
+            "beneficiary.tax.foreignTaxResident": false,
+            "beneficiary.contacts.email": "pa.test.01@example.com",
+          },
+        },
+        "FV-NEG-12": {
+          context: {
+            pipelineId: "entrypoints.b.fl_resident.full_validation",
+          },
+          payload: {
+            "beneficiary.type": "FL_RESIDENT",
+            "beneficiary.inn": "511201186251",
+            "beneficiary.participationId": "TEST-552976161977",
+            "beneficiary.contacts.phone": "9632449030",
+            "beneficiary.status.startDate": "2023-05-29",
+            "beneficiary.fl.lastName": "Стаценко",
+            "beneficiary.fl.firstName": "Анастасия",
+            "beneficiary.fl.middleName": "Владимировна",
+            "beneficiary.fl.birthDate": "1999-11-12",
+            "beneficiary.fl.birthPlace": "Г. МУРМАНСК",
+            "beneficiary.fl.citizenshipCode": "RU",
+            "beneficiary.address.registration.addressLine":
+              "Мурманская обл, г Снежногорск, ул Мира, д 12, кв 187",
+            "beneficiary.address.registration.countryCode": "US",
+            "beneficiary.idDoc.typeCode": "21",
+            "beneficiary.idDoc.typeName": "Паспорт РФ",
+            "beneficiary.idDoc.series": "4719",
+            "beneficiary.idDoc.number": "671983",
+            "beneficiary.idDoc.issueDate": "2019-11-13",
+            "beneficiary.idDoc.issuer": "УМВД РОССИИ ПО МУРМАНСКОЙ ОБЛАСТИ",
+            "beneficiary.idDoc.issuerCode": "510-001",
+            "beneficiary.idDoc.isForeignIdDoc": false,
+            "beneficiary.tax.usTaxResident": false,
+            "beneficiary.tax.usResident": false,
+            "beneficiary.tax.foreignTaxResident": false,
+            "beneficiary.contacts.email": "pa.test.02@example.com",
+          },
+        },
+        "FV-NEG-13": {
+          context: {
+            pipelineId: "entrypoints.b.fl_resident.full_validation",
+          },
+          payload: {
+            "beneficiary.type": "FL_RESIDENT",
+            "beneficiary.inn": "366110509430",
+            "beneficiary.participationId": "TEST-553678199916",
+            "beneficiary.contacts.phone": "9257578736",
+            "beneficiary.status.startDate": "2024-02-21",
+            "beneficiary.fl.lastName": "Меркулов",
+            "beneficiary.fl.firstName": "Олег",
+            "beneficiary.fl.middleName": "Геннадьевич",
+            "beneficiary.fl.birthDate": "1988-04-16",
+            "beneficiary.fl.birthPlace": "г. Воронеж",
+            "beneficiary.fl.citizenshipCode": "RU",
+            "beneficiary.address.registration.addressLine":
+              "г Москва, ул Молдавская, д 2 к 1, кв 11",
+            "beneficiary.address.registration.countryCode": "RU",
+            "beneficiary.idDoc.typeCode": "21",
+            "beneficiary.idDoc.typeName": "Паспорт РФ",
+            "beneficiary.idDoc.series": "4518",
+            "beneficiary.idDoc.number": "917951",
+            "beneficiary.idDoc.issueDate": "2018-10-16",
+            "beneficiary.idDoc.issuer": "ГУ МВД РОССИИ ПО Г. МОСКВЕ",
+            "beneficiary.idDoc.issuerCode": "770-002",
+            "beneficiary.idDoc.isForeignIdDoc": false,
+            "beneficiary.tax.usTaxResident": false,
+            "beneficiary.tax.usResident": false,
+            "beneficiary.tax.foreignTaxResident": true,
+            "beneficiary.contacts.email": "pa.test.03@example.com",
+            "beneficiary.tax.foreignResidencies0.countryCode": "DE",
+            "beneficiary.tax.foreignResidencies0.tin": "DE123456789",
+            "beneficiary.tax.foreignResidencies0.address": "USA, New York",
+          },
+        },
+        "FV-POS-01": {
+          context: {
+            pipelineId: "entrypoints.b.fl_resident.full_validation",
+          },
+          payload: {
+            "beneficiary.type": "FL_RESIDENT",
+            "beneficiary.inn": "744404355804",
+            "beneficiary.participationId": "TEST-536779508951",
+            "beneficiary.contacts.phone": "9801611004",
+            "beneficiary.status.startDate": "2024-01-26",
+            "beneficiary.fl.lastName": "Петров",
+            "beneficiary.fl.firstName": "Алексей",
+            "beneficiary.fl.middleName": "Анатольевич",
+            "beneficiary.fl.birthDate": "1979-12-01",
+            "beneficiary.fl.birthPlace":
+              "гор. МАГНИТОГОРСК ЧЕЛЯБИНСКОЙ ОБЛАСТИ",
+            "beneficiary.fl.citizenshipCode": "RU",
+            "beneficiary.address.registration.addressLine":
+              "350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20",
+            "beneficiary.address.registration.countryCode": "RU",
+            "beneficiary.idDoc.typeCode": "21",
+            "beneficiary.idDoc.typeName": "Паспорт РФ",
+            "beneficiary.idDoc.series": "4507",
+            "beneficiary.idDoc.number": "360952",
+            "beneficiary.idDoc.issueDate": "2004-03-29",
+            "beneficiary.idDoc.issuer":
+              'ОВД РАЙОНА "БОГОРОДСКОЕ" ГОРОДА МОСКВЫ',
+            "beneficiary.idDoc.issuerCode": "770-001",
+            "beneficiary.idDoc.isForeignIdDoc": false,
+            "beneficiary.tax.usTaxResident": false,
+            "beneficiary.tax.usResident": false,
+            "beneficiary.tax.foreignTaxResident": false,
+            "beneficiary.contacts.email": "pa.test.01@example.com",
+          },
+        },
+        "FV-POS-02": {
+          context: {
+            pipelineId: "entrypoints.b.fl_resident.full_validation",
+          },
+          payload: {
+            "beneficiary.type": "FL_RESIDENT",
+            "beneficiary.inn": "511201186251",
+            "beneficiary.participationId": "TEST-552976161977",
+            "beneficiary.contacts.phone": "9632449030",
+            "beneficiary.status.startDate": "2023-05-29",
+            "beneficiary.fl.lastName": "Стаценко",
+            "beneficiary.fl.firstName": "Анастасия",
+            "beneficiary.fl.middleName": "Владимировна",
+            "beneficiary.fl.birthDate": "1999-11-12",
+            "beneficiary.fl.birthPlace": "Г. МУРМАНСК",
+            "beneficiary.fl.citizenshipCode": "RU",
+            "beneficiary.address.registration.addressLine":
+              "Мурманская обл, г Снежногорск, ул Мира, д 12, кв 187",
+            "beneficiary.address.registration.countryCode": "RU",
+            "beneficiary.idDoc.typeCode": "21",
+            "beneficiary.idDoc.typeName": "Паспорт РФ",
+            "beneficiary.idDoc.series": "4719",
+            "beneficiary.idDoc.number": "671983",
+            "beneficiary.idDoc.issueDate": "2019-11-13",
+            "beneficiary.idDoc.issuer": "УМВД РОССИИ ПО МУРМАНСКОЙ ОБЛАСТИ",
+            "beneficiary.idDoc.issuerCode": "510-001",
+            "beneficiary.idDoc.isForeignIdDoc": false,
+            "beneficiary.tax.usTaxResident": false,
+            "beneficiary.tax.usResident": false,
+            "beneficiary.tax.foreignTaxResident": false,
+            "beneficiary.contacts.email": "pa.test.02@example.com",
+          },
+        },
+        "FV-POS-03": {
+          context: {
+            pipelineId: "entrypoints.b.fl_resident.full_validation",
+          },
+          payload: {
+            "beneficiary.type": "FL_RESIDENT",
+            "beneficiary.inn": "366110509430",
+            "beneficiary.participationId": "TEST-553678199916",
+            "beneficiary.contacts.phone": "9257578736",
+            "beneficiary.status.startDate": "2024-02-21",
+            "beneficiary.fl.lastName": "Меркулов",
+            "beneficiary.fl.firstName": "Олег",
+            "beneficiary.fl.middleName": "Геннадьевич",
+            "beneficiary.fl.birthDate": "1988-04-16",
+            "beneficiary.fl.birthPlace": "г. Воронеж",
+            "beneficiary.fl.citizenshipCode": "RU",
+            "beneficiary.address.registration.addressLine":
+              "г Москва, ул Молдавская, д 2 к 1, кв 11",
+            "beneficiary.address.registration.countryCode": "RU",
+            "beneficiary.idDoc.typeCode": "21",
+            "beneficiary.idDoc.typeName": "Паспорт РФ",
+            "beneficiary.idDoc.series": "4518",
+            "beneficiary.idDoc.number": "917951",
+            "beneficiary.idDoc.issueDate": "2018-10-16",
+            "beneficiary.idDoc.issuer": "ГУ МВД РОССИИ ПО Г. МОСКВЕ",
+            "beneficiary.idDoc.issuerCode": "770-002",
+            "beneficiary.idDoc.isForeignIdDoc": false,
+            "beneficiary.tax.usTaxResident": false,
+            "beneficiary.tax.usResident": false,
+            "beneficiary.tax.foreignTaxResident": false,
+            "beneficiary.contacts.email": "pa.test.03@example.com",
+          },
+        },
+        // "PC-POS-01": {
+        //   context: {
+        //     pipelineId: "entrypoints.c.fl_resident.precheck_min",
+        //   },
+        //   payload: {
+        //     "beneficiary.type": "FL_RESIDENT",
+        //     "beneficiary.inn": "744404355804",
+        //     "beneficiary.fl.lastName": "Петров",
+        //     "beneficiary.fl.firstName": "Алексей",
+        //   },
+        // },
+        // "PC-POS-02": {
+        //   context: {
+        //     pipelineId: "entrypoints.c.fl_resident.precheck_min",
+        //   },
+        //   payload: {
+        //     "beneficiary.type": "FL_RESIDENT",
+        //     "beneficiary.inn": "511201186251",
+        //     "beneficiary.fl.lastName": "Стаценко",
+        //     "beneficiary.fl.firstName": "Анастасия",
+        //   },
+        // },
+        // "PC-POS-03": {
+        //   context: {
+        //     pipelineId: "entrypoints.c.fl_resident.precheck_min",
+        //   },
+        //   payload: {
+        //     "beneficiary.type": "FL_RESIDENT",
+        //     "beneficiary.inn": "366110509430",
+        //     "beneficiary.fl.lastName": "Меркулов",
+        //     "beneficiary.fl.firstName": "Олег",
+        //   },
+        // },
+      };
+
+      const PIPELINES = [
+        {
+          id: "entrypoints.b.fl_resident.full_validation",
+          label: "Полная проверка · канал B",
+          mode: "full",
+        },
+        // {
+        //   id: "entrypoints.c.fl_resident.precheck_min",
+        //   label: "Предпроверка · канал C",
+        //   mode: "pre",
+        // },
+      ];
+
+      const EMPTY = {
+        pipelineId: PIPELINES[0].id,
+        inn: "",
+        participationId: "",
+        lastName: "",
+        firstName: "",
+        middleName: "",
+        birthDate: "",
+        birthPlace: "",
+        citizenshipCode: "RU",
+        docTypeCode: "21",
+        docTypeName: "Паспорт РФ",
+        docSeries: "",
+        docNumber: "",
+        docIssueDate: "",
+        docIssuer: "",
+        docIssuerCode: "",
+        isForeignIdDoc: false,
+        regAddressLine: "",
+        regCountryCode: "RU",
+        usTaxResident: false,
+        usResident: false,
+        foreignTaxResident: false,
+        statusStartDate: "",
+        foreignCountryCode: "",
+        foreignTin: "",
+        foreignTinAbsenceReason: "",
+        foreignAddress: "",
+        phone: "",
+        phoneForeign: "",
+        email: "",
+        postalAddress: "",
+      };
+
+      /* ── payload builder ── */
+      function buildRequest(f) {
+        const p = {};
+        const add = (k, v) => {
+          if (v !== "" && v != null) p[k] = v;
+        };
+        const nd = (v) => {
+          if (!v) return "";
+          if (/^\d{4}-\d{2}-\d{2}$/.test(v)) return v;
+          if (/^\d{2}\.\d{2}\.\d{4}$/.test(v)) {
+            const [dd, mm, yyyy] = v.split(".");
+            return `${yyyy}-${mm}-${dd}`;
+          }
+          return v;
+        };
+
+        add("beneficiary.type", "FL_RESIDENT");
+        add("beneficiary.inn", f.inn);
+        add("beneficiary.participationId", f.participationId);
+
+        add("beneficiary.fl.lastName", f.lastName);
+        add("beneficiary.fl.firstName", f.firstName);
+        add("beneficiary.fl.middleName", f.middleName);
+        add("beneficiary.fl.birthDate", nd(f.birthDate));
+        add("beneficiary.fl.birthPlace", f.birthPlace);
+        add(
+          "beneficiary.fl.citizenshipCode",
+          (f.citizenshipCode || "").toUpperCase(),
+        );
+
+        add("beneficiary.status.startDate", nd(f.statusStartDate));
+
+        add("beneficiary.idDoc.typeCode", f.docTypeCode);
+        add("beneficiary.idDoc.typeName", f.docTypeName);
+        add("beneficiary.idDoc.series", f.docSeries);
+        add("beneficiary.idDoc.number", f.docNumber);
+        add("beneficiary.idDoc.issueDate", nd(f.docIssueDate));
+        add("beneficiary.idDoc.issuer", f.docIssuer);
+        add("beneficiary.idDoc.issuerCode", f.docIssuerCode);
+        p["beneficiary.idDoc.isForeignIdDoc"] = Boolean(f.isForeignIdDoc);
+
+        add("beneficiary.address.registration.addressLine", f.regAddressLine);
+        add(
+          "beneficiary.address.registration.countryCode",
+          (f.regCountryCode || "").toUpperCase(),
+        );
+
+        p["beneficiary.tax.usTaxResident"] = Boolean(f.usTaxResident);
+        p["beneficiary.tax.usResident"] = Boolean(f.usResident);
+        p["beneficiary.tax.foreignTaxResident"] = Boolean(f.foreignTaxResident);
+
+        if (f.foreignTaxResident || f.isForeignIdDoc) {
+          add(
+            "beneficiary.tax.foreignResidencies0.countryCode",
+            (f.foreignCountryCode || "").toUpperCase(),
+          );
+          add("beneficiary.tax.foreignResidencies0.tin", f.foreignTin);
+          add(
+            "beneficiary.tax.foreignResidencies0.tinAbsenceReason",
+            f.foreignTinAbsenceReason,
+          );
+          add("beneficiary.tax.foreignResidencies0.address", f.foreignAddress);
+        }
+
+        add("beneficiary.contacts.phone", f.phone);
+        add("beneficiary.contacts.phoneForeign", f.phoneForeign);
+        add("beneficiary.contacts.email", f.email);
+        add("beneficiary.contacts.postalAddress", f.postalAddress);
+
+        return { context: { pipelineId: f.pipelineId }, payload: p };
+      }
+
+      /* ── payload → form ── */
+      function p2f(p, ctxId) {
+        const g = (keys, d = "") => {
+          const list = Array.isArray(keys) ? keys : [keys];
+          for (const k of list) if (k in p) return p[k];
+          return d;
+        };
+        const gb = (keys, d = false) => {
+          const list = Array.isArray(keys) ? keys : [keys];
+          for (const k of list) if (p[k] !== undefined) return Boolean(p[k]);
+          return d;
+        };
+        const pid =
+          ctxId && PIPELINES.find((x) => x.id === ctxId)
+            ? ctxId
+            : PIPELINES[0].id;
+        return {
+          pipelineId: pid,
+          inn: g("beneficiary.inn"),
+          participationId: g("beneficiary.participationId"),
+          lastName: g(["beneficiary.lastName", "beneficiary.fl.lastName"]),
+          firstName: g(["beneficiary.firstName", "beneficiary.fl.firstName"]),
+          middleName: g([
+            "beneficiary.middleName",
+            "beneficiary.fl.middleName",
+          ]),
+          statusStartDate: g("beneficiary.status.startDate"),
+          birthDate: g(["beneficiary.birthDate", "beneficiary.fl.birthDate"]),
+          birthPlace: g([
+            "beneficiary.birthPlace",
+            "beneficiary.fl.birthPlace",
+          ]),
+          citizenshipCode: g(
+            ["beneficiary.citizenshipCode", "beneficiary.fl.citizenshipCode"],
+            "RU",
+          ),
+          docTypeCode: g("beneficiary.idDoc.typeCode", "21"),
+          docTypeName: g("beneficiary.idDoc.typeName", "Паспорт РФ"),
+          docSeries: g("beneficiary.idDoc.series"),
+          docNumber: g("beneficiary.idDoc.number"),
+          docIssueDate: g("beneficiary.idDoc.issueDate"),
+          docIssuer: g("beneficiary.idDoc.issuer"),
+          docIssuerCode: g("beneficiary.idDoc.issuerCode"),
+          isForeignIdDoc: gb("beneficiary.idDoc.isForeignIdDoc"),
+          regAddressLine: g("beneficiary.address.registration.addressLine"),
+          regCountryCode: g(
+            "beneficiary.address.registration.countryCode",
+            "RU",
+          ),
+          usTaxResident: gb("beneficiary.tax.usTaxResident"),
+          usResident: gb("beneficiary.tax.usResident"),
+          foreignTaxResident: gb("beneficiary.tax.foreignTaxResident"),
+          foreignCountryCode: g(
+            "beneficiary.tax.foreignResidencies0.countryCode",
+          ),
+          foreignTin: g("beneficiary.tax.foreignResidencies0.tin"),
+          foreignTinAbsenceReason: g(
+            "beneficiary.tax.foreignResidencies0.tinAbsenceReason",
+          ),
+          foreignAddress: g("beneficiary.tax.foreignResidencies0.address"),
+          phone: g("beneficiary.contacts.phone"),
+          phoneForeign: g("beneficiary.contacts.phoneForeign"),
+          email: g("beneficiary.contacts.email"),
+          postalAddress: g("beneficiary.contacts.postalAddress"),
+        };
+      }
+
+      /* ── ui primitives ── */
+      function F({ label, hint, wide, children }) {
+        return (
+          <div className={"Поле" + (wide ? " wide" : "")}>
+            <span className="Поле-lbl">
+              {label}
+              {hint && <span className="Поле-hint"> {hint}</span>}
+            </span>
+            {children}
+          </div>
+        );
+      }
+
+      function Inp({ value, onChange, mono, ...rest }) {
+        return (
+          <input
+            className={"inp" + (mono ? " mono" : "")}
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            autoComplete="off"
+            {...rest}
+          />
+        );
+      }
+
+      function Tog({ checked, onChange, label }) {
+        return (
+          <button
+            type="button"
+            className="tog"
+            onClick={() => onChange(!checked)}
+            aria-pressed={checked}
+          >
+            <span className={"tog-track" + (checked ? " on" : "")}>
+              <span className="tog-thumb" />
+            </span>
+            <span className="tog-lbl">{label}</span>
+          </button>
+        );
+      }
+
+      function Block({ id, title, children, defaultOpen = true }) {
+        const [open, setOpen] = useState(defaultOpen);
+        return (
+          <section className="block">
+            <button className="block-head" onClick={() => setOpen((o) => !o)}>
+              <span className="block-num">{id}</span>
+              <span className="block-title">{title}</span>
+              <span className={"block-arrow" + (open ? " open" : "")}>▸</span>
+            </button>
+            {open && <div className="block-body">{children}</div>}
+          </section>
+        );
+      }
+
+      /* ── result panel ── */
+
+      /* ── TraceViewer helpers ── */
+      function _tvClassify(msg) {
+        if (!msg) return "info";
+        const m = msg.toLowerCase();
+        if (
+          m.includes("stop") ||
+          m.includes("exception") ||
+          m.includes("abort")
+        )
+          return "stop";
+        if (m.includes("fail") || m.includes("error")) return "fail";
+        if (m.includes("pass") || m.includes("ok") || m === "predicate")
+          return "pass";
+        if (m.includes("skip") || m.includes("undefined treated"))
+          return "skip";
+        if (m.includes("wildcard")) return "wildcard";
+        if (m.startsWith("exec")) return "exec";
+        return "info";
+      }
+      function _tvKind(scope) {
+        if (!scope) return "pipe";
+        if (scope.includes(":pred:")) return "pred";
+        if (scope.includes(":check:")) return "check";
+        if (scope.startsWith("condition:")) return "cond";
+        return "pipe";
+      }
+      function _tvLabel(scope) {
+        if (!scope) return scope;
+        const m1 = scope.match(/:pred:(.+)$/);
+        if (m1) return m1[1];
+        const m2 = scope.match(/:check:(.+)$/);
+        if (m2) return m2[1];
+        const m3 = scope.match(/^condition:(.+)$/);
+        if (m3) return m3[1];
+        const m4 = scope.match(/^pipeline:(.+)$/);
+        if (m4) return m4[1];
+        return scope;
+      }
+      function _tvRoot(scope) {
+        if (!scope) return "pipeline";
+        const m = scope.match(/^(pipeline:[^:]+)/);
+        return m ? m[1] : scope.split(":")[0];
+      }
+
+      function TraceViewer({ items }) {
+        const firstRoot = React.useMemo(() => {
+          for (const it of items) {
+            const r = _tvRoot(it?.data?.scope || it?.scope || "");
+            if (r) return r;
+          }
+          return null;
+        }, [items]);
+
+        const [openPipes, setOpenPipes] = useState(() =>
+          firstRoot ? { [firstRoot]: true } : {},
+        );
+
+        const byPipe = React.useMemo(() => {
+          const map = {};
+          items.forEach((it, idx) => {
+            const scope = it?.data?.scope || it?.scope || "pipeline";
+            const root = _tvRoot(scope);
+            if (!map[root]) map[root] = [];
+            map[root].push({ ...it, __idx: idx + 1, __scope: scope });
+          });
+          return map;
+        }, [items]);
+
+        const toggle = (root) =>
+          setOpenPipes((s) => ({ ...s, [root]: !s[root] }));
+
+        return (
+          <div className="trace-wrap">
+            {Object.entries(byPipe).map(([root, pipeItems]) => {
+              const isOpen = !!openPipes[root];
+              const laneOrder = [];
+              const laneMap = {};
+              pipeItems.forEach((it) => {
+                const s = it.__scope;
+                if (!laneMap[s]) {
+                  laneOrder.push(s);
+                  laneMap[s] = [];
+                }
+                laneMap[s].push(it);
+              });
+              const kindLabel = {
+                pred: "PRED",
+                check: "CHECK",
+                cond: "COND",
+                pipe: "PIPE",
+              };
+              return (
+                <div key={root} className="tr-pipe">
+                  <div className="tr-pipe-head" onClick={() => toggle(root)}>
+                    <span className="tr-pipe-badge">PIPELINE</span>
+                    <span className="tr-pipe-name">
+                      {root.replace(/^pipeline:/, "")}
+                    </span>
+                    <span className="tr-pipe-cnt">
+                      {pipeItems.length} событий
+                    </span>
+                    <span className={"tr-pipe-chev" + (isOpen ? " open" : "")}>
+                      ▶
+                    </span>
+                  </div>
+                  <div className={"tr-pipe-body" + (isOpen ? " open" : "")}>
+                    {laneOrder.map((scope) => {
+                      const laneItems = laneMap[scope];
+                      const kind = _tvKind(scope);
+                      return (
+                        <div key={scope} className={"tr-lane tr-lane--" + kind}>
+                          <div className="tr-lane-head">
+                            <span
+                              className={"tr-lane-kind tr-lane-kind--" + kind}
+                            >
+                              {kindLabel[kind]}
+                            </span>
+                            <span className="tr-lane-id">
+                              {_tvLabel(scope)}
+                            </span>
+                          </div>
+                          {laneItems.map((item) => {
+                            const evtCls = _tvClassify(item.message);
+                            const d = item?.data || {};
+                            // Убираем scope — он уже в lane-заголовке
+                            // Строим осмысленные чипсы по типу события
+                            const msg = item.message || "";
+                            const shorten = (v) =>
+                              typeof v === "string"
+                                ? v.split(".").slice(-2).join(".")
+                                : String(v);
+                            const chips = [];
+
+                            if (msg === "exec rule step") {
+                              chips.push(["rule", shorten(d.ruleId)]);
+                              if (d.operator) chips.push(["op", d.operator]);
+                              if (d.role) chips.push(["role", d.role]);
+                            } else if (msg === "exec pipeline step") {
+                              chips.push(["pipeline", shorten(d.pipelineId)]);
+                            } else if (msg === "exec condition step") {
+                              chips.push(["condition", shorten(d.conditionId)]);
+                            } else if (msg === "exec predicate step") {
+                              chips.push(["pred", shorten(d.ruleId)]);
+                              if (d.operator) chips.push(["op", d.operator]);
+                            } else if (msg === "condition evaluated") {
+                              chips.push(["mode", d.whenMode]);
+                              chips.push([
+                                "→",
+                                d.result ? "✓ TRUE" : "✗ FALSE",
+                              ]);
+                            } else if (msg === "STOP by EXCEPTION-level rule") {
+                              chips.push(["rule", shorten(d.ruleId)]);
+                              chips.push(["code", d.code]);
+                            } else if (
+                              msg === "STOP by strict pipeline boundary"
+                            ) {
+                              chips.push(["pipeline", shorten(d.pipelineId)]);
+                              chips.push(["code", d.code]);
+                            } else if (
+                              msg === "pipeline stopped by EXCEPTION"
+                            ) {
+                              if (d.pipelineId)
+                                chips.push(["pipeline", shorten(d.pipelineId)]);
+                            } else if (
+                              msg === "pipeline ABORT (runtime exception)"
+                            ) {
+                              if (d.pipelineId)
+                                chips.push(["pipeline", shorten(d.pipelineId)]);
+                              if (d.error)
+                                chips.push([
+                                  "error",
+                                  String(d.error).slice(0, 80),
+                                ]);
+                            } else if (msg === "wildcard expanded") {
+                              chips.push(["pattern", d.pattern]);
+                              chips.push(["matched", String(d.matched)]);
+                            } else if (msg === "wildcard aggregate") {
+                              chips.push(["mode", d.aggregateMode]);
+                              chips.push(["matched", String(d.matchedCount)]);
+                              if (d.failedCount != null)
+                                chips.push(["failed", String(d.failedCount)]);
+                              if (d.passCount != null)
+                                chips.push(["passed", String(d.passCount)]);
+                              if (d.pickedField)
+                                chips.push(["picked", shorten(d.pickedField)]);
+                              chips.push(["→", d.result]);
+                            } else if (
+                              msg === "predicate UNDEFINED treated as FALSE"
+                            ) {
+                              chips.push(["rule", shorten(d.ruleId)]);
+                              chips.push(["→", "FALSE — поле отсутствует"]);
+                            } else if (
+                              msg === "wildcard predicate matched 0 fields" ||
+                              msg === "wildcard check matched 0 fields"
+                            ) {
+                              chips.push(["pattern", d.pattern]);
+                              chips.push(["onEmpty", d.onEmpty]);
+                            } else {
+                              // fallback: показываем все нескучные ключи
+                              const skip = new Set([
+                                "scope",
+                                "meta",
+                                "stepId",
+                                "ref",
+                                "matchedSample",
+                                "failedSample",
+                              ]);
+                              Object.entries(d).forEach(([k, v]) => {
+                                if (
+                                  skip.has(k) ||
+                                  v === null ||
+                                  v === undefined
+                                )
+                                  return;
+                                chips.push([
+                                  k,
+                                  typeof v === "object"
+                                    ? JSON.stringify(v)
+                                    : String(v),
+                                ]);
+                              });
+                            }
+                            const ts = item.ts
+                              ? item.ts.replace(/^.*T/, "").replace(/Z$/, "")
+                              : null;
+                            return (
+                              <React.Fragment key={item.__idx}>
+                                <div className={"tr-row tr-row--" + evtCls}>
+                                  <span className="tr-num">#{item.__idx}</span>
+                                  <span className="tr-evt">{msg || "—"}</span>
+                                  {ts && <span className="tr-ts">{ts}</span>}
+                                </div>
+                                {chips.length > 0 && (
+                                  <div className="tr-details">
+                                    {chips.map(([k, v]) => (
+                                      <span key={k} className="tr-kv">
+                                        <span className="tr-k">{k}</span>
+                                        <code
+                                          className={
+                                            "tr-v" +
+                                            (k === "→" || k === "result"
+                                              ? " tr-v--result"
+                                              : "")
+                                          }
+                                        >
+                                          {String(v)}
+                                        </code>
+                                      </span>
+                                    ))}
+                                  </div>
+                                )}
+                              </React.Fragment>
+                            );
+                          })}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        );
+      }
+
+      const LV = { EXCEPTION: "lv-exc", ERROR: "lv-err", WARNING: "lv-wrn" };
+
+      function ResultPanel({ result, request }) {
+        const [tab, setTab] = useState("issues");
+        const { status, control, issues = [], httpStatus } = result;
+        const isOk = status === "OK" && issues.length === 0;
+        const byLv = { EXCEPTION: [], ERROR: [], WARNING: [] };
+        issues.forEach((i) => {
+          const l = i.level in byLv ? i.level : "ERROR";
+          byLv[l].push(i);
+        });
+        const sc =
+          status === "OK"
+            ? "stat-ok"
+            : status === "EXCEPTION"
+              ? "stat-exc"
+              : "stat-abort";
+
+        const rawTrace =
+          result?.trace ?? result?.debug?.trace ?? result?.meta?.trace ?? [];
+        const traceItems = Array.isArray(rawTrace)
+          ? rawTrace
+          : Array.isArray(rawTrace?.items)
+            ? rawTrace.items
+            : [];
+        const traceGroups = traceItems.reduce((acc, item, idx) => {
+          const scope = item?.data?.scope || item?.scope || "pipeline";
+          if (!acc[scope]) acc[scope] = [];
+          acc[scope].push({ ...item, __idx: idx + 1 });
+          return acc;
+        }, {});
+
+        return (
+          <div className="result-wrap">
+            <div className={"result-status " + sc}>
+              <div className="rs-left">
+                <span className="rs-icon">
+                  {isOk ? "✓" : status === "ABORT" ? "✕" : "⚠"}
+                </span>
+                <span className="rs-text">{status}</span>
+                {httpStatus != null && (
+                  <span className="rs-ctrl">HTTP: {httpStatus}</span>
+                )}
+                <span className="rs-ctrl">Управление: {control}</span>
+              </div>
+              {issues.length > 0 && (
+                <div className="rs-counts">
+                  {byLv.EXCEPTION.length > 0 && (
+                    <span className="rc lv-exc">
+                      {byLv.EXCEPTION.length} EXCEPTION
+                    </span>
+                  )}
+                  {byLv.ERROR.length > 0 && (
+                    <span className="rc lv-err">{byLv.ERROR.length} ERROR</span>
+                  )}
+                  {byLv.WARNING.length > 0 && (
+                    <span className="rc lv-wrn">
+                      {byLv.WARNING.length} WARNING
+                    </span>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {isOk && (
+              <div className="ok-msg">
+                <span>◈</span> Данные прошли проверку. Нарушений не выявлено.
+              </div>
+            )}
+
+            <div className="res-tabs">
+              {issues.length > 0 && (
+                <button
+                  className={"rtab" + (tab === "issues" ? " on" : "")}
+                  onClick={() => setTab("issues")}
+                >
+                  Ошибки <span className="rtab-cnt">{issues.length}</span>
+                </button>
+              )}
+              <button
+                className={"rtab" + (tab === "request" ? " on" : "")}
+                onClick={() => setTab("request")}
+              >
+                JSON запроса
+              </button>
+              <button
+                className={"rtab" + (tab === "response" ? " on" : "")}
+                onClick={() => setTab("response")}
+              >
+                JSON ответа
+              </button>
+              <button
+                className={"rtab" + (tab === "trace" ? " on" : "")}
+                onClick={() => setTab("trace")}
+              >
+                Трейс проверок
+              </button>
+            </div>
+
+            {tab === "issues" && issues.length > 0 && (
+              <div className="issues">
+                {["EXCEPTION", "ERROR", "WARNING"].map((lv) =>
+                  byLv[lv].length === 0 ? null : (
+                    <div key={lv} className="iss-group">
+                      <div className={"iss-group-head rc " + LV[lv]}>
+                        {lv} · {byLv[lv].length}
+                      </div>
+                      {byLv[lv].map((iss, i) => (
+                        <div
+                          key={i}
+                          className={"iss-card " + (LV[iss.level] || "lv-err")}
+                        >
+                          <div className="iss-top">
+                            <code className="iss-code">{iss.code}</code>
+                          </div>
+                          <div className="iss-msg">{iss.message}</div>
+                          <div className="iss-meta">
+                            {iss.Поле && (
+                              <span className="im">
+                                <span className="imk">Поле</span>
+                                <code className="imv">{iss.Поле}</code>
+                              </span>
+                            )}
+                            {iss.actual != null && (
+                              <span className="im">
+                                <span className="imk">Факт</span>
+                                <code className="imv">
+                                  {String(iss.actual)}
+                                </code>
+                              </span>
+                            )}
+                            {iss.ПравилоId && (
+                              <span className="im">
+                                <span className="imk">Правило</span>
+                                <code className="imv">{iss.ПравилоId}</code>
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ),
+                )}
+              </div>
+            )}
+            {tab === "request" && (
+              <pre className="json-block">
+                {JSON.stringify(request, null, 2)}
+              </pre>
+            )}
+            {tab === "response" && (
+              <pre className="json-block">
+                {JSON.stringify(result, null, 2)}
+              </pre>
+            )}
+
+            {tab === "trace" &&
+              (traceItems.length === 0 ? (
+                <div className="trace-empty">
+                  <div className="trace-empty-title">
+                    Трейс пустой или отключён в ответе движка.
+                  </div>
+                  <div className="trace-empty-text">
+                    Запусти движок с TRACE=1 чтобы получить пошаговый трейс
+                    выполнения.
+                  </div>
+                </div>
+              ) : (
+                <TraceViewer items={traceItems} />
+              ))}
+          </div>
+        );
+      }
+
+      /* ── main app ── */
+      function App() {
+        const [theme, setTheme] = useState("dark");
+        const [form, setForm] = useState(EMPTY);
+        const [baseUrl, setBaseUrl] = useState("http://localhost:3000");
+        const [loading, setLoading] = useState(false);
+        const [result, setResult] = useState(null);
+        const [lastReq, setLastReq] = useState(null);
+        const [netErr, setNetErr] = useState(null);
+        const [jsonErr, setJsonErr] = useState(null);
+        const [selectedPreset, setSelectedPreset] = useState("");
+        const fileRef = useRef();
+
+        const set = useCallback((k, v) => {
+          setForm((f) => ({ ...f, [k]: v }));
+          setResult(null);
+          setNetErr(null);
+        }, []);
+
+        const toggleTheme = useCallback(() => {
+          setTheme((t) => {
+            const next = t === "dark" ? "light" : "dark";
+            document.documentElement.setAttribute(
+              "data-theme",
+              next === "light" ? "light" : "",
+            );
+            return next;
+          });
+        }, []);
+        const pipe =
+          PIPELINES.find((p) => p.id === form.pipelineId) || PIPELINES[0];
+        const isPre = pipe.mode === "pre";
+
+        const handleFile = (e) => {
+          const file = e.target.files?.[0];
+          if (!file) return;
+          setJsonErr(null);
+          const reader = new FileReader();
+          reader.onload = (ev) => {
+            try {
+              const parsed = JSON.parse(ev.target.result);
+              const raw = parsed.payload ?? parsed;
+              setForm(p2f(raw, parsed.context?.pipelineId));
+              setSelectedPreset("");
+              setResult(null);
+              setNetErr(null);
+            } catch (err) {
+              setJsonErr("Ошибка разбора JSON: " + err.message);
+            }
+          };
+          reader.readAsText(file);
+          e.target.value = "";
+        };
+
+        const applyPreset = (id) => {
+          if (!id || !PA_PRESETS[id]) return;
+          const parsed = PA_PRESETS[id];
+          const raw = parsed.payload ?? parsed;
+          setSelectedPreset(id);
+          setForm(p2f(raw, parsed.context?.pipelineId));
+          setResult(null);
+          setNetErr(null);
+          setJsonErr(null);
+        };
+
+        const downloadCurrentJson = () => {
+          const body = buildRequest(form);
+          const blob = new Blob([JSON.stringify(body, null, 2)], {
+            type: "application/json;charset=utf-8",
+          });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = (selectedPreset || "fl_resident_manual_test") + ".json";
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          URL.revokeObjectURL(url);
+        };
+
+        const handleSubmit = async () => {
+          setLoading(true);
+          setResult(null);
+          setNetErr(null);
+          const body = buildRequest(form);
+          setLastReq(body);
+          try {
+            const res = await fetch(
+              baseUrl.replace(/\/$/, "") + "/v1/validate",
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body),
+              },
+            );
+            const data = await res.json();
+            setResult({ ...data, httpStatus: res.status });
+          } catch (err) {
+            setNetErr("Нет соединения с движком: " + err.message);
+          } finally {
+            setLoading(false);
+          }
+        };
+
+        return (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              minHeight: "100vh",
+            }}
+          >
+            {/* header */}
+            <header className="hdr">
+              <div className="hdr-brand">
+                <svg className="hdr-logo" viewBox="0 0 24 24" fill="none">
+                  <polygon
+                    points="12,2 22,7 22,17 12,22 2,17 2,7"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                  />
+                  <polygon
+                    points="12,7 17,9.5 17,14.5 12,17 7,14.5 7,9.5"
+                    fill="currentColor"
+                    opacity=".2"
+                  />
+                  <circle cx="12" cy="12" r="2" fill="currentColor" />
+                </svg>
+                <div>
+                  <div className="hdr-title">
+                    Тестовая форма заявки на регистрацию бенефициара ном. счёта
+                  </div>
+                  <div className="hdr-sub">Сценарий ФЛ (резидент)</div>
+                </div>
+              </div>
+              <div className="hdr-right">
+                <span className="url-lbl">Адрес движка</span>
+                <input
+                  className="url-inp"
+                  value={baseUrl}
+                  onChange={(e) => setBaseUrl(e.target.value)}
+                  spellCheck={false}
+                />
+              </div>
+            </header>
+
+            {/* toolbar */}
+            <div className="toolbar">
+              <div className="tb-left">
+                <span className="tb-lbl">Сценарий</span>
+                <div className="pipe-tabs">
+                  {PIPELINES.map((p) => (
+                    <button
+                      key={p.id}
+                      className={
+                        "pipe-tab" + (form.pipelineId === p.id ? " on" : "")
+                      }
+                      onClick={() => set("pipelineId", p.id)}
+                    >
+                      {p.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="tb-right">
+                <div className="preset-wrap">
+                  <select
+                    className="preset-select"
+                    value={selectedPreset}
+                    onChange={(e) => applyPreset(e.target.value)}
+                  >
+                    <option value="">— выбрать готовый сценарий —</option>
+                    <optgroup label="Полная проверка · позитив">
+                      {Object.keys(PA_PRESETS)
+                        .filter((k) => k.startsWith("FV-POS"))
+                        .map((k) => (
+                          <option key={k} value={k}>
+                            {PRESET_LABELS[k] || k}
+                          </option>
+                        ))}
+                    </optgroup>
+                    <optgroup label="Полная проверка · негатив">
+                      {Object.keys(PA_PRESETS)
+                        .filter((k) => k.startsWith("FV-NEG"))
+                        .map((k) => (
+                          <option key={k} value={k}>
+                            {PRESET_LABELS[k] || k}
+                          </option>
+                        ))}
+                    </optgroup>
+                  </select>
+                </div>
+                <button
+                  className="theme-btn"
+                  onClick={toggleTheme}
+                  title="Переключить тему"
+                >
+                  <span className="theme-btn-icon">
+                    {theme === "dark" ? "☀" : "☾"}
+                  </span>
+                  {theme === "dark" ? "Светлая" : "Тёмная"}
+                </button>
+                <button
+                  className="btn btn-ghost"
+                  onClick={() => fileRef.current?.click()}
+                >
+                  ⇪ Загрузить JSON
+                </button>
+                <input
+                  ref={fileRef}
+                  type="file"
+                  accept=".json"
+                  style={{ display: "none" }}
+                  onChange={handleFile}
+                />
+                <button className="btn btn-ghost" onClick={downloadCurrentJson}>
+                  ⇩ Скачать JSON
+                </button>
+                <button
+                  className="btn btn-ghost"
+                  onClick={() => {
+                    setForm(EMPTY);
+                    setSelectedPreset("");
+                    setResult(null);
+                    setNetErr(null);
+                    setJsonErr(null);
+                  }}
+                >
+                  Сбросить форму
+                </button>
+                <button
+                  className="btn btn-run"
+                  onClick={handleSubmit}
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <span className="spin" />
+                  ) : (
+                    <>▶ Проверить данные</>
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {jsonErr && <div className="alert alert-warn">⚠ {jsonErr}</div>}
+            {netErr && <div className="alert alert-err">✕ {netErr}</div>}
+
+            <div className="main" style={{ flex: 1 }}>
+              {/* form */}
+              <div className="form-col">
+                <Block id="01" title="Идентификация">
+                  <div className="row2">
+                    <F label="ИНН" hint="12 цифр">
+                      <Inp
+                        mono
+                        value={form.inn}
+                        onChange={(v) => set("inn", v)}
+                        placeholder="744404355804"
+                        maxLength={12}
+                      />
+                    </F>
+                    {!isPre && (
+                      <F label="Идентификатор участия">
+                        <Inp
+                          mono
+                          value={form.participationId}
+                          onChange={(v) => set("participationId", v)}
+                          placeholder="TEST-536779508951"
+                        />
+                      </F>
+                    )}
+                  </div>
+                </Block>
+
+                <Block id="02" title="Персональные данные">
+                  <div className="row3">
+                    <F label="Фамилия">
+                      <Inp
+                        value={form.lastName}
+                        onChange={(v) => set("lastName", v)}
+                        placeholder="Петров"
+                      />
+                    </F>
+                    <F label="Имя">
+                      {" "}
+                      <Inp
+                        value={form.firstName}
+                        onChange={(v) => set("firstName", v)}
+                        placeholder="Алексей"
+                      />
+                    </F>
+                    <F label="Отчество">
+                      <Inp
+                        value={form.middleName}
+                        onChange={(v) => set("middleName", v)}
+                        placeholder="Анатольевич"
+                      />
+                    </F>
+                  </div>
+                  {!isPre && (
+                    <>
+                      <div className="row3">
+                        <F label="Дата рождения" hint="YYYY-MM-DD">
+                          <Inp
+                            mono
+                            type="date"
+                            value={form.birthDate}
+                            onChange={(v) => set("birthDate", v)}
+                          />
+                        </F>
+                        <F label="Гражданство" hint="ISO alpha-2">
+                          <Inp
+                            mono
+                            value={form.citizenshipCode}
+                            onChange={(v) => set("citizenshipCode", v)}
+                            placeholder="RU"
+                            maxLength={2}
+                          />
+                        </F>
+                      </div>
+                      <F label="Место рождения" wide>
+                        <Inp
+                          value={form.birthPlace}
+                          onChange={(v) => set("birthPlace", v)}
+                          placeholder="гор. МАГНИТОГОРСК ЧЕЛЯБИНСКОЙ ОБЛАСТИ"
+                        />
+                      </F>
+                    </>
+                  )}
+                </Block>
+
+                {!isPre && (
+                  <>
+                    <Block id="03" title="Документ удостоверяющий личность">
+                      <div className="row2">
+                        <F label="Код документа" hint="21 — Паспорт РФ">
+                          <Inp
+                            mono
+                            value={form.docTypeCode}
+                            onChange={(v) => set("docTypeCode", v)}
+                            placeholder="21"
+                          />
+                        </F>
+                        <F label="Наименование документа">
+                          <Inp
+                            value={form.docTypeName}
+                            onChange={(v) => set("docTypeName", v)}
+                            placeholder="Паспорт РФ"
+                          />
+                        </F>
+                      </div>
+                      <div className="row3">
+                        <F label="Серия" hint="4 цифры">
+                          <Inp
+                            mono
+                            value={form.docSeries}
+                            onChange={(v) => set("docSeries", v)}
+                            placeholder="4507"
+                            maxLength={4}
+                          />
+                        </F>
+                        <F label="Номер" hint="6 цифр">
+                          <Inp
+                            mono
+                            value={form.docNumber}
+                            onChange={(v) => set("docNumber", v)}
+                            placeholder="360952"
+                            maxLength={6}
+                          />
+                        </F>
+                        <F label="Дата выдачи" hint="YYYY-MM-DD">
+                          <Inp
+                            mono
+                            type="date"
+                            value={form.docIssueDate}
+                            onChange={(v) => set("docIssueDate", v)}
+                          />
+                        </F>
+                      </div>
+                      <F label="Кем выдан" wide>
+                        <Inp
+                          value={form.docIssuer}
+                          onChange={(v) => set("docIssuer", v)}
+                          placeholder='ОВД РАЙОНА "БОГОРОДСКОЕ" ГОРОДА МОСКВЫ'
+                        />
+                      </F>
+                      <div className="row2">
+                        <F label="Код подразделения" hint="NNN-NNN">
+                          <Inp
+                            mono
+                            value={form.docIssuerCode}
+                            onChange={(v) => set("docIssuerCode", v)}
+                            placeholder="770-001"
+                          />
+                        </F>
+                        <F label="Признак документа">
+                          <div className="tog-wrap">
+                            <Tog
+                              checked={form.isForeignIdDoc}
+                              onChange={(v) => set("isForeignIdDoc", v)}
+                              label="Иностранный документ"
+                            />
+                          </div>
+                        </F>
+                      </div>
+                    </Block>
+
+                    <Block id="04" title="Адрес регистрации">
+                      <F label="Адресная строка" wide>
+                        <Inp
+                          value={form.regAddressLine}
+                          onChange={(v) => set("regAddressLine", v)}
+                          placeholder="350063, Краснодарский край, г Краснодар, ул им. Пушкина, д 6, кв 20"
+                        />
+                      </F>
+                      <F label="Страна регистрации" hint="ISO alpha-2">
+                        <Inp
+                          mono
+                          value={form.regCountryCode}
+                          onChange={(v) => set("regCountryCode", v)}
+                          placeholder="RU"
+                          maxLength={2}
+                        />
+                      </F>
+                    </Block>
+
+                    <Block id="05" title="Налоговый статус">
+                      <div className="tog-list">
+                        <Tog
+                          checked={form.usTaxResident}
+                          onChange={(v) => set("usTaxResident", v)}
+                          label="Налоговый резидент США"
+                        />
+                        <Tog
+                          checked={form.usResident}
+                          onChange={(v) => set("usResident", v)}
+                          label="Резидент США"
+                        />
+                        <Tog
+                          checked={form.foreignTaxResident}
+                          onChange={(v) => set("foreignTaxResident", v)}
+                          label="Иностранный налоговый резидент"
+                        />
+                      </div>
+                      {(form.foreignTaxResident || form.isForeignIdDoc) && (
+                        <div className="foreign-block">
+                          <div className="foreign-lbl">
+                            ▸ Данные иностранного налогового резидентства
+                          </div>
+                          <div className="row2">
+                            <F
+                              label="Страна налогового резидентства"
+                              hint="ISO alpha-2"
+                            >
+                              <Inp
+                                mono
+                                value={form.foreignCountryCode}
+                                onChange={(v) => set("foreignCountryCode", v)}
+                                placeholder="DE"
+                                maxLength={2}
+                              />
+                            </F>
+                            <F label="Иностранный TIN / ИНН">
+                              <Inp
+                                mono
+                                value={form.foreignTin}
+                                onChange={(v) => set("foreignTin", v)}
+                                placeholder="DE123456789"
+                              />
+                            </F>
+                          </div>
+                          <F label="Причина отсутствия TIN" wide>
+                            <Inp
+                              value={form.foreignTinAbsenceReason}
+                              onChange={(v) =>
+                                set("foreignTinAbsenceReason", v)
+                              }
+                              placeholder="TIN отсутствует по законодательству страны"
+                            />
+                          </F>
+                          <F label="Адрес в иностранном государстве" wide>
+                            <Inp
+                              value={form.foreignAddress}
+                              onChange={(v) => set("foreignAddress", v)}
+                              placeholder="Berlin, Alexanderplatz 1"
+                            />
+                          </F>
+                        </div>
+                      )}
+                    </Block>
+
+                    <Block id="06" title="Контакты">
+                      <div className="row3">
+                        <F label="Телефон РФ" hint="10 цифр">
+                          <Inp
+                            mono
+                            value={form.phone}
+                            onChange={(v) => set("phone", v)}
+                            placeholder="9801611004"
+                          />
+                        </F>
+                        <F label="Иностранный телефон">
+                          <Inp
+                            mono
+                            value={form.phoneForeign}
+                            onChange={(v) => set("phoneForeign", v)}
+                            placeholder="+4930123456"
+                          />
+                        </F>
+                        <F label="Email">
+                          <Inp
+                            type="email"
+                            value={form.email}
+                            onChange={(v) => set("email", v)}
+                            placeholder="user@example.com"
+                          />
+                        </F>
+                      </div>
+                      <F label="Почтовый адрес" wide>
+                        <Inp
+                          value={form.postalAddress}
+                          onChange={(v) => set("postalAddress", v)}
+                          placeholder="107023, Москва, Красносельская, д.1"
+                        />
+                      </F>
+                    </Block>
+                  </>
+                )}
+              </div>
+
+              {/* result */}
+              <div className="result-col">
+                {!result && !loading && (
+                  <div className="placeholder">
+                    <svg className="ph-icon" viewBox="0 0 48 48" fill="none">
+                      <circle
+                        cx="24"
+                        cy="24"
+                        r="20"
+                        stroke="currentColor"
+                        strokeWidth="1"
+                      />
+                      <path
+                        d="M16 24L24 16L32 24L24 32Z"
+                        stroke="currentColor"
+                        strokeWidth="1"
+                        fill="none"
+                      />
+                      <circle
+                        cx="24"
+                        cy="24"
+                        r="3"
+                        fill="currentColor"
+                        opacity=".4"
+                      />
+                    </svg>
+                    <p className="ph-text">
+                      Выберите пресет, загрузите JSON
+                      <br />
+                      или заполните форму и запустите проверку
+                    </p>
+                    <p className="ph-hint">
+                      Или загрузите готовый JSON-файл пэйлоада кнопкой{" "}
+                      <strong>⇪ JSON</strong>
+                    </p>
+                  </div>
+                )}
+                {loading && (
+                  <div className="placeholder">
+                    <span className="spin lg" />
+                    <p className="ph-text">Отправка запроса…</p>
+                  </div>
+                )}
+                {result && !loading && (
+                  <ResultPanel result={result} request={lastReq} />
+                )}
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>

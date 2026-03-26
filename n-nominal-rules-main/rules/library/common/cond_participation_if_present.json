@@ -1,0 +1,13 @@
+{
+  "id": "library.common.cond_participation_if_present",
+  "type": "condition",
+  "description": "Если идентификатор участия указан , то проверяем длину",
+  "when": {
+    "all": ["library.common.pred_participation_present"]
+  },
+  "steps": [
+    {
+      "rule": "library.common.participation_length"
+    }
+  ]
+}

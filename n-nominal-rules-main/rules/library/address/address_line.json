@@ -1,0 +1,12 @@
+{
+  "id": "library.address.address_line",
+  "type": "rule",
+  "description": "Проверка адреса регистрации (одной строкой) на длину",
+  "role": "check",
+  "operator": "length_max",
+  "level": "ERROR",
+  "code": "BEN.ADDR.REG.ADDRESS_LINE.LENGTH",
+  "message": "Адрес регистрации (указан одной строкой) превышает 500 символов",
+  "field": "beneficiary.address.registration.addressLine",
+  "value": 500
+}

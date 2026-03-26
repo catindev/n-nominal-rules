@@ -1,0 +1,11 @@
+{
+  "id": "library.common.status_start_required",
+  "type": "rule",
+  "description": "Дата начала статуса обязательна",
+  "role": "check",
+  "operator": "not_empty",
+  "level": "ERROR",
+  "code": "BEN.STATUS.START.REQUIRED",
+  "message": "Не указана beneficiary.status.startDate",
+  "field": "beneficiary.status.startDate"
+}

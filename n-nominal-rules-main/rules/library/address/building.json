@@ -1,0 +1,12 @@
+{
+  "id": "library.address.building",
+  "type": "rule",
+  "description": "Проверка корпуса/строения адреса регистрации на длину",
+  "role": "check",
+  "operator": "length_max",
+  "level": "ERROR",
+  "code": "BEN.ADDR.REG.BUILDING.LENGTH",
+  "message": "Корпус/строение адреса регистрации превышает 32 символа",
+  "field": "beneficiary.address.registration.building",
+  "value": 32
+}

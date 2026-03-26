@@ -1,0 +1,8 @@
+{
+  "id": "library.address.pred_region_code_present",
+  "type": "rule",
+  "description": "Код региона адреса регистрации заполнен",
+  "role": "predicate",
+  "operator": "not_empty",
+  "field": "beneficiary.address.registration.regionCode"
+}

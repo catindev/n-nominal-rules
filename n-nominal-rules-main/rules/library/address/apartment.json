@@ -1,0 +1,12 @@
+{
+  "id": "library.address.apartment",
+  "type": "rule",
+  "description": "Проверка квартиры или офиса адреса регистрации на длину",
+  "role": "check",
+  "operator": "length_max",
+  "level": "ERROR",
+  "code": "BEN.ADDR.REG.APARTMENT.LENGTH",
+  "message": "Указанная квартира/офис адреса регистрации превышает длину в 32 символа",
+  "field": "beneficiary.address.registration.apartment",
+  "value": 32
+}

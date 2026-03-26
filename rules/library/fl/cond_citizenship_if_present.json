@@ -1,7 +1,7 @@
 {
   "id": "library.fl.cond_citizenship_if_present",
   "type": "condition",
-  "description": "Если гражданство указано — проверяем формат и ограничения",
+  "description": "Если гражданство указано, то проверяем формат и ограничения",
   "when": {
     "all": [
       "library.fl.pred_citizenship_present"

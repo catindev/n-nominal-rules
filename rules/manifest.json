@@ -2,41 +2,70 @@
   "name": "Бенефициары ном. счетов (FL_RESIDENT)",
   "description": "Пакет правил проверок заявок на регистрацию бенефициаров номинальных счетов. В этом наборе пока чтто есть только стартовый пакет правил для профиля FL_RESIDENT. Пакет рассчитан как новая база для дальнейшего развития остальных профилей",
   "operators": {
-    "any_filled": {
-      "description": "заполнено хотя бы одно поле из списка"
+    "not_empty": {
+      "description": "заполнено",
+      "check_template": "{field} должен быть заполнен",
+      "predicate_template": "если {field} заполнен"
+    },
+    "is_empty": {
+      "description": "не заполнено",
+      "check_template": "{field} должен быть пустым",
+      "predicate_template": "если {field} не заполнен"
     },
     "equals": {
-      "description": "равно значению"
-    },
-    "field_greater_than_field": {
-      "description": "значение поля больше значения другого поля"
-    },
-    "field_less_than_field": {
-      "description": "значение поля меньше значения другого поля"
-    },
-    "in_dictionary": {
-      "description": "входит в справочник"
-    },
-    "length_max": {
-      "description": "длина не превышает заданное значение"
-    },
-    "matches_regex": {
-      "description": "соответствует формату"
-    },
-    "not_empty": {
-      "description": "заполнено"
-    },
-    "valid_inn": {
-      "description": "ИНН корректен по контрольным разрядам"
+      "description": "равно значению",
+      "check_template": "{field} должен быть равен {value}",
+      "predicate_template": "если {field} равен {value}"
     },
     "not_equals": {
-      "description": "не равно значению"
+      "description": "не равно значению",
+      "check_template": "{field} не должен быть равен {value}",
+      "predicate_template": "если {field} не равен {value}"
+    },
+    "in_dictionary": {
+      "description": "входит в справочник",
+      "check_template": "{field} должен входить в допустимые значения справочника",
+      "predicate_template": "если {field} входит в допустимые значения справочника"
+    },
+    "matches_regex": {
+      "description": "соответствует формату",
+      "check_template": "{field} должен соответствовать формату: `{value}`",
+      "predicate_template": "если {field} соответствует формату: `{value}`"
+    },
+    "length_max": {
+      "description": "длина не превышает заданное значение",
+      "check_template": "{field} должен быть не длиннее {value} символов",
+      "predicate_template": "если длина {field} не превышает {value} символов"
     },
     "length_equals": {
-      "description": "длина равна заданному значению"
+      "description": "длина равна заданному значению",
+      "check_template": "{field} должен содержать ровно {value} символов",
+      "predicate_template": "если длина {field} равна {value} символам"
     },
     "contains": {
-      "description": "содержит подстроку"
+      "description": "содержит подстроку",
+      "check_template": "{field} должен содержать {value}",
+      "predicate_template": "если {field} содержит {value}"
+    },
+    "any_filled": {
+      "description": "заполнено хотя бы одно поле из списка",
+      "check_template": "должно быть заполнено хотя бы одно из полей: {fields}",
+      "predicate_template": "если заполнено хотя бы одно из полей: {fields}"
+    },
+    "field_greater_than_field": {
+      "description": "значение поля больше значения другого поля",
+      "check_template": "{field} должен быть позже (больше) чем {value_field}",
+      "predicate_template": "если {field} позже (больше) чем {value_field}"
+    },
+    "field_less_than_field": {
+      "description": "значение поля меньше значения другого поля",
+      "check_template": "{field} должен быть раньше (меньше) чем {value_field}",
+      "predicate_template": "если {field} раньше (меньше) чем {value_field}"
+    },
+    "valid_inn": {
+      "description": "ИНН корректен по контрольным разрядам",
+      "check_template": "{field} должен быть корректным по контрольным разрядам",
+      "predicate_template": "если {field} корректен по контрольным разрядам"
     }
   },
   "fields": {

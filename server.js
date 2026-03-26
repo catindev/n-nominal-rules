@@ -18,7 +18,7 @@ const TRACE = (process.env.TRACE || "0") === "1";
 //                           Используется локально разработчиком и аналитиком.
 //   production / test     - snapshot-режим: грузит SNAPSHOT_PATH.
 //                           Используется в любом деплое (прод, тест, канарейка).
-//                           Если SNAPSHOT_PATH не задан или файл не найден — падает.
+//                           Если SNAPSHOT_PATH не задан или файл не найден  падает.
 const NODE_ENV = process.env.NODE_ENV || "development";
 const IS_DEV = NODE_ENV === "development";
 const SNAPSHOT_PATH = process.env.SNAPSHOT_PATH || null;
@@ -46,11 +46,9 @@ function startHotReload(engine, rulesDir, ctx) {
       const compiled = engine.compile(artifacts, { sources });
       ctx.compiled = compiled;
       ctx.emit("reload");
-      console.log(`[hot-reload] OK — ${artifacts.length} artifacts loaded`);
+      console.log(`[hot-reload] OK  ${artifacts.length} artifacts loaded`);
     } catch (err) {
-      console.error(
-        `[hot-reload] COMPILATION ERROR — keeping previous version`,
-      );
+      console.error(`[hot-reload] COMPILATION ERROR  keeping previous version`);
       if (err.name === "CompilationError" && Array.isArray(err.errors)) {
         err.errors.forEach((e, i) => console.error(`  ${i + 1}. ${e}`));
       } else {
@@ -264,18 +262,38 @@ if (DOCS_ENABLED) {
   app.post("/v1/debug", (req, res) => {
     const body = req.body ?? {};
     if (!body.context || typeof body.context !== "object")
-      return res.status(400).json({ error: true, message: 'Request body must contain "context" object' });
+      return res
+        .status(400)
+        .json({
+          error: true,
+          message: 'Request body must contain "context" object',
+        });
     const context = body.context;
     const pipelineId = context.pipelineId;
     if (!pipelineId || typeof pipelineId !== "string")
-      return res.status(400).json({ error: true, message: "context.pipelineId is required (string)" });
+      return res
+        .status(400)
+        .json({
+          error: true,
+          message: "context.pipelineId is required (string)",
+        });
     const payload = body.payload ?? {};
     const enrichedPayload = Object.assign({}, payload, { __context: context });
     try {
-      const result = engine.runPipeline(ctx.compiled, pipelineId, enrichedPayload);
+      const result = engine.runPipeline(
+        ctx.compiled,
+        pipelineId,
+        enrichedPayload,
+      );
       return res.json(Object.assign({ context }, result));
     } catch (err) {
-      return res.status(500).json({ error: true, message: err?.message || String(err), pipelineId });
+      return res
+        .status(500)
+        .json({
+          error: true,
+          message: err?.message || String(err),
+          pipelineId,
+        });
     }
   });
 }

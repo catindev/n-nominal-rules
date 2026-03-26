@@ -1,0 +1,13 @@
+{
+  "id": "true_false",
+  "type": "dictionary",
+  "description": "Логические значения boolean",
+  "entries": [
+    {
+      "value": true
+    },
+    {
+      "value": false
+    }
+  ]
+}

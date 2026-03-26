@@ -1,0 +1,16 @@
+{
+  "id": "library.documents.cond_issue_date_if_present",
+  "type": "condition",
+  "description": "Если дата выдачи указана , то проверяем формат, затем сравниваем с датой рождения",
+  "when": {
+    "all": ["library.documents.pred_issue_date_present"]
+  },
+  "steps": [
+    {
+      "rule": "library.documents.issue_date_format"
+    },
+    {
+      "condition": "library.documents.cond_issue_date_gt_birth_if_format_ok"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "id": "library.fl.cond_birth_place_if_present",
   "type": "condition",
-  "description": "Если место рождения указано — проверяем ограничения",
+  "description": "Если место рождения указано, то проверяем ограничения",
   "when": {
     "all": [
       "library.fl.pred_birth_place_present"

@@ -1,0 +1,15 @@
+{
+  "id": "library.common.beneficiary_type_supported",
+  "type": "rule",
+  "description": "Тип бенефициара должен входить в поддерживаемый enum",
+  "role": "check",
+  "operator": "in_dictionary",
+  "level": "EXCEPTION",
+  "code": "BEN.TYPE.UNSUPPORTED",
+  "message": "Неподдерживаемый тип бенефициара",
+  "field": "beneficiary.type",
+  "dictionary": {
+    "type": "static",
+    "id": "beneficiary_types"
+  }
+}

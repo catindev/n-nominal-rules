@@ -1,7 +1,7 @@
 {
   "id": "library.fl.cond_first_name_if_present",
   "type": "condition",
-  "description": "Если имя указано — проверяем формат и длину",
+  "description": "Если имя указано, то проверяем формат и длину",
   "when": {
     "all": [
       "library.fl.pred_first_name_present"

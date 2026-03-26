@@ -1,7 +1,7 @@
 {
   "id": "library.fl.cond_inn_format_if_length_ok",
   "type": "condition",
-  "description": "Если длина ИНН корректна — проверяем повторы и контрольный разряд",
+  "description": "Если длина ИНН корректна, то проверяем повторы и контрольный разряд",
   "when": {
     "all": [
       "library.fl.pred_inn_length_valid"

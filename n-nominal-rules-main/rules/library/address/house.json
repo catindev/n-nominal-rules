@@ -1,0 +1,12 @@
+{
+  "id": "library.address.house",
+  "type": "rule",
+  "description": "Проверка дома адреса регистрации на длину",
+  "role": "check",
+  "operator": "length_max",
+  "level": "ERROR",
+  "code": "BEN.ADDR.REG.HOUSE.LENGTH",
+  "message": "Дом адреса регистрации > 32 символов",
+  "field": "beneficiary.address.registration.house",
+  "value": 32
+}

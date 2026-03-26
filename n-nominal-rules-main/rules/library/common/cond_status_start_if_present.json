@@ -1,0 +1,13 @@
+{
+  "id": "library.common.cond_status_start_if_present",
+  "type": "condition",
+  "description": "Если дата начала статуса указана , то проверяем формат",
+  "when": {
+    "all": ["library.common.pred_status_start_present"]
+  },
+  "steps": [
+    {
+      "rule": "library.common.status_start_format"
+    }
+  ]
+}

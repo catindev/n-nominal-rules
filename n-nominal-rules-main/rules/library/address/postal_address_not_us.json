@@ -1,0 +1,12 @@
+{
+  "id": "library.address.postal_address_not_us",
+  "type": "rule",
+  "description": "Почтовый адрес не должен содержать указание на США",
+  "role": "check",
+  "operator": "matches_regex",
+  "level": "EXCEPTION",
+  "code": "BEN.CONTACTS.POSTAL.NOT_US",
+  "message": "Почтовый адрес не должен указывать на США",
+  "field": "beneficiary.contacts.postalAddress",
+  "value": "^(?!.*(?:США|USA|Usa|usa|US|U\\.S\\.)).*$"
+}

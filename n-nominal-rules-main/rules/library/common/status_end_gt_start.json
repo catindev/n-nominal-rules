@@ -1,0 +1,12 @@
+{
+  "id": "library.common.status_end_gt_start",
+  "type": "rule",
+  "description": "Дата окончания статуса должна быть позже даты начала",
+  "role": "check",
+  "operator": "field_greater_than_field",
+  "level": "ERROR",
+  "code": "BEN.STATUS.END.ORDER",
+  "message": "Дата окончания статуса должна быть позже beneficiary.status.startDate",
+  "field": "beneficiary.status.endDate",
+  "value_field": "beneficiary.status.startDate"
+}

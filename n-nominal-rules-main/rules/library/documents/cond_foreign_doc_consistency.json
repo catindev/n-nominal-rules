@@ -1,0 +1,15 @@
+{
+  "id": "library.documents.cond_foreign_doc_consistency",
+  "type": "condition",
+  "description": "Если код документа относится к иностранным документам, проверяем признак иностранного документа",
+  "when": {
+    "all": [
+      "library.documents.pred_type_code_foreign_group"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "library.documents.rule_is_foreign_true"
+    }
+  ]
+}

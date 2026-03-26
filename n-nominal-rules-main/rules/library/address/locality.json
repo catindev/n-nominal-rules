@@ -1,0 +1,12 @@
+{
+  "id": "library.address.locality",
+  "type": "rule",
+  "description": "Проверка населённого пункта адреса регистрации на длину",
+  "role": "check",
+  "operator": "length_max",
+  "level": "ERROR",
+  "code": "BEN.ADDR.REG.LOCALITY.LENGTH",
+  "message": "Населённый пункт адреса регистрации > 255 символов",
+  "field": "beneficiary.address.registration.locality",
+  "value": 255
+}

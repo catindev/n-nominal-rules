@@ -1,0 +1,12 @@
+{
+  "id": "library.common.status_start_format",
+  "type": "rule",
+  "description": "Дата начала статуса должна быть в формате YYYY-MM-DD",
+  "role": "check",
+  "operator": "matches_regex",
+  "level": "ERROR",
+  "code": "BEN.STATUS.START.FORMAT",
+  "message": "beneficiary.status.startDate должна быть в формате YYYY-MM-DD",
+  "field": "beneficiary.status.startDate",
+  "value": "^\\d{4}-\\d{2}-\\d{2}$"
+}

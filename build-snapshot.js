@@ -4,9 +4,9 @@
  *
  * Собирает снэпшот пакета правил из файловой системы.
  *
- * Снэпшот — единственный файл JSON содержащий все артефакты (правила,
+ * Снэпшот  единственный файл JSON содержащий все артефакты (правила,
  * пайплайны, условия, словари). Сервер при старте грузит снэпшот и
- * компилирует его в память — без обхода каталогов, без зависимости от fs.
+ * компилирует его в память  без обхода каталогов, без зависимости от fs.
  *
  * Использование:
  *   node tools/build-snapshot.js [options]
@@ -26,18 +26,18 @@
  *   node tools/build-snapshot.js --description "Добавлена проверка мерчантов"
  *
  * Exit codes:
- *   0 — успех
- *   1 — ошибка компиляции или I/O
+ *   0  успех
+ *   1  ошибка компиляции или I/O
  */
 
-'use strict';
+"use strict";
 
-const fs   = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
-const { loadArtifactsFromDir } = require('../lib/loader-fs');
-const { createEngine }         = require('../lib');
-const { Operators }            = require('../lib/operators');
+const { loadArtifactsFromDir } = require("../lib/loader-fs");
+const { createEngine } = require("../lib");
+const { Operators } = require("../lib/operators");
 
 // ─── parse args ────────────────────────────────────────────────────────────
 
@@ -46,8 +46,11 @@ function parseArgs(argv) {
   const result = {};
   for (let i = 0; i < args.length; i++) {
     const a = args[i];
-    if (a === '--pretty') { result.pretty = true; continue; }
-    if (a.startsWith('--') && i + 1 < args.length) {
+    if (a === "--pretty") {
+      result.pretty = true;
+      continue;
+    }
+    if (a.startsWith("--") && i + 1 < args.length) {
       const key = a.slice(2).replace(/-([a-z])/g, (_, c) => c.toUpperCase());
       result[key] = args[++i];
     }
@@ -57,21 +60,27 @@ function parseArgs(argv) {
 
 const args = parseArgs(process.argv);
 
-const RULES_DIR   = args.rulesDir   || process.env.RULES_DIR   || path.join(__dirname, '..', 'rules');
-const OUT_PATH    = args.out        || process.env.SNAPSHOT_OUT || path.join(__dirname, '..', 'snapshot.json');
-const PRETTY      = args.pretty     || process.env.PRETTY === '1';
-const AUTHOR      = args.author     || process.env.AUTHOR       || process.env.USER || 'unknown';
-const DESCRIPTION = args.description|| process.env.DESCRIPTION  || '';
+const RULES_DIR =
+  args.rulesDir || process.env.RULES_DIR || path.join(__dirname, "..", "rules");
+const OUT_PATH =
+  args.out ||
+  process.env.SNAPSHOT_OUT ||
+  path.join(__dirname, "..", "snapshot.json");
+const PRETTY = args.pretty || process.env.PRETTY === "1";
+const AUTHOR =
+  args.author || process.env.AUTHOR || process.env.USER || "unknown";
+const DESCRIPTION = args.description || process.env.DESCRIPTION || "";
 
 // version: arg → env → package.json
 let VERSION = args.version || process.env.VERSION;
 if (!VERSION) {
   try {
-    VERSION = JSON.parse(
-      fs.readFileSync(path.join(__dirname, '..', 'package.json'), 'utf8')
-    ).version || '0.0.0';
+    VERSION =
+      JSON.parse(
+        fs.readFileSync(path.join(__dirname, "..", "package.json"), "utf8"),
+      ).version || "0.0.0";
   } catch (_) {
-    VERSION = '0.0.0';
+    VERSION = "0.0.0";
   }
 }
 
@@ -82,17 +91,21 @@ console.log(`[build-snapshot] output    : ${OUT_PATH}`);
 console.log(`[build-snapshot] version   : ${VERSION}`);
 console.log(`[build-snapshot] author    : ${AUTHOR}`);
 if (DESCRIPTION) console.log(`[build-snapshot] description: ${DESCRIPTION}`);
-console.log('');
+console.log("");
 
 // 1а. Загрузка манифеста пакета (опционально)
-const MANIFEST_PATH = path.join(RULES_DIR, 'manifest.json');
+const MANIFEST_PATH = path.join(RULES_DIR, "manifest.json");
 let packageManifest = null;
 if (fs.existsSync(MANIFEST_PATH)) {
   try {
-    packageManifest = JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf8'));
-    console.log(`[build-snapshot] manifest: "${packageManifest.name || 'unnamed'}"`);
+    packageManifest = JSON.parse(fs.readFileSync(MANIFEST_PATH, "utf8"));
+    console.log(
+      `[build-snapshot] manifest: "${packageManifest.name || "unnamed"}"`,
+    );
   } catch (e) {
-    console.warn(`[build-snapshot] WARNING: manifest parse error: ${e.message}`);
+    console.warn(
+      `[build-snapshot] WARNING: manifest parse error: ${e.message}`,
+    );
   }
 } else {
   console.log(`[build-snapshot] manifest: not found (skipping)`);
@@ -108,27 +121,27 @@ try {
   process.exit(1);
 }
 
-// 2. Компиляция — ловим ошибки ДО сохранения снэпшота
-//    Если правила не компилируются — снэпшот не создаётся
+// 2. Компиляция  ловим ошибки ДО сохранения снэпшота
+//    Если правила не компилируются  снэпшот не создаётся
 try {
   const engine = createEngine({ operators: Operators });
   engine.compile(artifacts);
   console.log(`[build-snapshot] compilation OK`);
 } catch (err) {
-  console.error(`[build-snapshot] COMPILATION ERROR — snapshot NOT saved`);
+  console.error(`[build-snapshot] COMPILATION ERROR  snapshot NOT saved`);
   console.error(`[build-snapshot] ${err.message}`);
   process.exit(1);
 }
 
 // 3. Сборка снэпшота
 const snapshot = {
-  version:     VERSION,
-  createdAt:   new Date().toISOString(),
-  createdBy:   AUTHOR,
+  version: VERSION,
+  createdAt: new Date().toISOString(),
+  createdBy: AUTHOR,
   description: DESCRIPTION,
-  rulesDir:    path.resolve(RULES_DIR),
+  rulesDir: path.resolve(RULES_DIR),
   artifactCount: artifacts.length,
-  manifest:    packageManifest,
+  manifest: packageManifest,
   artifacts,
 };
 
@@ -139,12 +152,12 @@ const json = PRETTY
 
 try {
   fs.mkdirSync(path.dirname(path.resolve(OUT_PATH)), { recursive: true });
-  fs.writeFileSync(OUT_PATH, json, 'utf8');
+  fs.writeFileSync(OUT_PATH, json, "utf8");
 } catch (err) {
   console.error(`[build-snapshot] ERROR writing file: ${err.message}`);
   process.exit(1);
 }
 
-const sizeKb = (Buffer.byteLength(json, 'utf8') / 1024).toFixed(1);
+const sizeKb = (Buffer.byteLength(json, "utf8") / 1024).toFixed(1);
 console.log(`[build-snapshot] saved → ${OUT_PATH} (${sizeKb} KB)`);
 console.log(`[build-snapshot] done`);

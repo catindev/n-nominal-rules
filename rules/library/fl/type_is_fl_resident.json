@@ -6,7 +6,7 @@
   "operator": "equals",
   "level": "EXCEPTION",
   "code": "FL.TYPE.MISMATCH",
-  "message": "Ожидался beneficiary.type=FL_RESIDENT",
+  "message": "Бенефициар должен быть физическим лицом, резидентом РФ (FL_RESIDENT)",
   "field": "beneficiary.type",
   "value": "FL_RESIDENT"
 }

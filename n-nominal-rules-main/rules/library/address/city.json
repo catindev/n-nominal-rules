@@ -1,0 +1,12 @@
+{
+  "id": "library.address.city",
+  "type": "rule",
+  "description": "Проверка города адреса регистрации на длину",
+  "role": "check",
+  "operator": "length_max",
+  "level": "ERROR",
+  "code": "BEN.ADDR.REG.CITY.LENGTH",
+  "message": "Город адреса регистрации слишком длинный",
+  "field": "beneficiary.address.registration.city",
+  "value": 255
+}

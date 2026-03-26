@@ -1,7 +1,7 @@
 {
   "id": "library.documents.cond_issue_date_if_present",
   "type": "condition",
-  "description": "Если дата выдачи указана — проверяем формат, затем сравниваем с датой рождения",
+  "description": "Если дата выдачи указана, то проверяем формат, затем сравниваем с датой рождения",
   "when": {
     "all": [
       "library.documents.pred_issue_date_present"

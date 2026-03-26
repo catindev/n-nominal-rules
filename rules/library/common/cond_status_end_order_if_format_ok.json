@@ -1,7 +1,7 @@
 {
   "id": "library.common.cond_status_end_order_if_format_ok",
   "type": "condition",
-  "description": "Если формат endDate корректен — проверяем порядок дат",
+  "description": "Если формат endDate корректен, то проверяем порядок дат",
   "when": {
     "all": [
       "library.common.pred_status_end_format_valid"

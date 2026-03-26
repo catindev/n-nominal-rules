@@ -1,0 +1,12 @@
+{
+  "id": "library.common.status_end_format",
+  "type": "rule",
+  "description": "Дата окончания статуса должна быть в формате YYYY-MM-DD",
+  "role": "check",
+  "operator": "matches_regex",
+  "level": "ERROR",
+  "code": "BEN.STATUS.END.FORMAT",
+  "message": "beneficiary.status.endDate должна быть в формате YYYY-MM-DD",
+  "field": "beneficiary.status.endDate",
+  "value": "^\\d{4}-\\d{2}-\\d{2}$"
+}

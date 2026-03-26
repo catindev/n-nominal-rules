@@ -1,0 +1,12 @@
+{
+  "id": "library.address.country",
+  "type": "rule",
+  "description": "Проверка страны адреса регистрации",
+  "role": "check",
+  "operator": "matches_regex",
+  "level": "ERROR",
+  "code": "BEN.ADDR.REG.COUNTRY.FORMAT",
+  "message": "Страна адреса регистрации должна быть в формате ISO 3166-1 alpha-2",
+  "field": "beneficiary.address.registration.countryCode",
+  "value": "^[A-Z]{2}$"
+}

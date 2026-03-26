@@ -1,0 +1,16 @@
+{
+  "id": "library.fl.cond_first_name_if_present",
+  "type": "condition",
+  "description": "Если имя указано, то проверяем формат и длину",
+  "when": {
+    "all": ["library.fl.pred_first_name_present"]
+  },
+  "steps": [
+    {
+      "rule": "library.fl.first_name_length_max"
+    },
+    {
+      "rule": "library.fl.first_name_letters_hyphen"
+    }
+  ]
+}

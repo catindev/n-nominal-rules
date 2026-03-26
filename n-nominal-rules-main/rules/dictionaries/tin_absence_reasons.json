@@ -1,0 +1,10 @@
+{
+  "id": "tin_absence_reasons",
+  "type": "dictionary",
+  "description": "Причины отсутствия иностранного ИНН",
+  "entries": [
+    "A",
+    "B",
+    "C"
+  ]
+}

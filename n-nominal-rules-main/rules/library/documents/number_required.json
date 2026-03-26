@@ -1,0 +1,11 @@
+{
+  "id": "library.documents.number_required",
+  "type": "rule",
+  "description": "Номер документа обязателен",
+  "role": "check",
+  "operator": "not_empty",
+  "level": "ERROR",
+  "code": "BEN.IDDOC.NUMBER.REQUIRED",
+  "message": "Не указан номер документа",
+  "field": "beneficiary.idDoc.number"
+}

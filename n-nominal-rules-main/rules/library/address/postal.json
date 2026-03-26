@@ -1,0 +1,12 @@
+{
+  "id": "library.address.postal",
+  "type": "rule",
+  "description": "Проверка почтового индекса адреса регистрации",
+  "role": "check",
+  "operator": "length_max",
+  "level": "ERROR",
+  "code": "BEN.ADDR.REG.POSTAL.LENGTH",
+  "message": "Почтовый индекс адреса регистрации слишком длинный",
+  "field": "beneficiary.address.registration.postalCode",
+  "value": 32
+}

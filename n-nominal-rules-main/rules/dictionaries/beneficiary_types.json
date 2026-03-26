@@ -1,0 +1,13 @@
+{
+  "id": "beneficiary_types",
+  "type": "dictionary",
+  "description": "Допустимые типы бенефициаров для версии 1",
+  "entries": [
+    "UL_RESIDENT",
+    "UL_NONRESIDENT",
+    "IP_RESIDENT",
+    "IP_NONRESIDENT",
+    "FL_RESIDENT",
+    "FL_NONRESIDENT"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "library.documents.cond_issuer_code_format_if_present",
+  "type": "condition",
+  "description": "Если код подразделения указан , то проверяем формат",
+  "when": {
+    "all": ["library.documents.pred_issuer_code_present"]
+  },
+  "steps": [
+    {
+      "rule": "library.documents.issuer_code_format"
+    }
+  ]
+}

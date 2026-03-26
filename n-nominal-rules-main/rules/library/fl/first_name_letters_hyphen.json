@@ -1,0 +1,12 @@
+{
+  "id": "library.fl.first_name_letters_hyphen",
+  "type": "rule",
+  "description": "Имя должно содержать только буквы, пробелы и дефис",
+  "role": "check",
+  "operator": "matches_regex",
+  "level": "ERROR",
+  "code": "FL.FIRST_NAME.FORMAT",
+  "message": "Допустимы буквы, пробел и дефис; начальные и конечные пробелы не допускаются",
+  "field": "beneficiary.fl.firstName",
+  "value": "^[A-Za-zА-Яа-яЁё](?:[A-Za-zА-Яа-яЁё -]*[A-Za-zА-Яа-яЁё])?$"
+}

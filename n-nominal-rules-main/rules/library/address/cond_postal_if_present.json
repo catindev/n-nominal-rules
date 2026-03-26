@@ -1,0 +1,13 @@
+{
+  "id": "library.address.cond_postal_if_present",
+  "type": "condition",
+  "description": "Если почтовый индекс адреса регистрации заполнен, проверяем формат и длину",
+  "when": {
+    "all": ["library.address.pred_postal_present"]
+  },
+  "steps": [
+    {
+      "rule": "library.address.postal"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "library.documents.is_foreign_bool",
+  "type": "rule",
+  "description": "Признак иностранного документа должен быть true или false",
+  "role": "check",
+  "operator": "in_dictionary",
+  "level": "ERROR",
+  "code": "BEN.IDDOC.IS_FOREIGN.BOOL",
+  "message": "Признак beneficiary.idDoc.isForeignIdDoc должен быть true или false",
+  "field": "beneficiary.idDoc.isForeignIdDoc",
+  "dictionary": {
+    "type": "static",
+    "id": "true_false"
+  }
+}

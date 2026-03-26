@@ -1,7 +1,7 @@
 {
   "id": "library.documents.cond_expire_date_if_present",
   "type": "condition",
-  "description": "Если дата окончания документа указана — проверяем формат, затем порядок",
+  "description": "Если дата окончания документа указана, то проверяем формат, затем порядок",
   "when": {
     "all": [
       "library.documents.pred_expire_date_present"

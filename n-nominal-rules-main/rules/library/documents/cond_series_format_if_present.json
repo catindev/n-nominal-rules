@@ -1,0 +1,13 @@
+{
+  "id": "library.documents.cond_series_format_if_present",
+  "type": "condition",
+  "description": "Если серия указана, то проверяем формат паспорта РФ",
+  "when": {
+    "all": ["library.documents.pred_series_present"]
+  },
+  "steps": [
+    {
+      "rule": "library.documents.series_passport_rf_format"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "library.documents.cond_expire_date_order_if_format_ok",
+  "type": "condition",
+  "description": "Если формат expireDate корректен , то проверяем порядок дат",
+  "when": {
+    "all": ["library.documents.pred_expire_date_format_valid"]
+  },
+  "steps": [
+    {
+      "rule": "library.documents.date_order"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "id": "library.documents.cond_issue_date_gt_birth_if_format_ok",
   "type": "condition",
-  "description": "Если формат issueDate корректен — проверяем, что дата позже рождения",
+  "description": "Если формат issueDate корректен, то проверяем, что дата позже рождения",
   "when": {
     "all": [
       "library.documents.pred_issue_date_format_valid"

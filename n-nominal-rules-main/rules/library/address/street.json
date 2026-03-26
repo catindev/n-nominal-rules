@@ -1,0 +1,12 @@
+{
+  "id": "library.address.street",
+  "type": "rule",
+  "description": "Проверка улицы адреса регистрации",
+  "role": "check",
+  "operator": "length_max",
+  "level": "ERROR",
+  "code": "BEN.ADDR.REG.STREET.LENGTH",
+  "message": "Улица адреса регистрации > 255 символов",
+  "field": "beneficiary.address.registration.street",
+  "value": 255
+}

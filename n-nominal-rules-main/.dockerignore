@@ -1,0 +1,10 @@
+node_modules
+.git
+.env*
+*.log
+payloads/
+FL_RESIDENT_TEST_SUITE_v5/
+docs/
+scripts/
+tools/
+*.snapshot.json

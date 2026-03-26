@@ -1,0 +1,12 @@
+{
+  "id": "library.fl.middle_name_length",
+  "type": "rule",
+  "description": "Отчество не должно быть длиннее 255 символов",
+  "role": "check",
+  "operator": "length_max",
+  "level": "ERROR",
+  "code": "FL.MIDDLE_NAME.LENGTH",
+  "message": "Отчество слишком длинное",
+  "field": "beneficiary.fl.middleName",
+  "value": 255
+}

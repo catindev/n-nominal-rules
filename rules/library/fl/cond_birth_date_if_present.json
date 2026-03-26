@@ -1,7 +1,7 @@
 {
   "id": "library.fl.cond_birth_date_if_present",
   "type": "condition",
-  "description": "Если дата рождения указана — проверяем формат",
+  "description": "Если дата рождения указана, то проверяем формат",
   "when": {
     "all": [
       "library.fl.pred_birth_date_present"

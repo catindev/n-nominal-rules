@@ -1,0 +1,12 @@
+{
+  "id": "library.documents.issue_date_format",
+  "type": "rule",
+  "description": "Дата выдачи документа должна быть в формате YYYY-MM-DD",
+  "role": "check",
+  "operator": "matches_regex",
+  "level": "ERROR",
+  "code": "BEN.IDDOC.ISSUE_DATE.FORMAT",
+  "message": "Дата выдачи документа должна быть в формате YYYY-MM-DD",
+  "field": "beneficiary.idDoc.issueDate",
+  "value": "^\\d{4}-\\d{2}-\\d{2}$"
+}

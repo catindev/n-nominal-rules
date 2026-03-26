@@ -1,0 +1,8 @@
+{
+  "id": "library.address.pred_postal_present",
+  "type": "rule",
+  "description": "Заполнен почтовый индекс адреса регистрации",
+  "role": "predicate",
+  "operator": "not_empty",
+  "field": "beneficiary.address.registration.postalCode"
+}

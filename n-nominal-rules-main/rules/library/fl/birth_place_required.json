@@ -1,0 +1,11 @@
+{
+  "id": "library.fl.birth_place_required",
+  "type": "rule",
+  "description": "Место рождения обязательно",
+  "role": "check",
+  "operator": "not_empty",
+  "level": "ERROR",
+  "code": "FL.BIRTH_PLACE.REQUIRED",
+  "message": "Не указано место рождения",
+  "field": "beneficiary.fl.birthPlace"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "library.tax.cond_reason_if_present",
+  "type": "condition",
+  "description": "Если указана причина отсутствия иностранного ИНН, проверяем справочник",
+  "when": {
+    "all": [
+      "library.tax.pred_reason_present"
+    ]
+  },
+  "steps": [
+    {
+      "rule": "library.tax.tin_absence_reason_dict"
+    }
+  ]
+}

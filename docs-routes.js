@@ -1,19 +1,19 @@
 /**
  * docs-routes.js
  *
- * Браузерная документация движка — только для dev-режима.
+ * Браузерная документация движка  только для dev-режима.
  * Шаблоны: views/*.ejs   Статика: static/
  *
  * Монтируется в server.js:
  *   if (IS_DEV) require('./docs-routes')(app, ctx);
  *
  * Маршруты:
- *   GET /                     — список корневых пайплайнов
- *   GET /pipelines/:id(*)     — страница пайплайна
- *   GET /rules/:id(*)         — страница правила
- *   GET /conditions/:id(*)    — страница условия
- *   GET /dictionaries/:id(*)  — страница справочника
- *   GET /static/*             — CSS, JS, иконки
+ *   GET /                      список корневых пайплайнов
+ *   GET /pipelines/:id(*)      страница пайплайна
+ *   GET /rules/:id(*)          страница правила
+ *   GET /conditions/:id(*)     страница условия
+ *   GET /dictionaries/:id(*)   страница справочника
+ *   GET /static/*              CSS, JS, иконки
  */
 
 "use strict";
@@ -26,7 +26,7 @@ const express = require("express");
 const VIEWS_DIR = path.join(__dirname, "views");
 const STATIC_DIR = path.join(__dirname, "static");
 
-// Иконки — загружаем один раз при старте
+// Иконки  загружаем один раз при старте
 const ICON_NAMES = [
   "big-logotype",
   "big-pipline",
@@ -64,7 +64,7 @@ for (const name of ICON_NAMES) {
   icons[name] = fs.existsSync(file) ? fs.readFileSync(file, "utf8") : "";
 }
 
-// Манифест пакета правил — загружается при старте, перечитывается при hot-reload
+// Манифест пакета правил  загружается при старте, перечитывается при hot-reload
 function loadManifest(rulesDir) {
   const file = path.join(
     rulesDir || path.join(__dirname, "rules"),
@@ -112,7 +112,7 @@ function analyzePipeline(rootPipelineId, compiled) {
 
   const DEPTH_WARN = 5;
   const STEPS_WARN = 60;
-  const LIBRARY_LOW = 50; // % — ниже которого предупреждаем
+  const LIBRARY_LOW = 50; // %  ниже которого предупреждаем
 
   // Рекурсивный обход
   function walk(steps, depth, visited) {
@@ -206,8 +206,276 @@ function analyzePipeline(rootPipelineId, compiled) {
   };
 }
 
+// ── Генерация документации пайплайна в Markdown ──────────────────────────
+
+// ── Генератор документации пайплайна ─────────────────────────────────────
+// fmt: 'md' | 'wiki'
+
+function generatePipelineDoc(rootPipelineId, compiled, manifest, fmt) {
+  fmt = fmt || "md";
+  const isMd = fmt === "md";
+
+  const registry = compiled.registry;
+  const pipelines = compiled.pipelines;
+  const conditions = compiled.conditions;
+  const operators = (manifest && manifest.operators) || {};
+  const fields = (manifest && manifest.fields) || {};
+
+  // ── Форматирование ──────────────────────────────────────────────────────
+
+  function bold(s) {
+    return isMd ? `**${s}**` : `*${s}*`;
+  }
+  function mono(s) {
+    return isMd ? `\`${s}\`` : `{{${s}}}`;
+  }
+  function italic(s) {
+    return isMd ? `_${s}_` : `_${s}_`;
+  }
+  function quote(s) {
+    return isMd ? `> ${s}` : `{quote}${s}{quote}`;
+  }
+  function hr() {
+    return isMd ? "---" : "----";
+  }
+  function h(level, text) {
+    if (isMd) return "#".repeat(level) + " " + text;
+    return "h" + level + ". " + text;
+  }
+  function label(key, val) {
+    return isMd ? `**${key}:** ${val}` : `*${key}:* ${val}`;
+  }
+
+  // ── Поля и операторы ────────────────────────────────────────────────────
+
+  function fieldLabel(fieldId) {
+    if (!fieldId) return "";
+    const f = fields[fieldId];
+    return f && f.description ? f.description : fieldId;
+  }
+
+  // Строчная первая буква
+  function lc(s) {
+    if (!s) return s;
+    return s.charAt(0).toLowerCase() + s.slice(1);
+  }
+
+  // Подставляем шаблон оператора
+  // Первичные поля  bold, вторичные (в скобках)  mono
+  function applyTemplate(rule, role) {
+    const op = operators[rule.operator];
+    const tpl = op
+      ? role === "predicate"
+        ? op.predicate_template || op.check_template || op.description
+        : op.check_template || op.description
+      : null;
+
+    if (!tpl) return rule.description || rule.operator;
+
+    let r = tpl;
+
+    // any_filled  поля вторичны, выводим отдельной строкой
+    if (rule.fields && Array.isArray(rule.fields)) {
+      const humanList = rule.fields
+        .map((f) => {
+          const fd = fields[f];
+          const d = fd && fd.description ? fd.description : f;
+          return d === f ? bold(f) : `${italic(lc(d))} (${bold(f)})`;
+        })
+        .join(", ");
+      r = r.replace("{fields}", humanList);
+      return [
+        r,
+        `Проверяем, что заполнено одно из полей: ${rule.fields.map((f) => bold(f)).join(", ")}.`,
+      ].join("\n");
+    }
+
+    // field_*_field  оба поля вторичны
+    if (rule.value_field) {
+      const fDesc = fieldLabel(rule.field);
+      const vDesc = fieldLabel(rule.value_field);
+      const fStr =
+        fDesc === rule.field
+          ? bold(rule.field)
+          : `${italic(lc(fDesc))} (${bold(rule.field)})`;
+      const vStr =
+        vDesc === rule.value_field
+          ? bold(rule.value_field)
+          : `${italic(lc(vDesc))} (${bold(rule.value_field)})`;
+      r = r.replace("{field}", fStr);
+      r = r.replace("{value_field}", vStr);
+      return [
+        r,
+        `Сравниваются поля ${bold(rule.field)} и ${bold(rule.value_field)}.`,
+      ].join("\n");
+    }
+
+    // Одно поле  первичное если нет описания, вторичное если есть
+    if (rule.field) {
+      const desc = fieldLabel(rule.field);
+      const isPrimary = desc === rule.field; // нет описания в манифесте
+      const fieldStr = isPrimary
+        ? bold(rule.field)
+        : `${italic(lc(desc))} (${bold(rule.field)})`;
+      r = r.replace("{field}", fieldStr);
+    }
+
+    if (rule.value !== undefined) {
+      const v =
+        typeof rule.value === "string" ? bold(rule.value) : String(rule.value);
+      r = r.replace("{value}", v);
+    }
+
+    return r;
+  }
+
+  // ── Строгость ───────────────────────────────────────────────────────────
+
+  const CONSEQUENCE = {
+    EXCEPTION:
+      "дальнейшие проверки прекращаются и ошибка возвращается как окончательная.",
+    ERROR: "возвращается ошибка. Дальнейшие проверки продолжаются.",
+    WARNING: "возвращается предупреждение. Дальнейшие проверки продолжаются.",
+  };
+
+  // ── Рендер правила ──────────────────────────────────────────────────────
+
+  const lines = [];
+  const visited = new Set();
+  // Глобальный счётчик для нумерации разделов
+  const counter = [0]; // [top-level]
+
+  function push(...args) {
+    args.forEach((a) => lines.push(a));
+  }
+
+  function renderRule(rule, num) {
+    const title = rule.description || rule.id;
+    push(h(Math.min(num.length + 1, 4), `${num.join(".")}. ${title}`), "");
+
+    // Условие проверки
+    const phrase = applyTemplate(rule, "check");
+    const phraseLines = phrase.split("\n");
+    phraseLines.forEach((l) => push(quote(l)));
+    push("");
+
+    // Строгость
+    const cons = CONSEQUENCE[rule.level] || "";
+    if (cons)
+      push(label("Строгость", `если проверка не выполнена, то ${cons}`), "");
+
+    // Сообщение
+    if (rule.message) push(label("Сообщение", rule.message), "");
+
+    // Код
+    if (rule.code) push(label("Код", rule.code), "");
+
+    // Специализированный оператор (valid_inn, valid_ogrn и др.)
+    const specialOps = ["valid_inn", "valid_ogrn"];
+    if (specialOps.includes(rule.operator))
+      push(
+        label(
+          "Алгоритм проверки",
+          "специализированная проверка, алгоритм описан в отдельном документе [ссылка на документ]",
+        ),
+        "",
+      );
+
+    push(hr(), "");
+  }
+
+  // ── Обход дерева ────────────────────────────────────────────────────────
+
+  function walkPipeline(pipelineId, num) {
+    if (visited.has(pipelineId)) return;
+    visited.add(pipelineId);
+
+    const art = registry.get(pipelineId);
+    const cmp = pipelines && pipelines.get(pipelineId);
+    if (!cmp) return;
+
+    const title = art && art.description ? art.description : pipelineId;
+
+    // Уровень заголовка: корень=1, первый уровень вложенности=2, глубже=3 max
+    const hLevel = Math.min(num.length + 1, 4);
+    push("", h(hLevel, num.length ? `${num.join(".")}. ${title}` : title), "");
+
+    walkSteps(cmp.steps, num);
+  }
+
+  function walkSteps(steps, parentNum) {
+    if (!steps || !steps.length) return;
+
+    // Счётчик внутри текущего уровня
+    let idx = 0;
+
+    for (const step of steps) {
+      if (step.kind === "rule") {
+        const rule = registry.get(step.ruleId);
+        if (!rule || rule.role === "predicate") continue;
+
+        idx++;
+        const num = [...parentNum, idx];
+        renderRule(rule, num);
+      } else if (step.kind === "condition") {
+        const cid = step.conditionId;
+        const cart = registry.get(cid);
+        const ccmp = conditions && conditions.get(cid);
+        if (!ccmp) continue;
+
+        // Строим фразу условия
+        const predTexts = ccmp.when.predIds.map((predId) => {
+          const pred = registry.get(predId);
+          return pred ? applyTemplate(pred, "predicate") : predId;
+        });
+        const mode = ccmp.when.mode === "any" ? "или" : "и";
+        const when = predTexts.join(` ${mode} `);
+
+        // Условный блок  не увеличивает счётчик, но создаёт заголовок если есть description
+        const condTitle = cart && cart.description ? cart.description : null;
+        if (condTitle) {
+          idx++;
+          const num = [...parentNum, idx];
+          push(
+            "",
+            h(Math.min(num.length + 1, 4), `${num.join(".")}. ${condTitle}`),
+            "",
+          );
+          push(quote(`Проверка применяется если ${lc(when)}.`), "");
+          walkSteps(ccmp.steps, num);
+        } else {
+          push(quote(`Проверка применяется если ${lc(when)}.`), "");
+          walkSteps(ccmp.steps, parentNum);
+        }
+      } else if (step.kind === "pipeline") {
+        idx++;
+        const num = [...parentNum, idx];
+        walkPipeline(step.pipelineId, num);
+      }
+    }
+  }
+
+  // ── Корень ──────────────────────────────────────────────────────────────
+
+  const rootArt = registry.get(rootPipelineId);
+  const rootTitle =
+    rootArt && rootArt.description ? rootArt.description : rootPipelineId;
+
+  push(h(1, rootTitle), "");
+  push(label("Сценарий", mono(rootPipelineId)), "");
+  push(hr(), "");
+
+  const rootCmp = pipelines && pipelines.get(rootPipelineId);
+  if (rootCmp) {
+    visited.add(rootPipelineId);
+    walkSteps(rootCmp.steps, []);
+  }
+
+  return lines.join("\n");
+}
+
 module.exports = function mountDocs(app, ctx) {
-  // Путь к rules/ — берём из ctx если есть, иначе рядом с docs-routes.js
+  // Путь к rules/  берём из ctx если есть, иначе рядом с docs-routes.js
   const rulesDir = ctx.rulesDir || path.join(__dirname, "rules");
   // dev: читаем с диска + hot-reload; prod: берём из ctx.manifest (встроен в снэпшот)
   let manifest = ctx.manifest || loadManifest(rulesDir);
@@ -224,7 +492,7 @@ module.exports = function mountDocs(app, ctx) {
 
   app.use("/static", express.static(STATIC_DIR));
 
-  // Главная — только корневые пайплайны (id без точки)
+  // Главная  только корневые пайплайны (id без точки)
   app.get("/", (req, res) => {
     const pipelines = [];
     for (const [id, a] of ctx.compiled.registry) {
@@ -259,7 +527,17 @@ module.exports = function mountDocs(app, ctx) {
     render(res, "stats", { pipeline: a, stats: result }, manifest);
   });
 
-  // Playground — тест пайплайна
+  // Документация пайплайна
+  app.get("/pipelines/:id/doc", (req, res) => {
+    const a = ctx.compiled.registry.get(req.params.id);
+    if (!a || a.type !== "pipeline")
+      return res.status(404).send("Pipeline not found: " + req.params.id);
+    const fmt = req.query.fmt === "wiki" ? "wiki" : "md";
+    const content = generatePipelineDoc(a.id, ctx.compiled, manifest, fmt);
+    render(res, "doc", { pipeline: a, docContent: content, fmt }, manifest);
+  });
+
+  // Playground  тест пайплайна
   app.get("/pipelines/:id/playground", (req, res) => {
     const a = ctx.compiled.registry.get(req.params.id);
     if (!a || a.type !== "pipeline")

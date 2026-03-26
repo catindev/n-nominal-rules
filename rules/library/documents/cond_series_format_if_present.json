@@ -1,7 +1,7 @@
 {
   "id": "library.documents.cond_series_format_if_present",
   "type": "condition",
-  "description": "Если серия указана — проверяем формат паспорта РФ",
+  "description": "Если серия указана, то проверяем формат паспорта РФ",
   "when": {
     "all": [
       "library.documents.pred_series_present"

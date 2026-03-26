@@ -1,0 +1,8 @@
+{
+  "id": "library.fl.pred_birth_date_present",
+  "type": "rule",
+  "description": "Дата рождения указана",
+  "role": "predicate",
+  "operator": "not_empty",
+  "field": "beneficiary.fl.birthDate"
+}

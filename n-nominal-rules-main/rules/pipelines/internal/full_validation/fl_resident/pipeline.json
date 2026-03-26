@@ -1,0 +1,33 @@
+{
+  "id": "internal.full_validation.fl_resident",
+  "type": "pipeline",
+  "description": "Сценарий полной проверки заявки на ФЛ-резидента",
+  "strict": false,
+  "flow": [
+    {
+      "rule": "library.common.beneficiary_type_required"
+    },
+    {
+      "rule": "library.common.beneficiary_type_supported"
+    },
+    {
+      "rule": "library.fl.type_is_fl_resident"
+    },
+    {
+      "pipeline": "internal.blocks.common.contacts_and_status"
+    },
+    {
+      "pipeline": "internal.blocks.fl.identity_core"
+    },
+    {
+      "pipeline": "internal.blocks.fl.identity_document"
+    },
+    {
+      "pipeline": "internal.blocks.address.registration_required"
+    },
+    {
+      "pipeline": "internal.blocks.fl.tax_flags"
+    }
+  ],
+  "entrypoint": false
+}

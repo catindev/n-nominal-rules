@@ -1,0 +1,12 @@
+{
+  "id": "library.tax.us_resident_not_true",
+  "type": "rule",
+  "description": "Признак резидентства США не должен быть true",
+  "role": "check",
+  "operator": "not_equals",
+  "level": "EXCEPTION",
+  "code": "BEN.TAX.US_RESIDENT.NOT_TRUE",
+  "message": "Признак резидентства США не допускается для FL_RESIDENT",
+  "field": "beneficiary.tax.usResident",
+  "value": true
+}

@@ -1,0 +1,13 @@
+{
+  "id": "library.address.cond_address_line_if_present",
+  "type": "condition",
+  "description": "Если адрес регистрации (одной строкой) заполнен, проверяем формат и длину",
+  "when": {
+    "all": ["library.address.pred_address_line_present"]
+  },
+  "steps": [
+    {
+      "rule": "library.address.address_line"
+    }
+  ]
+}

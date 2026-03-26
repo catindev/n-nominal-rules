@@ -1,0 +1,12 @@
+{
+  "id": "library.documents.issuer_code_format",
+  "type": "rule",
+  "description": "Код подразделения должен быть в формате XXX-XXX",
+  "role": "check",
+  "operator": "matches_regex",
+  "level": "ERROR",
+  "code": "BEN.IDDOC.ISSUER_CODE.FORMAT",
+  "message": "Код подразделения должен быть в формате XXX-XXX и не может быть 000-000",
+  "field": "beneficiary.idDoc.issuerCode",
+  "value": "^(?!000-000)\\d{3}-\\d{3}$"
+}

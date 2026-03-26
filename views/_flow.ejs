@@ -70,7 +70,7 @@
     %>
     <li class="flow-item flow-item--condition">
 
-      <%# ── заголовок условия — ссылка ── %>
+      <%# ── заголовок условия  ссылка ── %>
       <a class="flow-cond-header<%= cLib ? ' flow-leaf--library' : '' %>" href="/conditions/<%= encodeURIComponent(step.conditionId) %>">
         <span class="flow-leaf-icon"><%- cIco %></span>
         <span class="flow-leaf-title"><%= cond ? (cond.description || cond.id) : step.conditionId %></span>

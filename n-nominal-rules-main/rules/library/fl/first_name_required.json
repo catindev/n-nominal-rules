@@ -1,0 +1,11 @@
+{
+  "id": "library.fl.first_name_required",
+  "type": "rule",
+  "description": "Имя обязательно",
+  "role": "check",
+  "operator": "not_empty",
+  "level": "ERROR",
+  "code": "FL.FIRST_NAME.REQUIRED",
+  "message": "Не указано имя физического лица",
+  "field": "beneficiary.fl.firstName"
+}

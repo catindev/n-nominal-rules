@@ -6,6 +6,6 @@
   "operator": "not_empty",
   "level": "ERROR",
   "code": "BEN.CONTACTS.PHONE_FOREIGN.REQUIRED",
-  "message": "Не указан иностранный телефон — он обязателен при иностранном налоговом резидентстве и отсутствии телефона РФ",
+  "message": "Не указан иностранный телефон , то он обязателен при иностранном налоговом резидентстве и отсутствии телефона РФ",
   "field": "beneficiary.contacts.phoneForeign"
 }

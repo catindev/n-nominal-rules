@@ -1,0 +1,13 @@
+{
+  "id": "library.address.cond_building_if_present",
+  "type": "condition",
+  "description": "Если заполнен корпус/строение адреса регистрации, проверяем формат и длину",
+  "when": {
+    "all": ["library.address.pred_building_present"]
+  },
+  "steps": [
+    {
+      "rule": "library.address.building"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "id": "library.documents.series_required",
+  "type": "rule",
+  "description": "Серия документа обязательна",
+  "role": "check",
+  "operator": "not_empty",
+  "level": "ERROR",
+  "code": "BEN.IDDOC.SERIES.REQUIRED",
+  "message": "Не указана серия документа",
+  "field": "beneficiary.idDoc.series"
+}
