@@ -5,7 +5,7 @@ const path = require("path");
 const { createEngine } = require("./lib");
 const { loadArtifactsFromDir } = require("./lib/loader-fs");
 const { Operators } = require("./lib/operators");
-const { CompilationError } = require("./lib/compiler/compilation-error");
+const { CompilationError } = require("jsonspecs");
 const mountDocs = require("./docs-routes");
 const EventEmitter = require("events");
 
